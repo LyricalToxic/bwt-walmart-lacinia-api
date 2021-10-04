@@ -2,7 +2,3 @@ version: 2
 
 python:
   version: "3.8"
-
-formats:
-  - pdf
-  - epub
