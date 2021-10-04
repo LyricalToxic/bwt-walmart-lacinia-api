@@ -4,4 +4,10 @@ API
 .. autosummary::
    :toctree: generated
 
-   lumache
+   endpoints
+
+Search
+------------
+.. js:function:: query Search
+.. js:attribute:: $query: String
+    описание
