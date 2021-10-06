@@ -19,6 +19,6 @@ Query
 
 Запрос на поиск товаров по ключевому :doc:`слову`
 
-:members String $query: Описание
+- :bold:`$query`(String): Описание
 
 :members  Int $page: Описание
