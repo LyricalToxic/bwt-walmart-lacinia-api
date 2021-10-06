@@ -15,7 +15,7 @@ Body
 
 Query
 
-.. function:: query_Search(...)
+.. function:: query Search(...)
 
 Запрос на поиск товаров по ключевому :doc:`слову`
 
@@ -25,82 +25,83 @@ Query
 
 .. param:: $page: Int
 
-        Описание
+Описание
 
-    .. param:: $prg: Prg!
+.. param:: $prg: Prg!
 
-        Описание
+Описание
 
-    .. paramparam:: $facet: String
+.. paramparam:: $facet: String
 
-        Описание
+Описание
 
-    .. paramparam:: $sort: Sort = best_match!
+.. paramparam:: $sort: Sort = best_match!
 
-        Описание
+Описание
 
-    .. paramparam:: $catId: String
+.. paramparam:: $catId: String
 
-        Описание
+Описание
 
-    .. paramparam:: $max_price: String
+.. paramparam:: $max_price: String
 
-        Описание
+Описание
 
-    .. paramparam:: $min_price: String
+.. paramparam:: $min_price: String
 
-        Описание
+Описание
 
-    .. paramparam:: $spelling: Boolean = true,
+.. paramparam:: $spelling: Boolean = true,
 
-        Описание
+Описание
 
-    .. paramparam:: $affinityOverride: AffinityOverride
+.. paramparam:: $affinityOverride: AffinityOverride
 
-        Описание
+Описание
 
-    .. paramparam:: $storeSlotBooked: String
+.. paramparam:: $storeSlotBooked: String
 
-        Описание
+Описание
 
-    .. paramparam:: $ps: Int
+.. paramparam:: $ps: Int
 
-        Описание
+Описание
 
-    .. paramparam:: $ptss: String
+.. paramparam:: $ptss: String
 
-        Описание
+Описание
 
-    .. paramparam:: $recall_set: String
+.. paramparam:: $recall_set: String
 
-        Описание
+Описание
 
-    .. paramparam:: $fitmentFieldParams: JSON = {}
+.. paramparam:: $fitmentFieldParams: JSON = {}
 
-        Описание
+Описание
 
-    .. paramparam:: $fitmentSearchParams: JSON = {}
+.. paramparam:: $fitmentSearchParams: JSON = {}
 
-        Описание
+Описание
 
-    .. paramparam:: $fetchMarquee: Boolean!
+.. paramparam:: $fetchMarquee: Boolean!
 
-        Описание
+Описание
 
-    .. paramparam:: $trsp: String
+.. paramparam:: $trsp: String
 
-        Описание
+Описание
 
-    .. paramparam:: $fetchSkyline: Boolean!
+.. paramparam:: $fetchSkyline: Boolean!
 
-        Описание
+Описание
 
-    .. paramparam:: $fetchSbaTop: Boolean!
+.. paramparam:: $fetchSbaTop: Boolean!
 
-        Описание
+Описание
 
 Variables
-.. code-block:: json
+
+.. code:: json
     "variables": {
         "id": "",
         "dealsId": "",
