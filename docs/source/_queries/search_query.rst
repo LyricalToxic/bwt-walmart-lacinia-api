@@ -15,11 +15,11 @@ Body
 
 Query
 
-.. function:: query Search(...)
+.. py:function:: query Search(...)
 
 Запрос на поиск товаров по ключевому :doc:`слову`
 
-    :param String $query: Описание
+:param String $query: Описание
 
 :param $page: Int
 
