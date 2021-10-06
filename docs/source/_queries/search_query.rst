@@ -1,90 +1,155 @@
-Query input
+Search
+-----------
+Overview
 ~~~~~~~~~~~
-.. js:method:: query Search(...)
+
+    Запрос на поиск товаров выполняется на endpoint::
+
+        https://www.walmart.com/orchestra/home/graphql
+
+    Результаты поиска разбиваются на пагинации. Для каждого набора фильтров можно получить не более 1000 товаров.
+
+
+Body
+~~~~~~~~~~~
+
+..
+.. js:function:: query Search(...)
 
     Запрос на поиск товаров по ключевому :doc:`слову`
 
-    .. js:attribute::$query: String
+    .. js:param::$query: String
 
         Описание
 
-    .. js:attribute:: $page: Int
+    .. js:param:: $page: Int
 
         Описание
 
-    .. js:attribute:: $prg: Prg!
+    .. js:param:: $prg: Prg!
 
         Описание
 
-    .. js:attribute:: $facet: String
+    .. js:param:: $facet: String
 
         Описание
 
-    .. js:attribute:: $sort: Sort = best_match!
+    .. js:param:: $sort: Sort = best_match!
 
         Описание
 
-    .. js:attribute:: $catId: String
+    .. js:param:: $catId: String
 
         Описание
 
-    .. js:attribute:: $max_price: String
+    .. js:param:: $max_price: String
 
         Описание
 
-    .. js:attribute:: $min_price: String
+    .. js:param:: $min_price: String
 
         Описание
 
-    .. js:attribute:: $spelling: Boolean = true,
+    .. js:param:: $spelling: Boolean = true,
 
         Описание
 
-    .. js:attribute:: $affinityOverride: AffinityOverride
+    .. js:param:: $affinityOverride: AffinityOverride
 
         Описание
 
-    .. js:attribute:: $storeSlotBooked: String
+    .. js:param:: $storeSlotBooked: String
 
         Описание
 
-    .. js:attribute:: $ps: Int
+    .. js:param:: $ps: Int
 
         Описание
 
-    .. js:attribute:: $ptss: String
+    .. js:param:: $ptss: String
 
         Описание
 
-    .. js:attribute:: $recall_set: String
+    .. js:param:: $recall_set: String
 
         Описание
 
-    .. js:attribute:: $fitmentFieldParams: JSON = {}
+    .. js:param:: $fitmentFieldParams: JSON = {}
 
         Описание
 
-    .. js:attribute:: $fitmentSearchParams: JSON = {}
+    .. js:param:: $fitmentSearchParams: JSON = {}
 
         Описание
 
-    .. js:attribute:: $fetchMarquee: Boolean!
+    .. js:param:: $fetchMarquee: Boolean!
 
         Описание
 
-    .. js:attribute:: $trsp: String
+    .. js:param:: $trsp: String
 
         Описание
 
-    .. js:attribute:: $fetchSkyline: Boolean!
+    .. js:param:: $fetchSkyline: Boolean!
 
         Описание
 
-    .. js:attribute:: $fetchSbaTop: Boolean!
+    .. js:param:: $fetchSbaTop: Boolean!
 
         Описание
 
+Body:variables
+~~~~~~~~~~~
 
-
-.. js:attribute:: $query: String
-    описание
+..
+.. code-block:: json
+    "variables": {
+        "id": "",
+        "dealsId": "",
+        "query": "Weston",
+        "page": 1,
+        "prg": "desktop",
+        "catId": "",
+        "facet": "",
+        "sort": "best_match",
+        "rawFacet": "",
+        "seoPath": "",
+        "ps": 40,
+        "ptss": "",
+        "trsp": "",
+        "beShelfId": "",
+        "recall_set": "",
+        "module_search": "",
+        "min_price": "",
+        "max_price": "",
+        "storeSlotBooked": "",
+        "additionalQueryParams": null,
+        "fitmentFieldParams": null,
+        "fitmentSearchParams": {
+          "id": "",
+          "dealsId": "",
+          "query": "Weston",
+          "page": 1,
+          "prg": "desktop",
+          "catId": "",
+          "facet": "",
+          "sort": "best_match",
+          "rawFacet": "",
+          "seoPath": "",
+          "ps": 40,
+          "ptss": "",
+          "trsp": "",
+          "beShelfId": "",
+          "recall_set": "",
+          "module_search": "",
+          "min_price": "",
+          "max_price": "",
+          "storeSlotBooked": "",
+          "additionalQueryParams": null,
+          "cat_id": "",
+          "_be_shelf_id": ""
+        },
+        "fetchMarquee": true,
+        "fetchSkyline": true,
+        "fetchSbaTop": true
+      }
