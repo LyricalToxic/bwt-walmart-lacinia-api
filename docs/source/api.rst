@@ -17,7 +17,7 @@ Overview
 
 Query input
 ~~~~~~~~~~~
-.. js:function:: query Search(
+.. method:: query.Search(
     $query: String
     $page: Int
     $prg: Prg!
@@ -40,9 +40,12 @@ Query input
     $fetchSbaTop: Boolean!
 )
 
+    Запрос на поиск товаров по ключевому :doc:`слову`
+
 
 .. js:attribute:: $query: String
     описание
 
 
 ------------
+.. include:: ../_queries/search_query.rst
