@@ -19,83 +19,83 @@ Query
 
 Запрос на поиск товаров по ключевому :doc:`слову`
 
-.. param::$query: String
+:param$query: String
 
 Описание
 
-.. param:: $page: Int
+:param $page: Int
 
 Описание
 
-.. param:: $prg: Prg!
+:param $prg: Prg!
 
 Описание
 
-.. paramparam:: $facet: String
+:param $facet: String
 
 Описание
 
-.. paramparam:: $sort: Sort = best_match!
+:param $sort: Sort = best_match!
 
 Описание
 
-.. paramparam:: $catId: String
+:param $catId: String
 
 Описание
 
-.. paramparam:: $max_price: String
+:param $max_price: String
 
 Описание
 
-.. paramparam:: $min_price: String
+:param $min_price: String
 
 Описание
 
-.. paramparam:: $spelling: Boolean = true,
+:param $spelling: Boolean = true,
 
 Описание
 
-.. paramparam:: $affinityOverride: AffinityOverride
+:param $affinityOverride: AffinityOverride
 
 Описание
 
-.. paramparam:: $storeSlotBooked: String
+:param $storeSlotBooked: String
 
 Описание
 
-.. paramparam:: $ps: Int
+:param $ps: Int
 
 Описание
 
-.. paramparam:: $ptss: String
+:param $ptss: String
 
 Описание
 
-.. paramparam:: $recall_set: String
+:param $recall_set: String
 
 Описание
 
-.. paramparam:: $fitmentFieldParams: JSON = {}
+:param $fitmentFieldParams: JSON = {}
 
 Описание
 
-.. paramparam:: $fitmentSearchParams: JSON = {}
+:param $fitmentSearchParams: JSON = {}
 
 Описание
 
-.. paramparam:: $fetchMarquee: Boolean!
+:param $fetchMarquee: Boolean!
 
 Описание
 
-.. paramparam:: $trsp: String
+:param $trsp: String
 
 Описание
 
-.. paramparam:: $fetchSkyline: Boolean!
+:param $fetchSkyline: Boolean!
 
 Описание
 
-.. paramparam:: $fetchSbaTop: Boolean!
+:param $fetchSbaTop: Boolean!
 
 Описание
 
