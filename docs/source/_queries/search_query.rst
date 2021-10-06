@@ -3,9 +3,9 @@ Search
 Overview
 ~~~~~~~~~~~
 
-    Запрос на поиск товаров выполняется на endpoint::
+    Запрос на поиск товаров выполняется на endpoint:
 
-        https://www.walmart.com/orchestra/home/graphql
+        :link:`https://www.walmart.com/orchestra/home/graphql`
 
     Результаты поиска разбиваются на пагинации. Для каждого набора фильтров можно получить не более 1000 товаров.
 
@@ -13,7 +13,7 @@ Overview
 Body
 ~~~~~~~~~~~
 
-..
+.. title::query
 .. js:function:: query Search(...)
 
     Запрос на поиск товаров по ключевому :doc:`слову`
@@ -98,10 +98,10 @@ Body
 
         Описание
 
-Body:variables
+Body
 ~~~~~~~~~~~
 
-..
+.. title:: variables
 .. code-block:: json
     "variables": {
         "id": "",
