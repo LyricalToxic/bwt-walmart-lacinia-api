@@ -2,7 +2,7 @@
 
 # -- Project information
 
-project = 'BWTWalmartApi'
+project = 'BWT Walmart API doc'
 copyright = '2021, Graziella'
 author = 'Graziella'
 

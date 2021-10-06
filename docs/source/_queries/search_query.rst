@@ -5,7 +5,7 @@ Overview
 
     Запрос на поиск товаров выполняется на endpoint:
 
-        :link:`https://www.walmart.com/orchestra/home/graphql`
+        :label:`https://www.walmart.com/orchestra/home/graphql`
 
     Результаты поиска разбиваются на пагинации. Для каждого набора фильтров можно получить не более 1000 товаров.
 
@@ -13,95 +13,92 @@ Overview
 Body
 ~~~~~~~~~~~
 
-.. title::query
+Query
 .. js:function:: query Search(...)
 
     Запрос на поиск товаров по ключевому :doc:`слову`
 
-    .. js:param::$query: String
+    .. param::$query: String
 
         Описание
 
-    .. js:param:: $page: Int
+    .. param:: $page: Int
 
         Описание
 
-    .. js:param:: $prg: Prg!
+    .. param:: $prg: Prg!
 
         Описание
 
-    .. js:param:: $facet: String
+    .. paramparam:: $facet: String
 
         Описание
 
-    .. js:param:: $sort: Sort = best_match!
+    .. paramparam:: $sort: Sort = best_match!
 
         Описание
 
-    .. js:param:: $catId: String
+    .. paramparam:: $catId: String
 
         Описание
 
-    .. js:param:: $max_price: String
+    .. paramparam:: $max_price: String
 
         Описание
 
-    .. js:param:: $min_price: String
+    .. paramparam:: $min_price: String
 
         Описание
 
-    .. js:param:: $spelling: Boolean = true,
+    .. paramparam:: $spelling: Boolean = true,
 
         Описание
 
-    .. js:param:: $affinityOverride: AffinityOverride
+    .. paramparam:: $affinityOverride: AffinityOverride
 
         Описание
 
-    .. js:param:: $storeSlotBooked: String
+    .. paramparam:: $storeSlotBooked: String
 
         Описание
 
-    .. js:param:: $ps: Int
+    .. paramparam:: $ps: Int
 
         Описание
 
-    .. js:param:: $ptss: String
+    .. paramparam:: $ptss: String
 
         Описание
 
-    .. js:param:: $recall_set: String
+    .. paramparam:: $recall_set: String
 
         Описание
 
-    .. js:param:: $fitmentFieldParams: JSON = {}
+    .. paramparam:: $fitmentFieldParams: JSON = {}
 
         Описание
 
-    .. js:param:: $fitmentSearchParams: JSON = {}
+    .. paramparam:: $fitmentSearchParams: JSON = {}
 
         Описание
 
-    .. js:param:: $fetchMarquee: Boolean!
+    .. paramparam:: $fetchMarquee: Boolean!
 
         Описание
 
-    .. js:param:: $trsp: String
+    .. paramparam:: $trsp: String
 
         Описание
 
-    .. js:param:: $fetchSkyline: Boolean!
+    .. paramparam:: $fetchSkyline: Boolean!
 
         Описание
 
-    .. js:param:: $fetchSbaTop: Boolean!
+    .. paramparam:: $fetchSbaTop: Boolean!
 
         Описание
 
-Body
-~~~~~~~~~~~
-
-.. title:: variables
+Variables
 .. code-block:: json
     "variables": {
         "id": "",
