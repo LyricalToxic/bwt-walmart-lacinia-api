@@ -14,7 +14,7 @@ Body
 ~~~~~~~~~~~
 
 Query
-.. js:function:: query Search(...)
+.. method:: query Search(...)
 
     Запрос на поиск товаров по ключевому :doc:`слову`
 
