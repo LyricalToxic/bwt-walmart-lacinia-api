@@ -19,9 +19,7 @@ Query
 
 Запрос на поиск товаров по ключевому :doc:`слову`
 
-:param$query: String
-
-Описание
+    :param String $query: Описание
 
 :param $page: Int
 
