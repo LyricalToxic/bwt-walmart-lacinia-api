@@ -48,4 +48,4 @@ $fetchSbaTop: Boolean!,
 
 
 ------------
-.. include:: ../_queries/search_query.rst
+.. include:: _queries/search_query.rst
