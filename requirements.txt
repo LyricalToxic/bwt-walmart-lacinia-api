@@ -1,1 +1,2 @@
 furo==2021.9.22
+sphinx-copybutton==0.4.0
