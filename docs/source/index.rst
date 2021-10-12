@@ -1,5 +1,5 @@
 Welcome to BWT Walmart Lacinia API documentation!
-===================================
+====================================================
 
 `Lacinia <https://github.com/walmartlabs/lacinia>`_ - это библиотека реализующая Facebook's GraphQL спецификации на Closure, разработанная  `walmartlabs <https://github.com/walmartlabs]>`_.
 Она является реализацией контракта между GraphQL-клиентом и вашими данными.
@@ -18,4 +18,5 @@ Contents
 .. toctree::
 
    overview
-   api
+   search_query
+   item_by_id_query

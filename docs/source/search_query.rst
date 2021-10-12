@@ -297,39 +297,46 @@ Response
 
     {
         "data": {
-            "search": {...}
+            "search": {...},
             "contentLayout": {...}
         }
     }
 
 - data.search - Содержит результат поиска и некоторые метаданные.
-    - query - Поисковый запрос
-    - searchResult - Результат поиска.
 
 ::
 
-    {
-        "title": "",
-        "aggregatedCount": 0,
-        "breadCrumb": null,
-        "debug": {},
-        "itemStacks": [],
-        "pageMetadata": {},
-        "paginationV2": {},
-        "spelling": {},
-        "requestContext": {},
-        "errorResponse": {},
-        "modules": null,
-    }
+        "search": {
+            "query": "",
+            "searchResult": {}
+        }
 
 \
-    Из важного:
-        - aggregatedCount - количество результатов
-        - itemStacks - список состоящий из типов. Известные типы продуктов: результат поиска, `похожие продукты <https://monosnap.com/file/4gSV6zy1HznqJXs3JsVlJNRVYNzNKR>`_ .\
-            - meta - мета информация результата
-            - itemsV2 - список результатов
-        - pageMetadata - описательная  информация о странице. Содержит локацию
-        - paginationV2 - параметры запроса.
+    - query - Поисковый запрос
+    - searchResult - Результат поиска::
+
+        {
+            "title": "",
+            "aggregatedCount": 0,
+            "breadCrumb": null,
+            "debug": {},
+            "itemStacks": [],
+            "pageMetadata": {},
+            "paginationV2": {},
+            "spelling": {},
+            "requestContext": {},
+            "errorResponse": {},
+            "modules": null,
+        }
+
+\
+        Из важного:
+            - aggregatedCount - количество результатов
+            - itemStacks - список состоящий из типов. Известные типы продуктов: результат поиска, `похожие продукты <https://monosnap.com/file/4gSV6zy1HznqJXs3JsVlJNRVYNzNKR>`_ .\
+                - meta - мета информация результата
+                - itemsV2 - список результатов
+            - pageMetadata - описательная  информация о странице. Содержит локацию
+            - paginationV2 - параметры запроса.
 
 - data.contentLayout - Содержит modules, layouts и pageMetadata.
 
@@ -346,4 +353,7 @@ Response
     - layouts - Содержит информацию о расположении макетов на странице. Зависит от типа устройства.
     - pageMetadata - Содержит информацию о локации и контексте.
 
-Полный пример ответа для ключевого слова "Toyo": :download:`link <data/search_response.json5>`
+.. admonition:: Response example
+    :class: note
+
+    Полный пример ответа для ключевого слова "Toyo": :download:`link <data/search_response.json5>`
