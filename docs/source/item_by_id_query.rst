@@ -132,18 +132,6 @@ Query
 
         Обязательный параметр, содержащий метаинформацию о запросе. Нужен для modules. \
 
-        Минимальный набор параметров::
-
-            "p13N": {
-                "reqId": "",
-                "pageId": "",
-                "modules": [],
-                "userClientInfo": {
-                    "deviceType": ""
-                },
-                "userReqInfo": {}
-            }
-
     :parameter JSON $p13nCls: \
 
         Интерфейс p13N. \
@@ -161,21 +149,7 @@ Query
 
         Неизвестно. \
 
-        Необязательный параметр. Известное значение::
-
-            "tempo": {
-                "targeting": "",
-                "params": [
-                    {
-                        "key": "expoVars",
-                        "value": "expoVariationValue"
-                    },
-                    {
-                        "key": "expoVars",
-                        "value": "expoVariationValue2"
-                    }
-                ]
-            }
+        Необязательный параметр.
 
     :parameter Int $semStoreId: \
 
@@ -215,14 +189,14 @@ Query
 Variables
 """"""""""""
 Variables
-    - **semStoreId** (str) - неизвестно.
-    - **selected** (bool) - неизвестно.
-    - **channel** (str) - неизвестно.
-    - **pageType** (str) - неизвестно.
-    - **tenant** (str) - неизвестно.
-    - **version** (str) - неизвестно.
-    - **layout** (str) - неизвестно.
-    - **tempo** (str) - неизвестно::
+    - **semStoreId** (str) - неизвестно. По дефолту null. Относится к `product`.
+    - **selected** (bool) - неизвестно. По дефолту true. Относится к `product`.
+    - **channel** (str) - Тип contentLayout. По дефолту WWW. Относится к `contentLayout`.
+    - **pageType** (str) - Тип страницы contentLayout. По дефолту ItemPageGlobal. Относится к `contentLayout`.
+    - **tenant** (str) - Тип макета страницы contentLayout. По дефолту WM_GLASS. Относится к `contentLayout`.
+    - **version** (str) - Версия contentLayout. Относится к `contentLayout`.
+    - **layout** (str) - Тип устройства contentLayout. Относится к `contentLayout`.
+    - **tempo** (str) - Метаинформация для contentLayout. Относится к `contentLayout`::
 
             {
                 "targeting": "",
@@ -232,16 +206,27 @@ Variables
                 ]
             }
 
-    - **page** (int) - неизвестно.
-    - **limit** (int) - неизвестно.
-    - **sort** (str) - неизвестно.
-    - **filters** ([str]) - неизвестно.
-    - **p13N** (object) - неизвестно.
-    - **p13nCls** (object) - неизвестно.
-    - **fetchBuyBoxAd** (bool) - неизвестно.
-    - **fetchMarquee** (bool) - неизвестно.
-    - **fetchSkyline** (bool) - неизвестно.
-    - **fetchSpCarousel** (bool) - неизвестно.
+    - **page** (int) - Порядковый номер пагинации ревью. Относится к `reviews`.
+    - **limit** (int) - Количество ревью на пагинации. Относится к `reviews`.
+    - **sort** (str) - Сортировка ревью. Относится к `reviews`.
+    - **filters** ([str]) - Фильтры ревью. Относится к `reviews`.
+    - **p13N** (object) - Метаинформация о запросе.  Минимальный набор параметров::
+
+            "p13N": {
+                "reqId": "",
+                "pageId": "",
+                "modules": [],
+                "userClientInfo": {
+                    "deviceType": ""
+                },
+                "userReqInfo": {}
+            }
+
+    - **p13nCls** (object) - Интерфейс для p13N.
+    - **fetchBuyBoxAd** (bool) - Нужно ли возвращать информацию о BuyBoxAd. Относится к `contentLayout`.
+    - **fetchMarquee** (bool) - Нужно ли возвращать информацию о Marquee. Относится к `contentLayout`.
+    - **fetchSkyline** (bool) - Нужно ли возвращать информацию о Skyline. Относится к `contentLayout`.
+    - **fetchSpCarousel** (bool) - Нужно ли возвращать информацию о SpCarousel. Относится к `contentLayout`.
 
 Пример переменных:
     .. code-block::
@@ -279,4 +264,4 @@ Response
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для ключевого слова "Toyo": :download:`link <data/item_by_id_response.json5>`
+    Полный пример ответа для товара с id "14532503": :download:`link <data/item_by_id_response.json5>`
