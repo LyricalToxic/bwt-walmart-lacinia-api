@@ -1,0 +1,89 @@
+{
+  "data": {
+    "product": {
+      "allOffers": [
+        {
+          "offerId": "2D03CB9EBD4C46D8AC5B64D806D731AB",
+          "offerType": "ONLINE_ONLY",
+          "availabilityStatus": "IN_STOCK",
+          "fulfillmentType": "FC",
+          "fulfillmentBadge": null,
+          "sellerId": "3C85F1687C5A488C858E8C3998E63CF4",
+          "catalogSellerId": 10173,
+          "sellerName": "Supreme Sunrise Inc",
+          "sellerDisplayName": "Cali Sunshine",
+          "sellerType": "EXTERNAL",
+          "wfsEnabled": true,
+          "hasSellerBadge": false,
+          "priceInfo": {
+            "currentPrice": {
+              "price": 7.96,
+              "priceString": "$7.96"
+            },
+            "unitPrice": null
+          },
+          "returnPolicy": {
+            "returnable": true,
+            "freeReturns": true,
+            "returnWindow": {
+              "value": 30,
+              "unitType": "Day"
+            }
+          },
+          "shippingOption": {
+            "slaTier": "THREE_TO_FIVE_DAY",
+            "availabilityStatus": "AVAILABLE",
+            "accessTypes": [
+              "DELIVERY_ADDRESS"
+            ],
+            "deliveryDate": "2021-10-17T19:00:00.000Z",
+            "maxDeliveryDate": null,
+            "shipPrice": null
+          }
+        },
+        {
+          "offerId": "A18D554FC88A4FD6831A04CC9FDF78A8",
+          "offerType": "ONLINE_ONLY",
+          "availabilityStatus": "IN_STOCK",
+          "fulfillmentType": "MARKETPLACE",
+          "fulfillmentBadge": null,
+          "sellerId": "A017C618F29F4028ACFFD961DCDDD27D",
+          "catalogSellerId": 101007063,
+          "sellerName": "KMJ Trading",
+          "sellerDisplayName": "Julian Group",
+          "sellerType": "EXTERNAL",
+          "wfsEnabled": false,
+          "hasSellerBadge": false,
+          "priceInfo": {
+            "currentPrice": {
+              "price": 17.99,
+              "priceString": "$17.99"
+            },
+            "unitPrice": null
+          },
+          "returnPolicy": {
+            "returnable": true,
+            "freeReturns": true,
+            "returnWindow": {
+              "value": 30,
+              "unitType": "Day"
+            }
+          },
+          "shippingOption": {
+            "slaTier": "THREE_TO_FIVE_DAY",
+            "availabilityStatus": "AVAILABLE",
+            "accessTypes": [
+              "DELIVERY_ADDRESS"
+            ],
+            "deliveryDate": "2021-10-21T19:00:00.000Z",
+            "maxDeliveryDate": null,
+            "shipPrice": {
+              "price": 0,
+              "priceString": "$0.00"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
