@@ -279,4 +279,4 @@ Response
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для ключевого слова "Toyo": :download:`link <data/search_response.json5>`
+    Полный пример ответа для ключевого слова "Toyo": :download:`link <data/item_by_id_response.json5>`
