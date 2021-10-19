@@ -20,3 +20,6 @@ Contents
    overview
    search_query
    item_by_id_query
+   get_seller_page_details
+   get_all_seller_offers
+   update_postal_code
