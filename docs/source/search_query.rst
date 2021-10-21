@@ -16,6 +16,11 @@ Overview
 
 Запрос предназначен для поиска товаров по ключевому слову. \
 
+.. admonition:: Schema reference
+    :class: info
+
+    Description: Search Query - fetches search results from SIS, layout & modules from Content Layout Service. \
+
 .. HTTP метод и endpoint.
 
 Поиск по ключевым словам на сайте walmart выполняется с помощью `post` запроса на endpoint:
@@ -59,60 +64,126 @@ Body
 Query
 """""""""""
 
-.. function:: query Search(...)
+.. function:: search(...)
+
+    :parameter AffinityOverride $affinityOverride: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Affinity Override. \
+
+        Влияет на результат.
+
+        Перечисление может принимать значения::
+
+            ["default", "default_fc", "store_only", "store_led"]
+
+    :parameter Boolean $displayGuidedNav: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Display Guided Navigation Section in Response. \
+
+    :parameter String $storeSlotBooked: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: null. \
+
+        Относится к seoTopicData.
+
+    :parameter String $stores: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: The Customer Store. If no value is passed, it will attempt to default to the value from location service. \
+
+        Уникальный идентификатор магазина относительно которого будет выполняться поиск.
+
+    :parameter Prg $prg!: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Helps to identify device type. \
+            Possible values: desktop, mWeb, ios, android. \
+
+        Тип устройства. На результат поиска не влияет. Нужен для contentLayout. \
+
+    :parameter String $zipcode: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Customer ZIP Code. If no value is passed, it will attempt to default to the value from location service. \
+            Eg: 94087. \
+
+        Зип код пользователя. Предположительно нужен для релевантной рекламы. \
+
+    :parameter String $stateOrProvinceCode: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: State or Province Code. If no value is passed, it will attempt to default to the value from location service. \
+            Eg: CA. \
+
+        Код штата или провинция пользователя. Предположительно нужен для релевантной рекламы. \
+
+    :parameter Boolean $guided_nav: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Guided Nav param to indicate guided navigation is set to true. \
+
+    :parameter Int $pos: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Guided Nav param to indicate the position of the guided nav pill. \
+            Eg: 1. \
+
+    :parameter String $s_type: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Guided Nav param to indicate the type of the guided nav pill. \
+            Eg: ref. \
+
+    :parameter String $src_query: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Guided Nav param to indicate the source / parent query. \
+            Eg: tv. \
 
     :parameter String $query: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Search query. \
+            Eg: tv. \
 
         Ключевое слово для поиска. \
 
         Может быть пустым. В таком случае результатом поиска будет 15000 результатов соответствующим сортировки. \
 
+    :parameter String $cat_Id: \
 
-    :parameter Int $page: \
+        .. admonition:: Schema reference
+            :class: info
 
-        Порядковый номер страницы пагинации. \
-
-        При положительных значениях возвращает результат поиска для указанной страницы, если она существует.
-        В противном случае результат возвращен не будет и количество результатов будет равно 0. \
-
-        При 40 товаров на пагинации максимальное значение страницы 25. \
-
-    :parameter Prg $prg!: \
-
-        Тип устройства. На результат поиска не влияет. Нужен для contentLayout\
-
-        Перечисление может принимать значения::
-
-                ["desktop", "mWeb", "ios", "android"]
-
-    :parameter String $facet: \
-
-        Фильтры поиска. \
-
-        Форма записи::
-
-            тип фильтра:значение||тип фильтра:значение ...
-
-            Например: fulfillment_method:Delivery||brand:Cra-Z-Art
-
-        Значение фильтров находятся в ответе.
-
-    :parameter Sort $sort: \
-
-        *Default: best_match* \
-
-        Тип сортировки результата. \
-
-        Перечисление может принимать значения::
-
-            ["best_seller", "price_low", "price_high", "best_match"]
-
-        .. admonition:: Caution
-            :class: caution
-
-            При сортировке best_match в результатах возвращаются спонсорские продукты.
-
-    :parameter String $catId: \
+            Description: Category Id.\
+            Eg: 4044. \
 
         Уникальный идентификатор категорий. \
 
@@ -124,9 +195,68 @@ Query
 
             Например: 1229749_1086045_9412206_8443517_3254837
 
-        Уникальные идентификаторы содержаться в ответе.
+        Уникальные идентификаторы содержаться в ответе. \
+
+    :parameter String $_be_shelf_id: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Manual shelf id. \
+            Eg: 7778. \
+
+        Относиться к seoBrowseMetaData. \
+
+    :parameter String $facet: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: selected facets. For manual shelf FE sends the shelf id as separate query param and as part of facet as well. Example: https://www.walmart.com/browse/all-apple-ipad/0/0/?_refineresult=true&_be_shelf_id=7780&search_sort=100&facet=shelf_id:7780 . \
+
+        Фильтры поиска. \
+
+        Форма записи::
+
+            тип фильтра:значение||тип фильтра:значение ...
+
+            Например: fulfillment_method:Delivery||brand:Cra-Z-Art
+
+        Значение фильтров находятся в ответе.
+
+    :parameter Int $page: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: This determines the page selected by customer. \
+
+        Порядковый номер страницы пагинации. \
+
+        При положительных значениях возвращает результат поиска для указанной страницы, если она существует.
+        В противном случае результат возвращен не будет и количество результатов будет равно 0. \
+
+        При 40 товаров на пагинации максимальное значение страницы 25. \
+
+    :parameter Int $ps: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: The number of items per page. \
+
+        Количество товаров на пагинации. \
+
+        Фактически не влияет на размер пагинации. Всегда будет приходить не более 40 товаров на страницу. \
+
+        Но при разных значениях ps будут приходить разные товары.
 
     :parameter String $max_price: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Max price entered by customer. \
 
         Максимальная цена продукта. \
 
@@ -145,9 +275,14 @@ Query
         .. admonition:: Attention
             :class: attention
 
-            Этот параметр не гарантирует, что в поисковой выдаче не будет товара с ценой выше чем указано.
+            Этот параметр не гарантирует, что в поисковой выдаче не будет товара с ценой выше чем указано. \
 
     :parameter String $min_price: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Min price entered by customer. \
 
         Минимальная цена продукта. \
 
@@ -166,124 +301,196 @@ Query
         .. admonition:: Attention
             :class: attention
 
-            Этот параметр не гарантирует, что в поисковой выдаче не будет товара с ценой ниже чем указано.
+            Этот параметр не гарантирует, что в поисковой выдаче не будет товара с ценой ниже чем указано. \
 
+    :parameter Sort $sort: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Chosen sort option. \
+
+        *Default: best_match* \
+
+        Тип сортировки результата. \
+
+        Перечисление может принимать значения::
+
+            ["best_seller", "price_low", "price_high", "best_match"]
+
+        .. admonition:: Caution
+            :class: caution
+
+            При сортировке best_match в результатах возвращаются спонсорские продукты. \
+
+    :parameter Boolean $soft_sort: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: null. \
 
     :parameter Boolean $spelling: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Indicates whether to apply spell correction. \
 
         *Default: true* \
 
         Нужно ли исправлять `query`. \
 
-        Значение запроса `query` может быть исправлено на более релевантное при значении true.
+        Значение запроса `query` может быть исправлено на более релевантное.
 
-    :parameter AffinityOverride $affinityOverride: \
+    :parameter String $xpa: \
 
-        Неизвестно  \
+        .. admonition:: Schema reference
+            :class: info
 
-        Необязательный параметр. Влияет на результат.
+            Description: This is for expo to enable A/B test on back end. Desktop/mweb sends as query param. \
+            Eg:werw1. \
 
-        Перечисление может принимать значения::
+    :parameter Boolean $grid: \
 
-            ["default", "default_fc", "store_only", "store_led"]
+        .. admonition:: Schema reference
+            :class: info
 
-    :parameter String $storeSlotBooked: \
+            Description: Grid/List view. \
 
-        Неизвестно  \
+    :parameter String $typehead: \
 
-    :parameter Int $ps: \
+        .. admonition:: Schema reference
+            :class: info
 
-        Количество товаров на пагинации. \
+            Description: null. \
 
-        Фактически не влияет на размер пагинации. Всегда будет приходить не более 40 товаров на страницу. \
+    :parameter String $strategy: \
 
-        Но при разных значениях ps будут приходить разные товары.
+        .. admonition:: Schema reference
+            :class: info
 
-    :parameter String $ptss: \
-
-        Неизвестно \
+            Description: null. \
 
     :parameter String $recall_set: \
 
-        Неизвестно \
+        .. admonition:: Schema reference
+            :class: info
 
-    :parameter JSON $fitmentFieldParams: \
+            Description: Stack recall. Indicates the recall set to use. \
 
-        Default = {} \
+    :parameter Boolean $preciseSearch: \
 
-        Параметры автомобиля при поиске товаров для автомобиля. \
+        .. admonition:: Schema reference
+            :class: info
 
-    :parameter JSON $fitmentSearchParams: \
+            Description: null. \
 
-        Default = {} \
+    :parameter String $pap: \
 
-        Параметры поиска. Дублирует основные параметры поиска. Необязательное. \
+        .. admonition:: Schema reference
+            :class: info
 
-    :parameter Boolean $fetchMarquee!: \
+            Description: This is a piggy back param. Whenever Preso sends them FE has to url-encode and send it back to preso in the next pagination call. \
 
-        Будет ли приходить marquee конфигурации в contentLayout.  \
+    :parameter String $ptss: \
 
-        Предположительно вид рекламы.\
+        .. admonition:: Schema reference
+            :class: info
 
+            Description: null. \
+
+    :parameter String $c_btc_id: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: null. \
+
+    :parameter String $c_bstc: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: null. \
+
+    :parameter String $sod: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: null. \
+
+    :parameter String $channel: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Tempo channel query params. \
+
+        Известное значение: "WWW". \
+
+    :parameter String $pageType: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Tempo pageType query params. \
+
+        Известные значения: "SearchPage". \
+
+    :parameter String $tenant: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Tempo pageType query params. \
+
+        Известные значения: "WM_GLASS". \
+
+    :parameter Boolean $previewMode: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Whether directed spend is enabled for a cat_id. \
+            Eg: browse_shelf. \
+
+    :parameter String $module_search: \
+
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Access tempo-preview environment. \
 
     :parameter String $trsp: \
 
-        Неизвестно \
+        .. admonition:: Schema reference
+            :class: info
 
-    :parameter Boolean $fetchSkyline!: \
+            Description: Way to override polaris switch properties through FE. \
 
-        Будет ли приходить skyline конфигурации в contentLayout. \
+    :parameter String $dealsId: \
 
-        Предположительно вид рекламы.
+        .. admonition:: Schema reference
+            :class: info
 
-    :parameter Boolean $fetchSbaTop!: \
-
-        Будет ли приходить sbatop конфигурации в contentLayout. \
-
-        Предположительно вид рекламы.
-        Находятся в ответе между продуктами и имеют __typename=SponsoredBrands. `Пример <https://monosnap.com/file/1GbI0G0TS9mGdNvyjsvoUh6CPlu4CK>`_. \
-
+            Description: id for dealsPages like gift-finder, savings etc. \
 
     :parameter JSON $additionalQueryParams: \
 
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: In the case of view all, pagination or facet, client will pass all params as the key-value pairs in this query param. \
+
         Default = {} \
 
-        Описание \
 
 Пример запроса:
     .. code-block::
 
-        query Search( $query:String $page:Int $prg:Prg! $facet:String $sort:Sort = best_match $catId:String $max_price:String $min_price:String $spelling:Boolean = true $affinityOverride:AffinityOverride $storeSlotBooked:String $ps:Int $ptss:String $recall_set:String $fitmentFieldParams:JSON ={}$fitmentSearchParams:JSON ={}$fetchMarquee:Boolean! $trsp:String $fetchSkyline:Boolean! $fetchSbaTop:Boolean! $additionalQueryParams:JSON ={}){search( query:$query page:$page prg:$prg facet:$facet sort:$sort cat_id:$catId max_price:$max_price min_price:$min_price spelling:$spelling affinityOverride:$affinityOverride storeSlotBooked:$storeSlotBooked ps:$ps ptss:$ptss recall_set:$recall_set trsp:$trsp additionalQueryParams:$additionalQueryParams ){query searchResult{...SearchResultFragment}}contentLayout( channel:"WWW" pageType:"SearchPage" tenant:"WM_GLASS" searchArgs:{query:$query cat_id:$catId prg:$prg}){modules{...ModuleFragment configs{...SearchNonItemFragment __typename...on TempoWM_GLASSWWWSponsoredProductCarouselConfigs{_rawConfigs}...on _TempoWM_GLASSWWWSearchSortFilterModuleConfigs{facetsV1{...FacetFragment}}...on _TempoWM_GLASSWWWSearchGuidedNavModuleConfigs{guidedNavigation{...GuidedNavFragment}}...on TempoWM_GLASSWWWPillsModuleConfigs{moduleSource pillsV2{...PillsModuleFragment}}...on TempoWM_GLASSWWWSearchFitmentModuleConfigs{fitments( fitmentSearchParams:$fitmentSearchParams fitmentFieldParams:$fitmentFieldParams ){...FitmentFragment sisFitmentResponse{...SearchResultFragment}}}...BrandAmplifierAdConfigs @include(if:$fetchSbaTop)...BannerModuleFragment...MarqueeDisplayAdConfigsFragment @include(if:$fetchMarquee)...SkylineDisplayAdConfigsFragment @include(if:$fetchSkyline)...HorizontalChipModuleConfigsFragment}}...LayoutFragment pageMetadata{location{postalCode stateOrProvinceCode city storeId}pageContext}}}fragment SearchResultFragment on SearchInterface{title aggregatedCount...BreadCrumbFragment...DebugFragment...ItemStacksFragment...PageMetaDataFragment...PaginationFragment...SpellingFragment...RequestContextFragment...ErrorResponse modules{facetsV1{...FacetFragment}guidedNavigation{...GuidedNavFragment}guidedNavigationV2{...PillsModuleFragment}pills{...PillsModuleFragment}spellCheck{title subTitle urlLinkText url}}}fragment ModuleFragment on TempoModule{name version type moduleId schedule{priority}matchedTrigger{zone}}fragment LayoutFragment on ContentLayout{layouts{id layout}}fragment BreadCrumbFragment on SearchInterface{breadCrumb{id name url}}fragment DebugFragment on SearchInterface{debug{sisUrl}}fragment ItemStacksFragment on SearchInterface{itemStacks{displayMessage meta{adsBeacon{adUuid moduleInfo max_ads}query stackId stackType title layoutEnum totalItemCount totalItemCountDisplay viewAllParams{query cat_id sort facet affinityOverride recall_set min_price max_price}}itemsV2{...ItemFragment...InGridMarqueeAdFragment}}}fragment ItemFragment on Product{__typename id usItemId fitmentLabel name type shortDescription imageInfo{...ProductImageInfoFragment}canonicalUrl externalInfo{url}category{path{name url}}badges{flags{key text}tags{...on BaseBadge{key text type}}}classType averageRating numberOfReviews esrb mediaRating salesUnitType sellerId sellerName hasSellerBadge availabilityStatusV2{display value}productLocation{displayValue aisle{zone aisle}}badge{type dynamicDisplayName}fulfillmentSpeed offerId preOrder{...PreorderFragment}priceInfo{...ProductPriceInfoFragment}variantCriteria{...VariantCriteriaFragment}fulfillmentBadge fulfillmentTitle fulfillmentType brand manufacturerName showAtc sponsoredProduct{spQs clickBeacon spTags}showOptions}fragment ProductImageInfoFragment on ProductImageInfo{thumbnailUrl}fragment ProductPriceInfoFragment on ProductPriceInfo{priceRange{minPrice maxPrice}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}listPrice{...ProductPriceFragment}shipPrice{...ProductPriceFragment}subscriptionPrice{priceString subscriptionString}priceDisplayCodes{priceDisplayCondition finalCostByWeight}}fragment PreorderFragment on PreOrder{isPreOrder preOrderMessage preOrderStreetDateMessage}fragment ProductPriceFragment on ProductPrice{price priceString}fragment VariantCriteriaFragment on VariantCriterion{name type id isVariantTypeSwatch variantList{id images name rank swatchImageUrl availabilityStatus products selectedProduct{canonicalUrl usItemId}}}fragment InGridMarqueeAdFragment on MarqueePlaceholder{__typename type moduleLocation lazy}fragment PageMetaDataFragment on SearchInterface{pageMetadata{title canonical description location{addressId}}}fragment PaginationFragment on SearchInterface{paginationV2{maxPage pageProperties}}fragment SpellingFragment on SearchInterface{spelling{correctedTerm}}fragment RequestContextFragment on SearchInterface{requestContext{isFitmentFilterQueryApplied searchMatchType categories{id name}}}fragment ErrorResponse on SearchInterface{errorResponse{correlationId source errors{errorType statusCode statusMsg source}}}fragment GuidedNavFragment on GuidedNavigationSearchInterface{title url}fragment PillsModuleFragment on PillsSearchInterface{title url image:imageV1{src alt}baseSeoURL}fragment BannerModuleFragment on TempoWM_GLASSWWWSearchBannerConfigs{moduleType viewConfig{title image imageAlt displayName description url urlAlt appStoreLink appStoreLinkAlt playStoreLink playStoreLinkAlt}}fragment FacetFragment on Facet{name type layout min max selectedMin selectedMax unboundedMax stepSize values{id name description type itemCount isSelected baseSeoURL}}fragment FitmentFragment on Fitments{partTypeIDs result{status formId position quantityTitle extendedAttributes{...FitmentFieldFragment}labels{...LabelFragment}resultSubTitle}labels{...LabelFragment}savedVehicle{vehicleYear{...VehicleFieldFragment}vehicleMake{...VehicleFieldFragment}vehicleModel{...VehicleFieldFragment}additionalAttributes{...VehicleFieldFragment}}fitmentFields{...VehicleFieldFragment}fitmentForms{id fields{...FitmentFieldFragment}title labels{...LabelFragment}}}fragment LabelFragment on FitmentLabels{ctas{...FitmentLabelEntityFragment}messages{...FitmentLabelEntityFragment}links{...FitmentLabelEntityFragment}images{...FitmentLabelEntityFragment}}fragment FitmentLabelEntityFragment on FitmentLabelEntity{id label}fragment VehicleFieldFragment on FitmentVehicleField{id label value}fragment FitmentFieldFragment on FitmentField{id displayName value extended data{value label}dependsOn}fragment MarqueeDisplayAdConfigsFragment on TempoWM_GLASSWWWMarqueeDisplayAdConfigs{_rawConfigs ad{...DisplayAdFragment}}fragment DisplayAdFragment on Ad{...AdFragment adContent{type data{__typename...AdDataDisplayAdFragment}}}fragment AdFragment on Ad{status moduleType platform pageId pageType storeId stateCode zipCode pageContext moduleConfigs adsContext adRequestComposite}fragment AdDataDisplayAdFragment on AdData{...on DisplayAd{json status}}fragment SkylineDisplayAdConfigsFragment on TempoWM_GLASSWWWSkylineDisplayAdConfigs{_rawConfigs ad{...SkylineDisplayAdFragment}}fragment SkylineDisplayAdFragment on Ad{...SkylineAdFragment adContent{type data{__typename...SkylineAdDataDisplayAdFragment}}}fragment SkylineAdFragment on Ad{status moduleType platform pageId pageType storeId stateCode zipCode pageContext moduleConfigs adsContext adRequestComposite}fragment SkylineAdDataDisplayAdFragment on AdData{...on DisplayAd{json status}}fragment BrandAmplifierAdConfigs on TempoWM_GLASSWWWBrandAmplifierAdConfigs{_rawConfigs moduleLocation ad{...SponsoredBrandsAdFragment}}fragment SponsoredBrandsAdFragment on Ad{...AdFragment adContent{type data{__typename...AdDataSponsoredBrandsFragment}}}fragment AdDataSponsoredBrandsFragment on AdData{...on SponsoredBrands{adUuid adExpInfo moduleInfo brands{logo{featuredHeadline featuredImage featuredImageName featuredUrl logoClickTrackUrl}products{...ProductFragment}}}}fragment ProductFragment on Product{usItemId offerId badges{flags{key text}labels{key text}tags{key text}}priceInfo{priceDisplayCodes{rollback reducedPrice eligibleForAssociateDiscount clearance strikethrough submapType priceDisplayCondition unitOfMeasure pricePerUnitUom}currentPrice{price priceString}wasPrice{price priceString}priceRange{minPrice maxPrice priceString}unitPrice{price priceString}}showOptions sponsoredProduct{spQs clickBeacon spTags}canonicalUrl numberOfReviews averageRating availabilityStatus imageInfo{thumbnailUrl allImages{id url}}name fulfillmentBadge classType type p13nData{predictedQuantity flags{PREVIOUSLY_PURCHASED{text}CUSTOMERS_PICK{text}}labels{PREVIOUSLY_PURCHASED{text}CUSTOMERS_PICK{text}}}}fragment SearchNonItemFragment on TempoWM_GLASSWWWSearchNonItemConfigs{title subTitle urlLinkText url}fragment HorizontalChipModuleConfigsFragment on TempoWM_GLASSWWWHorizontalChipModuleConfigs{chipModuleSource:moduleSource chipModule{title url{linkText title clickThrough{type value}}}chipModuleWithImages{title url{linkText title clickThrough{type value}}image{alt clickThrough{type value}height src title width}}}
-
-Variables
-""""""""""""
-Variables
-    - **id** (str) - неизвестно.
-    - **dealsId** (str) - неизвестно.
-    - **query** (str) - поисковый запрос. Соответствует :class:`$query`.
-    - **page** (int) - номер страницы. Соответствует :class:`$page`.
-    - **spelling** (bool) - исправлять ли поисковый запрос. Соответствует :class:`$spelling`.
-    - **prg** (str) - тип устройства. Соответствует :class:`$prg`.
-    - **catId** (str) - номер категории. Соответствует :class:`$catId`.
-    - **facet** (str) - фильтр поиска. Соответствует :class:`$facet`.
-    - **sort** (str) - фильтр сортировки. Соответствует :class:`$sort`.
-    - **rawFacet** (str) - неизвестно.
-    - **seoPath** (str)- неизвестно.
-    - **ps** (int) - количество товаров на странице. Соответствует :class:`$ps`.
-    - **ptss** (str) - неизвестно.
-    - **trsp** (str) - неизвестно.
-    - **beShelfId** (str) - неизвестно.
-    - **recall_set** (str) - неизвестно.
-    - **module_search** (str) - неизвестно.
-    - **min_price** (str) - минимум ценового диапазона. Соответствует :class:`max_price`.
-    - **max_price** (str) - максимум ценового диапазона. Соответствует :class:`max_price`.
-    - **storeSlotBooked** (str) - неизвестно.
-    - **additionalQueryParams** (object) - неизвестно. Соответствует :class:`$additionalQueryParams`.
-    - **fitmentFieldParams** (object) - параметры автомобиля. Соответствует :class:`$fitmentFieldParams`.
-    - **fitmentSearchParams** (object) - параметры поиска. Соответствует :class:`$fitmentSearchParams`.
-    - **fetchMarquee** (bool) - будет ли приходить marquee сущности. Соответствует :class:`$fetchMarquee`.
-    - **fetchSkyline** (bool) - будет ли skyline сущности.. Соответствует :class:`$fetchSkyline`.
-    - **fetchSbaTop** (bool) - будет ли sbatop сущности. Соответствует :class:`$fetchSbaTop`.
+        query Search( $query:String $page:Int $prg:Prg! $facet:String $sort:Sort = best_match $catId:String $max_price:String $min_price:String $spelling:Boolean = true $affinityOverride:AffinityOverride $storeSlotBooked:String $ps:Int $ptss:String $recall_set:String $trsp:String  $additionalQueryParams:JSON ={}){search( query:$query page:$page prg:$prg facet:$facet sort:$sort cat_id:$catId max_price:$max_price min_price:$min_price spelling:$spelling affinityOverride:$affinityOverride storeSlotBooked:$storeSlotBooked ps:$ps ptss:$ptss recall_set:$recall_set trsp:$trsp additionalQueryParams:$additionalQueryParams ){query searchResult{...SearchResultFragment}}}fragment SearchResultFragment on SearchInterface{title aggregatedCount...BreadCrumbFragment...DebugFragment...ItemStacksFragment...PageMetaDataFragment...PaginationFragment...SpellingFragment...RequestContextFragment...ErrorResponse modules{facetsV1{...FacetFragment}guidedNavigation{...GuidedNavFragment}guidedNavigationV2{...PillsModuleFragment}pills{...PillsModuleFragment}spellCheck{title subTitle urlLinkText url}}}fragment BreadCrumbFragment on SearchInterface{breadCrumb{id name url}}fragment DebugFragment on SearchInterface{debug{sisUrl}}fragment ItemStacksFragment on SearchInterface{itemStacks{displayMessage meta{adsBeacon{adUuid moduleInfo max_ads}query stackId stackType title layoutEnum totalItemCount totalItemCountDisplay viewAllParams{query cat_id sort facet affinityOverride recall_set min_price max_price}}itemsV2{...ItemFragment...InGridMarqueeAdFragment}}}fragment ItemFragment on Product{__typename id usItemId fitmentLabel name type shortDescription imageInfo{...ProductImageInfoFragment}canonicalUrl externalInfo{url}category{path{name url}}badges{flags{key text}tags{...on BaseBadge{key text type}}}classType averageRating numberOfReviews esrb mediaRating salesUnitType sellerId sellerName hasSellerBadge availabilityStatusV2{display value}productLocation{displayValue aisle{zone aisle}}badge{type dynamicDisplayName}fulfillmentSpeed offerId preOrder{...PreorderFragment}priceInfo{...ProductPriceInfoFragment}variantCriteria{...VariantCriteriaFragment}fulfillmentBadge fulfillmentTitle fulfillmentType brand manufacturerName showAtc sponsoredProduct{spQs clickBeacon spTags}showOptions}fragment ProductImageInfoFragment on ProductImageInfo{thumbnailUrl}fragment ProductPriceInfoFragment on ProductPriceInfo{priceRange{minPrice maxPrice}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}listPrice{...ProductPriceFragment}shipPrice{...ProductPriceFragment}subscriptionPrice{priceString subscriptionString}priceDisplayCodes{priceDisplayCondition finalCostByWeight}}fragment PreorderFragment on PreOrder{isPreOrder preOrderMessage preOrderStreetDateMessage}fragment ProductPriceFragment on ProductPrice{price priceString}fragment VariantCriteriaFragment on VariantCriterion{name type id isVariantTypeSwatch variantList{id images name rank swatchImageUrl availabilityStatus products selectedProduct{canonicalUrl usItemId}}}fragment InGridMarqueeAdFragment on MarqueePlaceholder{__typename type moduleLocation lazy}fragment PageMetaDataFragment on SearchInterface{pageMetadata{title canonical description location{addressId}}}fragment PaginationFragment on SearchInterface{paginationV2{maxPage pageProperties}}fragment SpellingFragment on SearchInterface{spelling{correctedTerm}}fragment RequestContextFragment on SearchInterface{requestContext{isFitmentFilterQueryApplied searchMatchType categories{id name}}}fragment ErrorResponse on SearchInterface{errorResponse{correlationId source errors{errorType statusCode statusMsg source}}}fragment GuidedNavFragment on GuidedNavigationSearchInterface{title url}fragment PillsModuleFragment on PillsSearchInterface{title url image:imageV1{src alt}baseSeoURL}fragment FacetFragment on Facet{name type layout min max selectedMin selectedMax unboundedMax stepSize values{id name description type itemCount isSelected baseSeoURL}}
 
 Пример переменных:
     .. code-block::
@@ -292,6 +499,8 @@ Variables
 
 Response
 ~~~~~~~~~~~
+
+
 Стандартный ответ на верхнем уровне состоит из нескольких частей:
 ::
 
