@@ -1,0 +1,122 @@
+{
+    "errors": [
+        {
+            "message": "idmlClient_ERROR",
+            "path": [
+                "idml"
+            ],
+            "extensions": {
+                "code": "expected_error",
+                "serviceName": "item-service",
+                "query": "query($catalogSellerId:String$itemId:String!$postalAddress:PostalAddress$storeFrontIds:[StoreFrontId]$selected:Boolean$semStoreId:Int$p13N:P13NRequest$variantFieldId:String$fulfillmentIntent:String){product(catalogSellerId:$catalogSellerId itemId:$itemId postalAddress:$postalAddress storeFrontIds:$storeFrontIds selected:$selected semStoreId:$semStoreId p13N:$p13N variantFieldId:$variantFieldId fulfillmentIntent:$fulfillmentIntent){showFulfillmentLink additionalOfferCount shippingRestriction availabilityStatus averageRating brand badges{flags{__typename ...on BaseBadge{id text key query}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought criteria{name value}}}labels{__typename ...on BaseBadge{id text key}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought}}tags{__typename ...on BaseBadge{id text key}}}rhPath partTerminologyId aaiaBrandId manufacturerProductId productTypeId tireSize tireLoadIndex tireSpeedRating viscosity model buyNowEligible preOrder{streetDate streetDateDisplayable streetDateType isPreOrder preOrderMessage preOrderStreetDateMessage}canonicalUrl catalogSellerId sellerReviewCount sellerAverageRating category{categoryPathId path{name url}}classType classId fulfillmentTitle shortDescription fulfillmentType fulfillmentBadge fulfillmentLabel{wPlusFulfillmentText message shippingText fulfillmentText locationText fulfillmentMethod addressEligibility fulfillmentType postalCode}hasSellerBadge itemType id imageInfo{allImages{id url zoomable}thumbnailUrl}location{postalCode stateOrProvinceCode city storeIds}manufacturerName name numberOfReviews orderMinLimit orderLimit offerId priceInfo{priceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}currentPrice{price priceString variantPriceString priceType currencyUnit}wasPrice{price priceString variantPriceString priceType currencyUnit}unitPrice{price priceString variantPriceString priceType currencyUnit}subscriptionPrice{price priceString intervalFrequency duration percentageRate subscriptionString}priceRange{minPrice maxPrice priceString currencyUnit unitOfMeasure denominations{price priceString selected}}}returnPolicy{returnable freeReturns returnWindow{value unitType}}fsaEligibleInd sellerId sellerName sellerDisplayName secondaryOfferPrice{currentPrice{priceType priceString price}}semStoreData{pickupStoreId deliveryStoreId isSemLocationDifferent}shippingOption{accessTypes availabilityStatus slaTier deliveryDate maxDeliveryDate shipMethod shipPrice{price priceString variantPriceString priceType currencyUnit}}type pickupOption{slaTier accessTypes availabilityStatus storeName storeId}salesUnit usItemId variantCriteria{id categoryTypeAllValues name type variantList{availabilityStatus id images name products swatchImageUrl selected}}variants{availabilityStatus imageInfo{allImages{id url zoomable}thumbnailUrl}priceInfo{priceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}currentPrice{price priceString variantPriceString priceType currencyUnit}wasPrice{price priceString variantPriceString priceType currencyUnit}unitPrice{price priceString variantPriceString priceType currencyUnit}}productUrl usItemId id:productId fulfillmentBadge}groupMetaData{groupType groupSubType numberOfComponents groupComponents{quantity offerId componentType}}upc wfsEnabled sellerType ironbankCategory snapEligible promoData{id description terms type templateData{priceString imageUrl}}showAddOnServices addOnServices{serviceType serviceTitle serviceSubTitle groups{groupType groupTitle assetUrl shortDescription services{displayName offerId selectedDisplayName currentPrice{price priceString}}}}productLocation{displayValue}}idml(itemId:$itemId html:true){chokingHazards{ageRestriction headline image mature message}directions{name value}indications{name value}ingredients{activeIngredientName{name value}activeIngredients{name value}inactiveIngredients{name value}ingredients{name value}}longDescription shortDescription interactiveProductVideo specifications{name value}warnings{name value}warranty{information length}esrbRating mpaaRating nutritionFacts{calorieInfo{name mainNutrient{name amount dvp childNutrients{name amount dvp}}childNutrients{name amount dvp childNutrients{name amount dvp childNutrients{name amount dvp}}}}keyNutrients{name values{name mainNutrient{name amount dvp childNutrients{name amount dvp}}childNutrients{name amount dvp childNutrients{name amount dvp childNutrients{name amount dvp}}}}}vitaminMinerals{name mainNutrient{name amount dvp childNutrients{name amount dvp}}childNutrients{name amount dvp childNutrients{name amount dvp childNutrients{name amount dvp}}}}servingInfo{name values{name value attribute values{name value attribute}}}additionalDisclaimer{name value attribute values{name value attribute values{name value attribute}}}staticContent{name value attribute values{name value attribute values{name value attribute}}}}}}",
+                "variables": {
+                    "catalogSellerId": null,
+                    "itemId": "4281128511",
+                    "p13N": {
+                        "reqId": "",
+                        "pageId": "",
+                        "modules": [],
+                        "userClientInfo": {
+                            "deviceType": ""
+                        },
+                        "userReqInfo": {}
+                    }
+                },
+                "type": "upstream_error",
+                "err": "Request failed with status code 404",
+                "exception": {
+                    "type": "upstream_error",
+                    "err": "Request failed with status code 404",
+                    "message": "idmlClient_ERROR",
+                    "locations": [
+                        {
+                            "line": 1,
+                            "column": 3957
+                        }
+                    ],
+                    "path": [
+                        "idml"
+                    ]
+                }
+            }
+        },
+        {
+            "message": "404",
+            "path": [
+                "product"
+            ],
+            "extensions": {
+                "code": "404",
+                "serviceName": "item-service",
+                "query": "query($catalogSellerId:String$itemId:String!$postalAddress:PostalAddress$storeFrontIds:[StoreFrontId]$selected:Boolean$semStoreId:Int$p13N:P13NRequest$variantFieldId:String$fulfillmentIntent:String){product(catalogSellerId:$catalogSellerId itemId:$itemId postalAddress:$postalAddress storeFrontIds:$storeFrontIds selected:$selected semStoreId:$semStoreId p13N:$p13N variantFieldId:$variantFieldId fulfillmentIntent:$fulfillmentIntent){showFulfillmentLink additionalOfferCount shippingRestriction availabilityStatus averageRating brand badges{flags{__typename ...on BaseBadge{id text key query}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought criteria{name value}}}labels{__typename ...on BaseBadge{id text key}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought}}tags{__typename ...on BaseBadge{id text key}}}rhPath partTerminologyId aaiaBrandId manufacturerProductId productTypeId tireSize tireLoadIndex tireSpeedRating viscosity model buyNowEligible preOrder{streetDate streetDateDisplayable streetDateType isPreOrder preOrderMessage preOrderStreetDateMessage}canonicalUrl catalogSellerId sellerReviewCount sellerAverageRating category{categoryPathId path{name url}}classType classId fulfillmentTitle shortDescription fulfillmentType fulfillmentBadge fulfillmentLabel{wPlusFulfillmentText message shippingText fulfillmentText locationText fulfillmentMethod addressEligibility fulfillmentType postalCode}hasSellerBadge itemType id imageInfo{allImages{id url zoomable}thumbnailUrl}location{postalCode stateOrProvinceCode city storeIds}manufacturerName name numberOfReviews orderMinLimit orderLimit offerId priceInfo{priceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}currentPrice{price priceString variantPriceString priceType currencyUnit}wasPrice{price priceString variantPriceString priceType currencyUnit}unitPrice{price priceString variantPriceString priceType currencyUnit}subscriptionPrice{price priceString intervalFrequency duration percentageRate subscriptionString}priceRange{minPrice maxPrice priceString currencyUnit unitOfMeasure denominations{price priceString selected}}}returnPolicy{returnable freeReturns returnWindow{value unitType}}fsaEligibleInd sellerId sellerName sellerDisplayName secondaryOfferPrice{currentPrice{priceType priceString price}}semStoreData{pickupStoreId deliveryStoreId isSemLocationDifferent}shippingOption{accessTypes availabilityStatus slaTier deliveryDate maxDeliveryDate shipMethod shipPrice{price priceString variantPriceString priceType currencyUnit}}type pickupOption{slaTier accessTypes availabilityStatus storeName storeId}salesUnit usItemId variantCriteria{id categoryTypeAllValues name type variantList{availabilityStatus id images name products swatchImageUrl selected}}variants{availabilityStatus imageInfo{allImages{id url zoomable}thumbnailUrl}priceInfo{priceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}currentPrice{price priceString variantPriceString priceType currencyUnit}wasPrice{price priceString variantPriceString priceType currencyUnit}unitPrice{price priceString variantPriceString priceType currencyUnit}}productUrl usItemId id:productId fulfillmentBadge}groupMetaData{groupType groupSubType numberOfComponents groupComponents{quantity offerId componentType}}upc wfsEnabled sellerType ironbankCategory snapEligible promoData{id description terms type templateData{priceString imageUrl}}showAddOnServices addOnServices{serviceType serviceTitle serviceSubTitle groups{groupType groupTitle assetUrl shortDescription services{displayName offerId selectedDisplayName currentPrice{price priceString}}}}productLocation{displayValue}}idml(itemId:$itemId html:true){chokingHazards{ageRestriction headline image mature message}directions{name value}indications{name value}ingredients{activeIngredientName{name value}activeIngredients{name value}inactiveIngredients{name value}ingredients{name value}}longDescription shortDescription interactiveProductVideo specifications{name value}warnings{name value}warranty{information length}esrbRating mpaaRating nutritionFacts{calorieInfo{name mainNutrient{name amount dvp childNutrients{name amount dvp}}childNutrients{name amount dvp childNutrients{name amount dvp childNutrients{name amount dvp}}}}keyNutrients{name values{name mainNutrient{name amount dvp childNutrients{name amount dvp}}childNutrients{name amount dvp childNutrients{name amount dvp childNutrients{name amount dvp}}}}}vitaminMinerals{name mainNutrient{name amount dvp childNutrients{name amount dvp}}childNutrients{name amount dvp childNutrients{name amount dvp childNutrients{name amount dvp}}}}servingInfo{name values{name value attribute values{name value attribute}}}additionalDisclaimer{name value attribute values{name value attribute values{name value attribute}}}staticContent{name value attribute values{name value attribute values{name value attribute}}}}}}",
+                "variables": {
+                    "catalogSellerId": null,
+                    "itemId": "4281128511",
+                    "p13N": {
+                        "reqId": "",
+                        "pageId": "",
+                        "modules": [],
+                        "userClientInfo": {
+                            "deviceType": ""
+                        },
+                        "userReqInfo": {}
+                    }
+                },
+                "type": {
+                    "code": "404.IRS.ITEMSTOREPRODUCT.103",
+                    "field": "Application",
+                    "description": "Product Not Found for the requested identifiers.",
+                    "info": "Requested Identifiers: 4281128511",
+                    "severity": "ERROR",
+                    "category": "APPLICATION",
+                    "causes": [
+                        {
+                            "code": "404.ITEM_STORE.",
+                            "field": "ITEM_NOT_FOUND",
+                            "type": "ITEM_NOT_FOUND",
+                            "description": "ITEM_NOT_FOUND"
+                        }
+                    ],
+                    "errorIdentifiers": {
+                        "entry": []
+                    }
+                },
+                "exception": {
+                    "type": {
+                        "code": "404.IRS.ITEMSTOREPRODUCT.103",
+                        "field": "Application",
+                        "description": "Product Not Found for the requested identifiers.",
+                        "info": "Requested Identifiers: 4281128511",
+                        "severity": "ERROR",
+                        "category": "APPLICATION",
+                        "causes": [
+                            {
+                                "code": "404.ITEM_STORE.",
+                                "field": "ITEM_NOT_FOUND",
+                                "type": "ITEM_NOT_FOUND",
+                                "description": "ITEM_NOT_FOUND"
+                            }
+                        ],
+                        "errorIdentifiers": {
+                            "entry": []
+                        }
+                    },
+                    "message": "404",
+                    "locations": [
+                        {
+                            "line": 1,
+                            "column": 200
+                        }
+                    ],
+                    "path": [
+                        "product"
+                    ]
+                }
+            }
+        }
+    ],
+    "data": {
+        "product": null,
+        "idml": null
+    }
+}
