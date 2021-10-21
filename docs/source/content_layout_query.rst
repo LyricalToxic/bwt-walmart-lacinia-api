@@ -1,4 +1,4 @@
-GetAllSellerOffers
+ContentLayout
 -----------
 Overview
 ~~~~~~~~~~~
@@ -31,7 +31,7 @@ Overview
     Accept: application/json
     Content-Type: application/json
     WM_MP: True
-    X-APOLLO-OPERATION-NAME: GetAllSellerOffers
+    X-APOLLO-OPERATION-NAME: FunctionName
 
 .. Описание ответа.
 
@@ -48,33 +48,39 @@ Body
 
 Query
 """""""""""
-.. function:: query GetAllSellerOffers(...)
+.. function:: contentLayout(...):
 
-    :parameter String $itemId!: \
+    :parameter JSON $fitmentFieldParams: \
 
-        Уникальный идентификатор товара на walmart. \
+        Default = {} \
 
-        Число. \
+        Параметры автомобиля при поиске товаров для автомобиля. \
 
-    :parameter PostalAddress $postalAddress: \
+    :parameter JSON $fitmentSearchParams: \
 
-        Местоположение пользователя. Не влияет на фактическую локацию. Фактическая локация хранится в куках. \
+        Default = {} \
 
-        Состоит из полей::
+        Параметры поиска. Дублирует основные параметры поиска. Необязательное. \
 
-                {
-                    "postalCode": "",
-                    "zipLocated": bool,
-                    "stateOrProvinceCode": "",
-                    "stateOrProvinceName": "",
-                    "countryCode": "",
-                    "addressType": "",
-                    "isPoBox": bool,
-                }
+    :parameter Boolean $fetchMarquee!: \
 
-    :parameter  $storeFrontIds[]: \
+        Будет ли приходить marquee конфигурации в contentLayout.  \
 
-        Уникальные идентификаторы магазина. \
+        Предположительно вид рекламы.\
+
+
+    :parameter Boolean $fetchSkyline!: \
+
+        Будет ли приходить skyline конфигурации в contentLayout. \
+
+        Предположительно вид рекламы.
+
+    :parameter Boolean $fetchSbaTop!: \
+
+        Будет ли приходить sbatop конфигурации в contentLayout. \
+
+        Предположительно вид рекламы.
+        Находятся в ответе между продуктами и имеют __typename=SponsoredBrands. `Пример <https://monosnap.com/file/1GbI0G0TS9mGdNvyjsvoUh6CPlu4CK>`_. \
 
 Пример запроса:
     .. code-block::
@@ -110,11 +116,3 @@ Response
 
     Полный пример ответа для товара с id "14532503": :download:`link <data/offers_response.json5>`
 
-UI-Response table comparison
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-+------------+---------------------+--------------------------------------------------+--------------------------------------------------+
-| Title      | Description         | JSON-Path                                        | Screenshot                                       |
-+============+========+============+==================================================+==================================================+
-| Price      | It is fucking price | data.product.price                               | `This is url <https://ident.me>`_                |
-+------------+---------------------+--------------------------------------------------+--------------------------------------------------+
