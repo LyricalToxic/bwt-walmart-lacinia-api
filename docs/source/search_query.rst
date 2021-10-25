@@ -19,7 +19,7 @@ Overview
 .. admonition:: Schema reference
     :class: info
 
-    Description: Search Query - fetches search results from SIS, layout & modules from Content Layout Service. \
+    Description: Search Query - fetches search results from SIS(search interface service), layout & modules from Content Layout Service. \
 
 .. HTTP метод и endpoint.
 
@@ -495,7 +495,7 @@ Query
 Пример переменных:
     .. code-block::
 
-        {"id":"","dealsId":"","query":"C2G","page":1,"prg":"desktop","catId":"","facet":"","sort":"best_match","rawFacet":"","seoPath":"","ps":40,"ptss":"","trsp":"","beShelfId":"","recall_set":"","module_search":"","min_price":"","max_price":"","storeSlotBooked":"","fitmentFieldParams":null,"fitmentSearchParams":{"id":"","dealsId":"","query":"C2G","page":1,"prg":"desktop","catId":"","facet":"","sort":"best_match","rawFacet":"","seoPath":"","ps":40,"ptss":"","trsp":"","beShelfId":"","recall_set":"","module_search":"","min_price":"","max_price":"","storeSlotBooked":"","cat_id":"","_be_shelf_id":""},"fetchMarquee":true,"fetchSkyline":true,"fetchSbaTop":true}
+        {"query": "coffee starbucks", "page": 3, "prg": "desktop", "catId": "", "facet": "", "sort": "price_low", "ps": 40, "ptss": "", "trsp": "", "beShelfId": "", "recall_set": "", "module_search": "", "min_price": "", "max_price": "","storeSlotBooked": ""}
 
 Response
 ~~~~~~~~~~~
@@ -506,72 +506,111 @@ Response
 
     {
         "data": {
-            "search": {...},
-            "contentLayout": {...}
+            "search": {
+                "query": "{$query}",
+                "searchResult": {SearchInterface},
+                "contentLayout": {ContentLayout}
+            },
         }
     }
 
-- data.search - Содержит результат поиска и некоторые метаданные.
+- data.search.query:String - Содержит финальный вариант ключевого слова.
+- data.search.searchResult:SearchInterface - Содержит результат поиска типа SearchInterface. Структура SearchInterface:
 
 ::
 
-        "search": {
+        "searchResult":{
             "query": "",
-            "searchResult": {}
-        }
-
-\
-    - query - Поисковый запрос
-    - searchResult - Результат поиска::
-
-        {
+            "searchInterfaceKey": {SearchInterfaceKey},
+            "_prefetch_": {JSON},
+            "itemStacks": [Stack],
             "title": "",
             "aggregatedCount": 0,
-            "breadCrumb": null,
-            "debug": {},
-            "itemStacks": [],
-            "pageMetadata": {},
-            "paginationV2": {},
-            "spelling": {},
-            "requestContext": {},
-            "errorResponse": {},
-            "modules": null,
+            "modules": {SearchInterfaceModule},
+            "errorResponse": {ErrorResponse},
+            "requestContext": {RequestContext},
+            "pageMetadata": {PageMetadata},
+            "spelling": {Spelling},
+            "paginationV2": {PaginationV2},
+            "gridViewToggle": {GridViewToggle},
+            "debug": {Debug},
+            "debug": [breadCrumb],
         }
 
 \
-        Из важного:
-            - aggregatedCount - количество результатов
-            - itemStacks - список состоящий из типов. Известные типы продуктов: результат поиска, `похожие продукты <https://monosnap.com/file/4gSV6zy1HznqJXs3JsVlJNRVYNzNKR>`_ .\
-                - meta - мета информация результата
-                - itemsV2 - список результатов. Стандартный ответ содержит сущности Product и MarqueePlaceholder. \
-            - pageMetadata - описательная  информация о странице. Содержит локацию
-            - paginationV2 - параметры запроса.
+    - query:String \
+    - searchInterfaceKey:SearchInterfaceKey \
+    - _prefetch_:JSON \
+    - itemStacks:[Stack] \
+        .. admonition:: Schema reference
+            :class: info
 
-- data.contentLayout - Содержит modules, layouts и pageMetadata.
+            Description: Stacks of Items/Products. \
+    - title:String
+        .. admonition:: Schema reference
+            :class: info
 
-::
+            Description: Computed title containing query & result count information. \
+    - aggregatedCount:Int - количество результатов. \
+    - modules:SearchInterfaceModule \
+    - errorResponse: ErrorResponse
+        .. admonition:: Schema reference
+            :class: info
 
-    "contentLayout": {
-        "modules": [...],
-        "layouts": [...],
-        "pageMetadata": {...},
-    }
+            Description: Error Information provided by SIS (search interface service). \
+    - requestContext:RequestContext
+        .. admonition:: Schema reference
+            :class: info
 
-\
-    - modules - Содержит информацию о различных конфигурациях таких как: facet, sort, marquee etc.
-    - layouts - Содержит информацию о расположении макетов на странице. Зависит от типа устройства.
-    - pageMetadata - Содержит информацию о локации и контексте.
+            Description: Request Context provided by SIS (search interface service). \
+    - pageMetadata:PageMetaData
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Page Metadata. \
+    - spelling:Spelling
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Corrected Spelling and suggestions. \
+    - paginationV2:PaginationV2
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Pagination information. \
+    - gridViewToggle:GridViewToggle
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Grid View/List View links. \
+    - debug:Debug
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Debug information provided by SIS (search interface service). \
+    - breadCrumb:[BreadCrumb]
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Breadcrumb Navigation Links. \
 
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для ключевого слова "Toyo": :download:`link <data/search_response.json5>`
+    Полный пример ответа для ключевого слова "coffee starbucks": :download:`link <data/search_response.json5>`
 
 UI-Response table comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-+------------+---------------------+--------------------------------------------------+--------------------------------------------------+
-| Title      | Description         | JSON-Path                                        | Screenshot                                       |
-+============+========+============+==================================================+==================================================+
-| Price      | It is fucking price | data.product.price                               | `This is url <https://ident.me>`_                |
-+------------+---------------------+--------------------------------------------------+--------------------------------------------------+
+.. |Product id| replace:: `URL <_images/product_id.png>`_
+
++------------+---------------------------+----------------------------------------------------+-------------------------+
+| Title      | Description               | JSON-Path                                          | Screenshot              |
++============+========+==================+====================================================+=========================+
+| Product id | Unique product identifier | data.search.searchResult.itemStacks[0].itemsV2[i]  | |Product id|_           |
++------------+---------------------------+----------------------------------------------------+-------------------------+
+|            |                           | `A <_images/product_id.png>`_                      |                         |
+|            |                           |                                                    |                         |
++------------+---------------------------+----------------------------------------------------+-------------------------+
+
+
