@@ -1,12 +1,12 @@
 query ItemById(
+  $catalogSellerId: String
+  $semStoreId: Int
+  $postalAddress: PostalAddress
   $itemId: String!
   $selected: Boolean
   $variantFieldId: String
-  $postalAddress: PostalAddress
   $storeFrontIds: [StoreFrontId]
   $p13N: P13NRequest
-  $semStoreId: Int
-  $catalogSellerId: String
   $fulfillmentIntent: String
 ) {
   product(
@@ -22,16 +22,18 @@ query ItemById(
   ) {
     ...FullProductFragment
   }
-  idml(itemId: $itemId, html: true) {
-    ...IDMLFragment
-  }
 }
 fragment FullProductFragment on Product {
+  blitzItem
+  giftingEligibility
+  shipAsIs
+  subscriptionEligible
   showFulfillmentLink
   additionalOfferCount
   shippingRestriction
   availabilityStatus
   averageRating
+  suppressReviews
   brand
   badges {
     ...BadgesFragment
@@ -47,6 +49,8 @@ fragment FullProductFragment on Product {
   viscosity
   model
   buyNowEligible
+  earlyAccessEvent
+  showBuyWithWplus
   preOrder {
     ...PreorderFragment
   }
@@ -63,7 +67,9 @@ fragment FullProductFragment on Product {
   shortDescription
   fulfillmentType
   fulfillmentBadge
+  checkStoreAvailabilityATC
   fulfillmentLabel {
+    checkStoreAvailability
     wPlusFulfillmentText
     message
     shippingText
@@ -92,6 +98,7 @@ fragment FullProductFragment on Product {
   orderMinLimit
   orderLimit
   offerId
+  offerType
   priceInfo {
     priceDisplayCodes {
       ...PriceDisplayCodesFragment
@@ -104,6 +111,9 @@ fragment FullProductFragment on Product {
     }
     unitPrice {
       ...ProductPriceFragment
+    }
+    savings {
+      priceString
     }
     subscriptionPrice {
       price
@@ -189,6 +199,7 @@ fragment FullProductFragment on Product {
       quantity
       offerId
       componentType
+      productDisplayName
     }
   }
   upc
@@ -196,16 +207,6 @@ fragment FullProductFragment on Product {
   sellerType
   ironbankCategory
   snapEligible
-  promoData {
-    id
-    description
-    terms
-    type
-    templateData {
-      priceString
-      imageUrl
-    }
-  }
   showAddOnServices
   addOnServices {
     serviceType
@@ -239,6 +240,7 @@ fragment BadgesFragment on UnifiedBadge {
       text
       key
       query
+      type
     }
     ... on PreviouslyPurchasedBadge {
       id
@@ -354,131 +356,4 @@ fragment ProductPriceFragment on ProductPrice {
   variantPriceString
   priceType
   currencyUnit
-}
-fragment NutrientFragment on Nutrient {
-  name
-  amount
-  dvp
-  childNutrients {
-    name
-    amount
-    dvp
-  }
-}
-fragment NutritionAttributeFragment on NutritionAttribute {
-  name
-  mainNutrient {
-    ...NutrientFragment
-  }
-  childNutrients {
-    ...NutrientFragment
-    childNutrients {
-      ...NutrientFragment
-    }
-  }
-}
-fragment IdmlAttributeFragment on IdmlAttribute {
-  name
-  value
-  attribute
-}
-fragment ServingAttributeFragment on ServingAttribute {
-  name
-  values {
-    ...IdmlAttributeFragment
-    values {
-      ...IdmlAttributeFragment
-    }
-  }
-}
-fragment IDMLFragment on Idml {
-  chokingHazards {
-    ...LegalContentFragment
-  }
-  directions {
-    name
-    value
-  }
-  indications {
-    name
-    value
-  }
-  ingredients {
-    activeIngredientName {
-      name
-      value
-    }
-    activeIngredients {
-      name
-      value
-    }
-    inactiveIngredients {
-      name
-      value
-    }
-    ingredients {
-      name
-      value
-    }
-  }
-  longDescription
-  shortDescription
-  interactiveProductVideo
-  specifications {
-    name
-    value
-  }
-  warnings {
-    name
-    value
-  }
-  warranty {
-    information
-    length
-  }
-  esrbRating
-  mpaaRating
-  nutritionFacts {
-    calorieInfo {
-      ...NutritionAttributeFragment
-    }
-    keyNutrients {
-      name
-      values {
-        ...NutritionAttributeFragment
-      }
-    }
-    vitaminMinerals {
-      ...NutritionAttributeFragment
-    }
-    servingInfo {
-      ...ServingAttributeFragment
-    }
-    additionalDisclaimer {
-      ...IdmlAttributeFragment
-      values {
-        ...IdmlAttributeFragment
-        values {
-          ...IdmlAttributeFragment
-        }
-      }
-    }
-    staticContent {
-      ...IdmlAttributeFragment
-      values {
-        ...IdmlAttributeFragment
-        values {
-          ...IdmlAttributeFragment
-        }
-      }
-    }
-  }
-}
-fragment LegalContentFragment on LegalContent {
-  ageRestriction
-  headline
-  headline
-  image
-  mature
-  message
 }

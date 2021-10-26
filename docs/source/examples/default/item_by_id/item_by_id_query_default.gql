@@ -22,7 +22,13 @@ query ItemById(
   $fetchMarquee: Boolean!
   $fetchSkyline: Boolean!
   $fetchSpCarousel: Boolean!
+  $fetchFitment: Boolean!
+  $fetchIdml: Boolean!
+  $fetchReviews: Boolean!
   $fulfillmentIntent: String
+  $fetchSEO: Boolean!
+  $fetchP13N: Boolean!
+  $fetchAffirm: Boolean!
 ) {
   contentLayout(
     channel: $channel
@@ -32,10 +38,22 @@ query ItemById(
   ) {
     modules(p13n: $p13nCls, tempo: $tempo) {
       configs {
-        ... on EnricherModuleConfigsV1 {
+        ... on EnricherModuleConfigsV1 @include(if: $fetchP13N) {
           zoneV1
         }
-        ... on TempoWM_GLASSWWWItemCarouselConfigsV1 {
+        ... on TempoWM_GLASSWWWBlitzConfigs {
+          onlineBlitzMessageText1
+          onlineBlitzMessageText2
+          onlineBlitzMessageText3
+          inStoreBlitzMessageText1
+          inStoreBlitzMessageText2
+          inStoreBlitzMessageText3
+          pulses {
+            pulseMessageLine1
+            pulseMessageLine2
+          }
+        }
+        ... on TempoWM_GLASSWWWItemCarouselConfigsV1 @include(if: $fetchP13N) {
           products {
             ...ContentLayoutProduct
           }
@@ -69,7 +87,8 @@ query ItemById(
             uid
           }
         }
-        ... on TempoWM_GLASSWWWItemFitmentModuleConfigs {
+        ... on TempoWM_GLASSWWWItemFitmentModuleConfigs
+        @include(if: $fetchFitment) {
           fitment {
             partTypeID
             partTypeIDs
@@ -110,7 +129,8 @@ query ItemById(
             }
           }
         }
-        ... on TempoWM_GLASSWWWItemRelatedShelvesConfigs {
+        ... on TempoWM_GLASSWWWItemRelatedShelvesConfigs
+        @include(if: $fetchSEO) {
           seoItemRelmData(id: $itemId) {
             relm {
               id
@@ -142,6 +162,48 @@ query ItemById(
             isUnderlined
             underlinedColor
             textColor
+          }
+        }
+        ... on TempoWM_GLASSWWWWalmartPlusBannerConfigsV1 {
+          heading
+          disclaimer
+          ctaLink {
+            linkText
+            title
+            clickThrough {
+              type
+              value
+            }
+          }
+        }
+        ... on TempoWM_GLASSWWWWalmartPlusEarlyAccessBeforeEventConfigsV1 {
+          earlyAccessLogo {
+            alt
+            src
+          }
+          earlyAccessCardMesssage
+          earlyAccessLink1 {
+            linkText
+          }
+          earlyAccessLink2 {
+            linkText
+            clickThrough {
+              value
+            }
+          }
+        }
+        ... on TempoWM_GLASSWWWWalmartPlusEarlyAccessDuringEventConfigsV1 {
+          earlyAccessLogo {
+            alt
+            src
+          }
+          earlyAccessCardMesssage
+          earlyAccessSubText
+          earlyAccessLink1 {
+            linkText
+            clickThrough {
+              value
+            }
           }
         }
         ... on TempoWM_GLASSWWWProductWarrantyPlaceholderConfigs {
@@ -217,7 +279,7 @@ query ItemById(
   ) {
     ...FullProductFragment
   }
-  idml(itemId: $itemId, html: true) {
+  idml(itemId: $itemId, html: true) @include(if: $fetchIdml) {
     ...IDMLFragment
   }
   reviews(
@@ -226,16 +288,22 @@ query ItemById(
     limit: $limit
     sort: $sort
     filters: $filters
-  ) {
+  ) @include(if: $fetchReviews) {
     ...FullReviewsFragment
   }
 }
 fragment FullProductFragment on Product {
+  blitzItem
+  giftingEligibility
+  shipAsIs
+  subscriptionEligible
   showFulfillmentLink
   additionalOfferCount
+  legalRestriction
   shippingRestriction
   availabilityStatus
   averageRating
+  suppressReviews
   brand
   badges {
     ...BadgesFragment
@@ -251,8 +319,15 @@ fragment FullProductFragment on Product {
   viscosity
   model
   buyNowEligible
+  earlyAccessEvent
+  isEarlyAccessItem
+  showBuyWithWplus
   preOrder {
     ...PreorderFragment
+  }
+  ozarkAttributes {
+    shippingPromise
+    exactAddress
   }
   canonicalUrl
   catalogSellerId
@@ -267,7 +342,9 @@ fragment FullProductFragment on Product {
   shortDescription
   fulfillmentType
   fulfillmentBadge
+  checkStoreAvailabilityATC
   fulfillmentLabel {
+    checkStoreAvailability
     wPlusFulfillmentText
     message
     shippingText
@@ -296,6 +373,7 @@ fragment FullProductFragment on Product {
   orderMinLimit
   orderLimit
   offerId
+  offerType
   priceInfo {
     priceDisplayCodes {
       ...PriceDisplayCodesFragment
@@ -308,6 +386,9 @@ fragment FullProductFragment on Product {
     }
     unitPrice {
       ...ProductPriceFragment
+    }
+    savings {
+      priceString
     }
     subscriptionPrice {
       price
@@ -337,6 +418,7 @@ fragment FullProductFragment on Product {
       value
       unitType
     }
+    returnPolicyText
   }
   fsaEligibleInd
   sellerId
@@ -393,6 +475,7 @@ fragment FullProductFragment on Product {
       quantity
       offerId
       componentType
+      productDisplayName
     }
   }
   upc
@@ -400,7 +483,7 @@ fragment FullProductFragment on Product {
   sellerType
   ironbankCategory
   snapEligible
-  promoData {
+  promoData @include(if: $fetchAffirm) {
     id
     description
     terms
@@ -443,6 +526,7 @@ fragment BadgesFragment on UnifiedBadge {
       text
       key
       query
+      type
     }
     ... on PreviouslyPurchasedBadge {
       id
@@ -692,18 +776,48 @@ fragment FullReviewsFragment on ProductReviews {
   topNegativeReview {
     rating
     reviewSubmissionTime
+    userNickname
     negativeFeedback
     positiveFeedback
     reviewText
     reviewTitle
+    badges {
+      badgeType
+      id
+      contentType
+      glassBadge {
+        id
+        text
+      }
+    }
+    syndicationSource {
+      logoImageUrl
+      contentLink
+      name
+    }
   }
   topPositiveReview {
     rating
     reviewSubmissionTime
+    userNickname
     negativeFeedback
     positiveFeedback
     reviewText
     reviewTitle
+    badges {
+      badgeType
+      id
+      contentType
+      glassBadge {
+        id
+        text
+      }
+    }
+    syndicationSource {
+      logoImageUrl
+      contentLink
+      name
+    }
   }
   totalReviewCount
 }
@@ -721,6 +835,20 @@ fragment CustomerReviewsFragment on CustomerReview {
   reviewText
   reviewTitle
   userNickname
+  badges {
+    badgeType
+    id
+    contentType
+    glassBadge {
+      id
+      text
+    }
+  }
+  syndicationSource {
+    logoImageUrl
+    contentLink
+    name
+  }
 }
 fragment ContentLayoutProduct on Product {
   name
@@ -991,8 +1119,12 @@ fragment ProductFragment on Product {
   offerId
   badges {
     flags {
-      key
-      text
+      ... on BaseBadge {
+        key
+        text
+        type
+        id
+      }
     }
     labels {
       key
@@ -1054,6 +1186,7 @@ fragment ProductFragment on Product {
   fulfillmentBadge
   classType
   type
+  showAtc
   p13nData {
     predictedQuantity
     flags {

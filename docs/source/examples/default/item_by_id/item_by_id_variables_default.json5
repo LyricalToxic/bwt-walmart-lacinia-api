@@ -1,54 +1,77 @@
 {
   "variables": {
-    "id": "",
-    "affinityOverride": "store_led",
-    "dealsId": "",
-    "query": "test",
-    "page": 3,
-    "prg": "desktop",
-    "catId": "",
-    "facet": "",
-    "sort": "best_match",
-    "rawFacet": "",
-    "seoPath": "",
-    "ps": 40,
-    "ptss": "",
-    "trsp": "",
-    "beShelfId": "",
-    "recall_set": "",
-    "module_search": "",
-    "min_price": "",
-    "max_price": "",
-    "storeSlotBooked": "",
-    "additionalQueryParams": null,
-    "fitmentFieldParams": null,
-    "fitmentSearchParams": {
-      "id": "",
-      "affinityOverride": "store_led",
-      "dealsId": "",
-      "query": "test",
-      "page": 3,
-      "prg": "desktop",
-      "catId": "",
-      "facet": "",
-      "sort": "best_match",
-      "rawFacet": "",
-      "seoPath": "",
-      "ps": 40,
-      "ptss": "",
-      "trsp": "",
-      "beShelfId": "",
-      "recall_set": "",
-      "module_search": "",
-      "min_price": "",
-      "max_price": "",
-      "storeSlotBooked": "",
-      "additionalQueryParams": null,
-      "cat_id": "",
-      "_be_shelf_id": ""
+    "itemId": "979211867",
+    "semStoreId": null,
+    "selected": true,
+    "channel": "WWW",
+    "pageType": "ItemPageGlobal",
+    "tenant": "WM_GLASS",
+    "version": "v1",
+    "layout": [
+      "itemDesktop"
+    ],
+    "tempo": {
+      "targeting": "%7B%22userState%22%3A%22loggedIn%22%7D",
+      "params": [
+        {
+          "key": "expoVars",
+          "value": "expoVariationValue"
+        },
+        {
+          "key": "expoVars",
+          "value": "expoVariationValue2"
+        }
+      ]
     },
+    "page": 1,
+    "limit": 10,
+    "sort": "relevancy",
+    "filters": [],
+    "p13N": {
+      "reqId": "6cSMmKJlG2H8QJPlxdTkOqOktAvq5-85ozB5",
+      "pageId": "979211867",
+      "modules": [
+        {
+          "moduleType": "PersonalizedLabels",
+          "moduleId": "234-sdfsfvns-sdfdskvl"
+        }
+      ],
+      "userClientInfo": {
+        "ipAddress": "IP=0:0:0:0:0:0:0:1-0:0:0:0:0:0:0:1",
+        "isZipLocated": true,
+        "callType": "CLIENT",
+        "deviceType": "desktop"
+      },
+      "userReqInfo": {
+        "refererContext": {
+          "source": "itempage"
+        },
+        "pageUrl": "/ip/Equate-91-Isopropyl-Alcohol-Liquid-Antiseptic-32-fl-oz-Twin-Pack/979211867?athcpid=979211867&athpgid=AthenaHomepageDesktop__mixed__0.5&athcgid=null&athznid=bs&athieid=v0&athstid=CS056&athguid=IaMxrGhKhX7wxBStaVG_PdQontAPpYaiH1HN&athancid=null&athena=true"
+      }
+    },
+    "p13nCls": {
+      "pageId": "979211867",
+      "userClientInfo": {
+        "ipAddress": "IP=0:0:0:0:0:0:0:1-0:0:0:0:0:0:0:1",
+        "isZipLocated": true,
+        "callType": "CLIENT",
+        "deviceType": "desktop"
+      },
+      "userReqInfo": {
+        "refererContext": {
+          "source": "itempage"
+        }
+      }
+    },
+    "fetchBuyBoxAd": true,
     "fetchMarquee": true,
     "fetchSkyline": true,
-    "fetchSbaTop": true
+    "fetchSpCarousel": true,
+    "fetchFitment": true,
+    "fetchIdml": true,
+    "fetchReviews": true,
+    "fetchSEO": true,
+    "fetchP13N": true,
+    "fetchAffirm": true
   }
 }
