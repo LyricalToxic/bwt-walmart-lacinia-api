@@ -1,0 +1,15 @@
+{
+  "variables": {
+    "query": "socks",
+    "page": 1,
+    "prg": "desktop",
+    "catId": "",
+    "facet": "",
+    "sort": "best_match",
+    "ps": 40,
+    "module_search": "",
+    "min_price": "",
+    "max_price": "",
+    "affinityOverride": "store_led"
+  }
+}
