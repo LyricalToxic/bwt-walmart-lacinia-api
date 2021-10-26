@@ -36,7 +36,7 @@ Overview
     Accept: application/json
     Content-Type: application/json
     WM_MP: True
-    X-APOLLO-OPERATION-NAME: Search
+    X-APOLLO-OPERATION-NAME: AnyFunctionName
 
 Помимо ключевого слова, в запросе можно указать различные фильтры и сортировку, что в свою очередь будет влиять на количество результатов.
 Также локация влияет на количество результатов.
@@ -602,15 +602,67 @@ Response
 UI-Response table comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. |Product id| replace:: `URL <_images/product_id.png>`_
 
-+------------+---------------------------+----------------------------------------------------+-------------------------+
-| Title      | Description               | JSON-Path                                          | Screenshot              |
-+============+========+==================+====================================================+=========================+
-| Product id | Unique product identifier | data.search.searchResult.itemStacks[0].itemsV2[i]  | |Product id|_           |
-+------------+---------------------------+----------------------------------------------------+-------------------------+
-|            |                           | `A <_images/product_id.png>`_                      |                         |
-|            |                           |                                                    |                         |
-+------------+---------------------------+----------------------------------------------------+-------------------------+
+.. _product_id: https://monosnap.com/file/xOYVsDHxKuk24OF6rbzt5tEaH5Bopz
+.. |product_id| replace:: Product id
 
+.. _item_id: https://monosnap.com/file/lc9mTjlrMn8V9VK0iyzUDdUxsq6fhH
+.. |item_id| replace:: Item id
 
+.. _title: https://monosnap.com/file/a1ooAD8UDZOyd5ZhDPk5UeQt7XPZfR
+.. |title| replace:: Title
+
+.. _image_url: https://monosnap.com/file/z6jF9RnLuIeiM30ymucuTSMkFVZce5
+.. |image_url| replace:: Image url
+
+.. _canonical_url: https://monosnap.com/file/gg9W6jGzoh0bEf297lJFhC0XHCCX4A
+.. |canonical_url| replace:: Canonical url
+
+.. _tags: https://monosnap.com/file/DGBXAVSV08loNF5s4F6QsvieC859aR
+.. |tags| replace:: Item tags
+
+.. _rating: https://monosnap.com/file/x7FgX58Id8fFJioLCM8LyMbMJjh0uA
+.. |rating| replace:: Rating
+
+.. _price: https://monosnap.com/file/bcI6FqW4UbCzjVJLAUzIPXEpnm7D8L
+.. |price| replace:: Price
+
+.. _stock: https://monosnap.com/file/SFHnK3QqLxixLr4MxHRxh40VKltJyD
+.. |stock| replace:: Stock status
+
+.. _sponsored: https://monosnap.com/file/cdJDnxhCEzxsMxfQxI3BVuQN8rHVhU
+.. |sponsored| replace:: Sponsored product
+
+.. _variants: https://monosnap.com/file/PZCVoM3VRZ4RYYmnRRo16pZ66BtHwP
+.. |variants| replace:: Item variants
+
++-------------------+---------------------------+----------------------------------------------------------------+
+| Title             | Description               | JSON-Path                                                      |
++===================+===========================+================================================================+
+| |product_id|_     | Unique page identifier    | data.search.searchResult.itemStacks[0].itemsV2[i].id           |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |item_id|_        | Unique item identifier    | data.search.searchResult.itemStacks[0].itemsV2[i].usItemId     |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |title|_          | Title of item             | data.search.searchResult.itemStacks[0].itemsV2[i].name         |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |image_url|_      | Image of item             | data.search.searchResult.itemStacks[0].itemsV2[i].imageInfo.   |
+|                   |                           | thumbnailUrl                                                   |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |canonical_url|_  | Url of item page          | data.search.searchResult.itemStacks[0].itemsV2[i].canonicalUrl |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |tags|_           | Item tags of features     | data.search.searchResult.itemStacks[0].itemsV2[i].badges.flags |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |rating|_         | Average rating & review   | data.search.searchResult.itemStacks[0].itemsV2[i]              |
+|                   | numbers                   | .averageRating and .numberOfReviews                            |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |price|_          | Item price                | data.search.searchResult.itemStacks[0].itemsV2[2].priceInfo    |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |stock|_          | Stock status of item      | data.search.searchResult.itemStacks[0].itemsV2[2].             |
+|                   |                           | availabilityStatusV2                                           |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |sponsored|_      | Whether the product is    | data.search.searchResult.itemStacks[0].itemsV2[20]             |
+|                   | sponsored                 | .sponsoredProduct                                              |
++-------------------+---------------------------+----------------------------------------------------------------+
+| |variants|_       | Variants criteria &       | data.search.searchResult.itemStacks[0].itemsV2[1]              |
+|                   | variants items            | .variantCriteria                                               |
++-------------------+---------------------------+----------------------------------------------------------------+
