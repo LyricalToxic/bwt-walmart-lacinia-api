@@ -660,7 +660,7 @@ UI-Response table comparison
 | |stock|_          | Stock status of item      | data.search.searchResult.itemStacks[0].itemsV2[i].             |
 |                   |                           | availabilityStatusV2                                           |
 +-------------------+---------------------------+----------------------------------------------------------------+
-| |sponsored|_      | Whether the product is    | data.search.searchResult.itemStacks[0].itemsV2[i]             |
+| |sponsored|_      | Whether the product is    | data.search.searchResult.itemStacks[0].itemsV2[i]              |
 |                   | sponsored                 | .sponsoredProduct                                              |
 +-------------------+---------------------------+----------------------------------------------------------------+
 | |variants|_       | Variants criteria &       | data.search.searchResult.itemStacks[0].itemsV2[i]              |
