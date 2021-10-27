@@ -6,7 +6,6 @@ query ItemById(
   $selected: Boolean
   $variantFieldId: String
   $storeFrontIds: [StoreFrontId]
-  $p13N: P13NRequest
   $fulfillmentIntent: String
 ) {
   product(
@@ -16,7 +15,6 @@ query ItemById(
     storeFrontIds: $storeFrontIds
     selected: $selected
     semStoreId: $semStoreId
-    p13N: $p13N
     variantFieldId: $variantFieldId
     fulfillmentIntent: $fulfillmentIntent
   ) {

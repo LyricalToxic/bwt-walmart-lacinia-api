@@ -1,13 +1,6 @@
 {
-  "itemId": "14532503",
-  "catalogSellerId": null,
-  "p13N": {
-    "reqId": "",
-    "pageId": "",
-    "modules": [],
-    "userClientInfo": {
-      "deviceType": ""
-    },
-    "userReqInfo": {}
-  }
+  "itemId": "493824815",
+  "semStoreId": null,
+  "selected": true,
+  "filters": []
 }

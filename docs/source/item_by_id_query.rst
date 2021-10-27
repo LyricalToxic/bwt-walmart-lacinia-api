@@ -14,7 +14,7 @@ Overview
 
 .. Предназначение
 
-Запрос предназначен для поиска информации о продукте с помощью item id. \
+Запрос предназначен для получения информации об item. \
 
 .. HTTP метод и endpoint.
 
@@ -31,20 +31,18 @@ Overview
     Accept: application/json
     Content-Type: application/json
     WM_MP: True
-    X-APOLLO-OPERATION-NAME: ItemById
-
-Помимо ключевого слова, в запросе можно указать параметры для ревью.
+    X-APOLLO-OPERATION-NAME: AnyFunctionName
 
 .. Описание ответа.
 
-Результатом поиска является информация о продукте и ревью.
-Ревью разбиваются на пагинации по N штук на K страниц.
+Результатом поиска является информация об item.
 
 
 .. Особенности
 
-- размер пагинации ревью может быть либо 10, для значений limit < 11, либо 20 для limit > 20
-- в случае если itemId не был найден, то будет возвращена :download:`ошибка 404 в теле ответа <data/item_by_id_404_response.json5>`
+
+- в случае если itemId не был найден, то будет возвращена :download:`ошибка 404 в теле ответа <data/item_by_id_404_response.json5>`.
+- если item out of stock, тогда информации о продавце может и не быть.
 
 Body
 ~~~~~~~~~~~
@@ -52,259 +50,524 @@ Body
 Query
 """""""""""
 
-.. function:: query ItemById(...)
+.. function:: product(...)
+
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: null
 
     :parameter String $itemId!: \
 
-        Уникальный идентификатор товара на walmart. \
+        .. admonition:: Schema reference
+                :class: info
 
-    :parameter Boolean $selected: \
+                Description: Item ID, returned in Product/usItemId field. Required for post-transaction scenario. \
 
-        Неизвестно \
+        Уникальный идентификатор item-a. \
 
-    :parameter String $variantFieldId: \
+    :parameter String $offerId: \
 
-        Неизвестно \
+        .. admonition:: Schema reference
+                :class: info
+
+                Description: Offer id of the Product. \
+
+        Уникальный идентификатор оффера. \
 
     :parameter PostalAddress $postalAddress: \
+
+        .. admonition:: Schema reference
+                :class: info
+
+                Description: null
 
         Местоположение пользователя. Не влияет на фактическую локацию. Фактическая локация хранится в куках. \
 
         Состоит из полей::
 
                 {
-                    "postalCode": "",
+                    "postalCode": str,
                     "zipLocated": bool,
-                    "stateOrProvinceCode": "",
-                    "stateOrProvinceName": "",
-                    "countryCode": "",
-                    "addressType": "",
+                    "stateOrProvinceCode": str,
+                    "stateOrProvinceName": str,
+                    "countryCode": str,
+                    "addressType": str,
                     "isPoBox": bool,
                 }
 
-    :parameter  $storeFrontIds: \
+    :parameter [StoreFrontId] $storeFrontIds: \
+
+        .. admonition:: Schema reference
+                :class: info
+
+                Description: null
 
         Уникальный идентификатор магазина. \
 
-    :parameter Int $page: \
+        Состоит из полей::
 
-        Страница пагинации ревью. \
+                {
+                    "usStoreId": int,
+                    "preferred": bool,
+                    "distance": float,
+                    "inStore": bool,
+                    "lastPickupStore": bool,
+                }
 
-    :parameter String $sort: \
 
-        Тип сортировки ревью. \
+    :parameter Boolean $selected: \
 
-        Может принимать значения::
+        .. admonition:: Schema reference
+                :class: info
 
-            ["relevancy", "helpful", "submission-desc", "submission-asc", "rating-desc", "rating-asc"]
+                Description: True if the current variant is selected"
 
-    :parameter Int $limit: \
-
-        Количество ревью на пагинации. Не более 20. \
-
-    :parameter  $filters: \
-
-        Фильтры для ревью по звездам. \
-
-    :parameter String $channel!: \
-
-        Неизвестно. Влияет на modules и layouts. Известное значение "WWW". \
-
-    :parameter String $pageType!: \
-
-        Тип страницы. Для страницы продуктов = `ItemPageGlobal`. \
-
-    :parameter String $tenant!: \
-
-        Параметр для contentLayout. Значение для страницы продуктов = `WM_GLASS`. \
-
-    :parameter String $version!: \
-
-        Версия contentLayout. Значение не влияет на результат. \
+        Неизвестно \
 
     :parameter P13NRequest $p13N: \
 
+        .. admonition:: Schema reference
+                :class: info
+
+                Description: null
+
         Обязательный параметр, содержащий метаинформацию о запросе. Нужен для modules. \
 
-    :parameter JSON $p13nCls: \
+    :parameter String $variantFieldId: \
 
-        Интерфейс p13N. \
+        .. admonition:: Schema reference
+                :class: info
 
-    :parameter [String] $layout: \
+                Description: null
 
-        Список типов layout. \
-
-    .. admonition:: Layout definition
-        :class: note
-
-        Layout - набор параметров, определяющих местоположение объектов на странице. По сути является метаинформацией для front-end.
-
-    :parameter JSON $tempo: \
-
-        Неизвестно. \
-
-        Необязательный параметр.
+        Неизвестно \
 
     :parameter Int $semStoreId: \
 
-        Уникальный идентификатор магазина. *Неизвестно на что влияет* \
+        .. admonition:: Schema reference
+                :class: info
+
+                Description: Optional, required only for the SEM (Search Engine Marketing) use case. The storeId for the advertised SEM store. Required for store comparison and for temporarily setting the users store to the SEM store if required.
+
+        Неизвестно. \
 
     :parameter String $catalogSellerId: \
 
-        Уникальный идентификатор каталога продавца. \
+        .. admonition:: Schema reference
+                :class: info
 
-        Можно переопределить, тогда в ответе будет информация о продавце, который был указан. \
+                Description: catalog Seller Id  of primary seller of product
 
-    :parameter Boolean $fetchBuyBoxAd!: \
-
-        Нужно ли возвращать информацию о buyBoxAd в contentLayout. \
-
-    :parameter Boolean $fetchMarquee!: \
-
-       Нужно ли возвращать информацию о marquee в contentLayout. \
-
-    :parameter Boolean $fetchSkyline!: \
-
-        Нужно ли возвращать информацию о skyline в contentLayout. \
-
-    :parameter Boolean $fetchSpCarousel!: \
-
-        Нужно ли возвращать информацию о sponsoredProductCarousel в contentLayout. \
+        Уникальный идентификатор страницы продавца. \
 
     :parameter String $fulfillmentIntent: \
 
-        Неизвестно. Относится к product.\
+        .. admonition:: Schema reference
+                :class: info
 
-    :parameter Boolean $fetchFitment!: \
+                Description: null
 
-        Нужно ли возвращать информацию о fitment в contentLayout. \
+        Неизвестно. \
 
-        Пример в теле ответа не был найден. \
+    :parameter [ComponentOfferDetail] $componentOffers: \
 
-    :parameter Boolean $fetchIdml!: \
+        .. admonition:: Schema reference
+                :class: info
 
-        Нужно ли возвращать информацию о idml. \
+                Description: null
 
-        IDML - фрагмент с описательной информацией о продукте. В html находится в блоке `About this item <https://monosnap.com/file/SgD3qkZ1LxVoBNJ1fbV2NSkkKIaaZL>`_. \
-
-    :parameter Boolean $fetchReviews!: \
-
-        Нужно ли возвращать информацию о ревью. \
-
-    :parameter Boolean $fetchSEO!: \
-
-        Нужно ли возвращать информацию о seo. \
-
-        Seo(seoItemRelmData) - информация о похожих `категориях <https://monosnap.com/file/fMZ0e8U87cnR3UVfqZ9FgzHOySADll>`_.
-
-        При значении false данные о seo приходить не будет, при этом будет сообщение об ошибке *INTERNAL_SERVER_ERROR*. \
-
-    :parameter Boolean $fetchP13N!: \
-
-        Нужно ли возвращать информацию о ItemCarousel. \
-
-    :parameter Boolean $fetchAffirm!: \
-
-        Нужно ли возвращать информацию о Affirm. \
-
-        Является типом рекламы. \
+        Неизвестно. \
 
 Пример запроса:
     .. code-block::
 
-        query ItemById( $itemId:String! $selected:Boolean $variantFieldId:String $postalAddress:PostalAddress $storeFrontIds:[StoreFrontId]$page:Int $sort:String $limit:Int $filters:[String]$channel:String! $pageType:String! $tenant:String! $version:String! $p13N:P13NRequest $p13nCls:JSON $layout:[String]$tempo:JSON $semStoreId:Int $catalogSellerId:String $fetchBuyBoxAd:Boolean! $fetchMarquee:Boolean! $fetchSkyline:Boolean! $fetchSpCarousel:Boolean! $fetchFitment:Boolean! $fetchIdml:Boolean! $fetchReviews:Boolean! $fulfillmentIntent:String $fetchSEO:Boolean! $fetchP13N:Boolean! $fetchAffirm:Boolean! ){contentLayout( channel:$channel pageType:$pageType tenant:$tenant version:$version ){modules(p13n:$p13nCls tempo:$tempo){configs{...on EnricherModuleConfigsV1 @include(if:$fetchP13N){zoneV1}...on TempoWM_GLASSWWWBlitzConfigs{onlineBlitzMessageText1 onlineBlitzMessageText2 onlineBlitzMessageText3 inStoreBlitzMessageText1 inStoreBlitzMessageText2 inStoreBlitzMessageText3 pulses{pulseMessageLine1 pulseMessageLine2}}...on TempoWM_GLASSWWWItemCarouselConfigsV1 @include(if:$fetchP13N){products{...ContentLayoutProduct}subTitle tileOptions{addToCart averageRatings displayAveragePriceCondition displayPricePerUnit displayStandardPrice displayWasPrice fulfillmentBadging mediaRatings productFlags productLabels productPrice productTitle}title type spBeaconInfo{adUuid moduleInfo pageViewUUID placement max}viewAllLink{linkText title uid}}...on TempoWM_GLASSWWWItemFitmentModuleConfigs @include(if:$fetchFitment){fitment{partTypeID partTypeIDs result{status notes position formId quantityTitle resultSubTitle suggestions{id position loadIndex speedRating searchQueryParam labels{...FitmentLabel}fitmentSuggestionParams{id value}cat_id}extendedAttributes{...FitmentFieldFragment}labels{...FitmentLabel}}labels{...FitmentLabel}savedVehicle{...FitmentVehicleFragment}}}...on TempoWM_GLASSWWWItemRelatedShelvesConfigs @include(if:$fetchSEO){seoItemRelmData(id:$itemId){relm{id url name}}}...on TempoWM_GLASSWWWCapitalOneBannerConfigsV1{bannerBackgroundColor primaryImage{alt src}bannerCta{ctaLink{linkText title clickThrough{value}uid}textColor}bannerText{text isBold isUnderlined underlinedColor textColor}}...on TempoWM_GLASSWWWWalmartPlusBannerConfigsV1{heading disclaimer ctaLink{linkText title clickThrough{type value}}}...on TempoWM_GLASSWWWWalmartPlusEarlyAccessBeforeEventConfigsV1{earlyAccessLogo{alt src}earlyAccessCardMesssage earlyAccessLink1{linkText}earlyAccessLink2{linkText clickThrough{tag value}}}...on TempoWM_GLASSWWWWalmartPlusEarlyAccessDuringEventConfigsV1{earlyAccessLogo{alt src}earlyAccessCardMesssage earlyAccessSubText earlyAccessLink1{linkText}}...on TempoWM_GLASSWWWProductWarrantyPlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWGeneralWarningsPlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWProductIndicationsPlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWProductDescriptionPlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWProductDirectionsPlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWProductSpecificationsPlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWNutritionValuePlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWReviewsPlaceholderConfigs{expandedOnPageLoad}...on TempoWM_GLASSWWWProductDescriptionPlaceholderConfigs{expandedOnPageLoad}...BuyBoxAdConfigsFragment @include(if:$fetchBuyBoxAd)...MarqueeDisplayAdConfigsFragment @include(if:$fetchMarquee)...SkylineDisplayAdConfigsFragment @include(if:$fetchSkyline)...SponsoredProductCarouselConfigsFragment @include(if:$fetchSpCarousel)}moduleId matchedTrigger{pageType pageId zone inheritable}name type version status publishedDate}layouts(layout:$layout){id layout}pageMetadata{location{postalCode stateOrProvinceCode city storeId}pageContext}}product( catalogSellerId:$catalogSellerId itemId:$itemId postalAddress:$postalAddress storeFrontIds:$storeFrontIds selected:$selected semStoreId:$semStoreId p13N:$p13N variantFieldId:$variantFieldId fulfillmentIntent:$fulfillmentIntent ){...FullProductFragment}idml(itemId:$itemId html:true) @include(if:$fetchIdml){...IDMLFragment}reviews( itemId:$itemId page:$page limit:$limit sort:$sort filters:$filters ) @include(if:$fetchReviews){...FullReviewsFragment}}fragment FullProductFragment on Product{blitzItem giftingEligibility shipAsIs subscriptionEligible showFulfillmentLink additionalOfferCount shippingRestriction availabilityStatus averageRating suppressReviews brand badges{...BadgesFragment}rhPath partTerminologyId aaiaBrandId manufacturerProductId productTypeId tireSize tireLoadIndex tireSpeedRating viscosity model buyNowEligible earlyAccessEvent showBuyWithWplus preOrder{...PreorderFragment}canonicalUrl catalogSellerId sellerReviewCount sellerAverageRating category{...ProductCategoryFragment}classType classId fulfillmentTitle shortDescription fulfillmentType fulfillmentBadge checkStoreAvailabilityATC fulfillmentLabel{checkStoreAvailability wPlusFulfillmentText message shippingText fulfillmentText locationText fulfillmentMethod addressEligibility fulfillmentType postalCode}hasSellerBadge itemType id imageInfo{...ProductImageInfoFragment}location{postalCode stateOrProvinceCode city storeIds}manufacturerName name numberOfReviews orderMinLimit orderLimit offerId offerType priceInfo{priceDisplayCodes{...PriceDisplayCodesFragment}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}savings{priceString}subscriptionPrice{price priceString intervalFrequency duration percentageRate subscriptionString}priceRange{minPrice maxPrice priceString currencyUnit unitOfMeasure denominations{price priceString selected}}}returnPolicy{returnable freeReturns returnWindow{value unitType}}fsaEligibleInd sellerId sellerName sellerDisplayName secondaryOfferPrice{currentPrice{priceType priceString price}}semStoreData{pickupStoreId deliveryStoreId isSemLocationDifferent}shippingOption{...ShippingOptionFragment}type pickupOption{slaTier accessTypes availabilityStatus storeName storeId}salesUnit usItemId variantCriteria{id categoryTypeAllValues name type variantList{availabilityStatus id images name products swatchImageUrl selected}}variants{...MinimalProductFragment}groupMetaData{groupType groupSubType numberOfComponents groupComponents{quantity offerId componentType productDisplayName}}upc wfsEnabled sellerType ironbankCategory snapEligible promoData @include(if:$fetchAffirm){id description terms type templateData{priceString imageUrl}}showAddOnServices addOnServices{serviceType serviceTitle serviceSubTitle groups{groupType groupTitle assetUrl shortDescription services{displayName offerId selectedDisplayName currentPrice{price priceString}}}}productLocation{displayValue}}fragment BadgesFragment on UnifiedBadge{flags{__typename...on BaseBadge{id text key query type}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought criteria{name value}}}labels{__typename...on BaseBadge{id text key}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought}}tags{__typename...on BaseBadge{id text key}}}fragment ShippingOptionFragment on ShippingOption{accessTypes availabilityStatus slaTier deliveryDate maxDeliveryDate shipMethod shipPrice{...ProductPriceFragment}}fragment ProductCategoryFragment on ProductCategory{categoryPathId path{name url}}fragment PreorderFragment on PreOrder{streetDate streetDateDisplayable streetDateType isPreOrder preOrderMessage preOrderStreetDateMessage}fragment MinimalProductFragment on Variant{availabilityStatus imageInfo{...ProductImageInfoFragment}priceInfo{priceDisplayCodes{...PriceDisplayCodesFragment}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}}productUrl usItemId id:productId fulfillmentBadge}fragment ProductImageInfoFragment on ProductImageInfo{allImages{id url zoomable}thumbnailUrl}fragment PriceDisplayCodesFragment on PriceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}fragment ProductPriceFragment on ProductPrice{price priceString variantPriceString priceType currencyUnit}fragment NutrientFragment on Nutrient{name amount dvp childNutrients{name amount dvp}}fragment NutritionAttributeFragment on NutritionAttribute{name mainNutrient{...NutrientFragment}childNutrients{...NutrientFragment childNutrients{...NutrientFragment}}}fragment IdmlAttributeFragment on IdmlAttribute{name value attribute}fragment ServingAttributeFragment on ServingAttribute{name values{...IdmlAttributeFragment values{...IdmlAttributeFragment}}}fragment IDMLFragment on Idml{chokingHazards{...LegalContentFragment}directions{name value}indications{name value}ingredients{activeIngredientName{name value}activeIngredients{name value}inactiveIngredients{name value}ingredients{name value}}longDescription shortDescription interactiveProductVideo specifications{name value}warnings{name value}warranty{information length}esrbRating mpaaRating nutritionFacts{calorieInfo{...NutritionAttributeFragment}keyNutrients{name values{...NutritionAttributeFragment}}vitaminMinerals{...NutritionAttributeFragment}servingInfo{...ServingAttributeFragment}additionalDisclaimer{...IdmlAttributeFragment values{...IdmlAttributeFragment values{...IdmlAttributeFragment}}}staticContent{...IdmlAttributeFragment values{...IdmlAttributeFragment values{...IdmlAttributeFragment}}}}}fragment FullReviewsFragment on ProductReviews{averageOverallRating customerReviews{...CustomerReviewsFragment}ratingValueFiveCount ratingValueFourCount ratingValueOneCount ratingValueThreeCount ratingValueTwoCount roundedAverageOverallRating topNegativeReview{rating reviewSubmissionTime userNickname negativeFeedback positiveFeedback reviewText reviewTitle badges{badgeType id contentType glassBadge{id text}}syndicationSource{logoImageUrl contentLink name}}topPositiveReview{rating reviewSubmissionTime userNickname negativeFeedback positiveFeedback reviewText reviewTitle badges{badgeType id contentType glassBadge{id text}}syndicationSource{logoImageUrl contentLink name}}totalReviewCount}fragment LegalContentFragment on LegalContent{ageRestriction headline headline image mature message}fragment CustomerReviewsFragment on CustomerReview{rating reviewSubmissionTime reviewText reviewTitle userNickname badges{badgeType id contentType glassBadge{id text}}syndicationSource{logoImageUrl contentLink name}}fragment ContentLayoutProduct on Product{name badges{...BadgesFragment}canonicalUrl classType availabilityStatus showAtc averageRating fulfillmentBadge fulfillmentSpeed fulfillmentTitle fulfillmentType imageInfo{thumbnailUrl}numberOfReviews offerId orderMinLimit orderLimit p13nDataV1{predictedQuantity flags{PREVIOUSLY_PURCHASED{text}CUSTOMERS_PICK{text}}}previouslyPurchased{label}preOrder{...PreorderFragment}priceInfo{currentPrice{...ProductPriceFragment}listPrice{...ProductPriceFragment}subscriptionPrice{priceString}priceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}priceRange{minPrice maxPrice priceString}unitPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}}rhPath salesUnit sellerId sellerName hasSellerBadge seller{name sellerId}shippingOption{slaTier shipMethod}showOptions snapEligible sponsoredProduct{spQs clickBeacon spTags}usItemId variantCount variantCriteria{name id variantList{name swatchImageUrl selectedProduct{usItemId canonicalUrl}}}}fragment FitmentLabel on FitmentLabels{links{...FitmentLabelEntity}messages{...FitmentLabelEntity}ctas{...FitmentLabelEntity}images{...FitmentLabelEntity}}fragment FitmentVehicleFragment on FitmentVehicle{vehicleYear{...FitmentVehicleFieldFragment}vehicleMake{...FitmentVehicleFieldFragment}vehicleModel{...FitmentVehicleFieldFragment}additionalAttributes{...FitmentVehicleFieldFragment}}fragment FitmentVehicleFieldFragment on FitmentVehicleField{id value label}fragment FitmentFieldFragment on FitmentField{id value displayName data{value label}extended dependsOn}fragment FitmentLabelEntity on FitmentLabelEntity{id label}fragment BuyBoxAdConfigsFragment on TempoWM_GLASSWWWBuyBoxAdConfigs{_rawConfigs moduleLocation lazy ad{...SponsoredProductsAdFragment}}fragment MarqueeDisplayAdConfigsFragment on TempoWM_GLASSWWWMarqueeDisplayAdConfigs{_rawConfigs ad{...DisplayAdFragment}}fragment DisplayAdFragment on Ad{...AdFragment adContent{type data{__typename...AdDataDisplayAdFragment}}}fragment AdFragment on Ad{status moduleType platform pageId pageType storeId stateCode zipCode pageContext moduleConfigs adsContext adRequestComposite}fragment AdDataDisplayAdFragment on AdData{...on DisplayAd{json status}}fragment SkylineDisplayAdConfigsFragment on TempoWM_GLASSWWWSkylineDisplayAdConfigs{_rawConfigs ad{...SkylineDisplayAdFragment}}fragment SkylineDisplayAdFragment on Ad{...SkylineAdFragment adContent{type data{__typename...SkylineAdDataDisplayAdFragment}}}fragment SkylineAdFragment on Ad{status moduleType platform pageId pageType storeId stateCode zipCode pageContext moduleConfigs adsContext adRequestComposite}fragment SkylineAdDataDisplayAdFragment on AdData{...on DisplayAd{json status}}fragment SponsoredProductCarouselConfigsFragment on TempoWM_GLASSWWWSponsoredProductCarouselConfigs{_rawConfigs moduleType ad{...SponsoredProductsAdFragment}}fragment SponsoredProductsAdFragment on Ad{...AdFragment adContent{type data{__typename...AdDataSponsoredProductsFragment}}}fragment AdDataSponsoredProductsFragment on AdData{...on SponsoredProducts{adUuid adExpInfo moduleInfo products{...ProductFragment}}}fragment ProductFragment on Product{usItemId offerId badges{flags{...on BaseBadge{key text type id}}labels{key text}tags{key text}}priceInfo{priceDisplayCodes{rollback reducedPrice eligibleForAssociateDiscount clearance strikethrough submapType priceDisplayCondition unitOfMeasure pricePerUnitUom}currentPrice{price priceString}wasPrice{price priceString}priceRange{minPrice maxPrice priceString}unitPrice{price priceString}}showOptions sponsoredProduct{spQs clickBeacon spTags}canonicalUrl numberOfReviews averageRating availabilityStatus imageInfo{thumbnailUrl allImages{id url}}name fulfillmentBadge classType type p13nData{predictedQuantity flags{PREVIOUSLY_PURCHASED{text}CUSTOMERS_PICK{text}}labels{PREVIOUSLY_PURCHASED{text}CUSTOMERS_PICK{text}}}}
-
-Variables
-""""""""""""
-Variables
-    - **semStoreId** (str) - неизвестно. По дефолту null. Относится к `product`.
-    - **selected** (bool) - неизвестно. По дефолту true. Относится к `product`.
-    - **channel** (str) - Тип contentLayout. По дефолту WWW. Относится к `contentLayout`.
-    - **pageType** (str) - Тип страницы contentLayout. По дефолту ItemPageGlobal. Относится к `contentLayout`.
-    - **tenant** (str) - Тип макета страницы contentLayout. По дефолту WM_GLASS. Относится к `contentLayout`.
-    - **version** (str) - Версия contentLayout. Относится к `contentLayout`.
-    - **layout** (str) - Тип устройства contentLayout. Относится к `contentLayout`.
-    - **tempo** (str) - Метаинформация для contentLayout. Относится к `contentLayout`::
-
-            {
-                "targeting": "",
-                "params": [
-                    {"key": "expoVars", "value": "expoVariationValue"},
-                    {"key": "expoVars", "value": "expoVariationValue2"}
-                ]
-            }
-
-    - **page** (int) - Порядковый номер пагинации ревью. Относится к `reviews`.
-    - **limit** (int) - Количество ревью на пагинации. Относится к `reviews`.
-    - **sort** (str) - Сортировка ревью. Относится к `reviews`.
-    - **filters** ([str]) - Фильтры ревью. Относится к `reviews`.
-    - **p13N** (object) - Метаинформация о запросе.  Минимальный набор параметров::
-
-            "p13N": {
-                "reqId": "",
-                "pageId": "",
-                "modules": [],
-                "userClientInfo": {
-                    "deviceType": ""
-                },
-                "userReqInfo": {}
-            }
-
-    - **p13nCls** (object) - Интерфейс для p13N.
-    - **fetchBuyBoxAd** (bool) - Нужно ли возвращать информацию о BuyBoxAd. Относится к `contentLayout`.
-    - **fetchMarquee** (bool) - Нужно ли возвращать информацию о Marquee. Относится к `contentLayout`.
-    - **fetchSkyline** (bool) - Нужно ли возвращать информацию о Skyline. Относится к `contentLayout`.
-    - **fetchSpCarousel** (bool) - Нужно ли возвращать информацию о SpCarousel. Относится к `contentLayout`.
-    - **fetchAffirm** (bool) - Нужно ли возвращать информацию о Affirml. Относится к `contentLayout`.
-    - **fetchFitment** (bool) - Нужно ли возвращать информацию о Fitment. Относится к `contentLayout`.
-    - **fetchIdml** (bool) - Нужно ли возвращать информацию о Idml. Относится к `contentLayout`.
-    - **fetchP13N** (bool) - Нужно ли возвращать информацию о P13N. Относится к `contentLayout`.
-    - **fetchReviews** (bool) - Нужно ли возвращать информацию о Reviews. Относится к `contentLayout`.
-    - **fetchSEO** (bool) - Нужно ли возвращать информацию о SEO. Относится к `contentLayout`.
+        query ItemById($catalogSellerId:String $semStoreId: Int $postalAddress:PostalAddress $itemId:String! $selected:Boolean $variantFieldId:String $storeFrontIds:[StoreFrontId] $p13N:P13NRequest  $fulfillmentIntent:String  ){product( catalogSellerId:$catalogSellerId itemId:$itemId postalAddress:$postalAddress storeFrontIds:$storeFrontIds selected:$selected semStoreId:$semStoreId p13N:$p13N variantFieldId:$variantFieldId fulfillmentIntent:$fulfillmentIntent ){...FullProductFragment}}fragment FullProductFragment on Product{blitzItem giftingEligibility shipAsIs subscriptionEligible showFulfillmentLink additionalOfferCount shippingRestriction availabilityStatus averageRating suppressReviews brand badges{...BadgesFragment}rhPath partTerminologyId aaiaBrandId manufacturerProductId productTypeId tireSize tireLoadIndex tireSpeedRating viscosity model buyNowEligible earlyAccessEvent showBuyWithWplus preOrder{...PreorderFragment}canonicalUrl catalogSellerId sellerReviewCount sellerAverageRating category{...ProductCategoryFragment}classType classId fulfillmentTitle shortDescription fulfillmentType fulfillmentBadge checkStoreAvailabilityATC fulfillmentLabel{checkStoreAvailability wPlusFulfillmentText message shippingText fulfillmentText locationText fulfillmentMethod addressEligibility fulfillmentType postalCode}hasSellerBadge itemType id imageInfo{...ProductImageInfoFragment}location{postalCode stateOrProvinceCode city storeIds}manufacturerName name numberOfReviews orderMinLimit orderLimit offerId offerType priceInfo{priceDisplayCodes{...PriceDisplayCodesFragment}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}savings{priceString}subscriptionPrice{price priceString intervalFrequency duration percentageRate subscriptionString}priceRange{minPrice maxPrice priceString currencyUnit unitOfMeasure denominations{price priceString selected}}}returnPolicy{returnable freeReturns returnWindow{value unitType}}fsaEligibleInd sellerId sellerName sellerDisplayName secondaryOfferPrice{currentPrice{priceType priceString price}}semStoreData{pickupStoreId deliveryStoreId isSemLocationDifferent}shippingOption{...ShippingOptionFragment}type pickupOption{slaTier accessTypes availabilityStatus storeName storeId}salesUnit usItemId variantCriteria{id categoryTypeAllValues name type variantList{availabilityStatus id images name products swatchImageUrl selected}}variants{...MinimalProductFragment}groupMetaData{groupType groupSubType numberOfComponents groupComponents{quantity offerId componentType productDisplayName}}upc wfsEnabled sellerType ironbankCategory snapEligible showAddOnServices addOnServices{serviceType serviceTitle serviceSubTitle groups{groupType groupTitle assetUrl shortDescription services{displayName offerId selectedDisplayName currentPrice{price priceString}}}}productLocation{displayValue}}fragment BadgesFragment on UnifiedBadge{flags{__typename...on BaseBadge{id text key query type}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought criteria{name value}}}labels{__typename...on BaseBadge{id text key}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought}}tags{__typename...on BaseBadge{id text key}}}fragment ShippingOptionFragment on ShippingOption{accessTypes availabilityStatus slaTier deliveryDate maxDeliveryDate shipMethod shipPrice{...ProductPriceFragment}}fragment ProductCategoryFragment on ProductCategory{categoryPathId path{name url}}fragment PreorderFragment on PreOrder{streetDate streetDateDisplayable streetDateType isPreOrder preOrderMessage preOrderStreetDateMessage}fragment MinimalProductFragment on Variant{availabilityStatus imageInfo{...ProductImageInfoFragment}priceInfo{priceDisplayCodes{...PriceDisplayCodesFragment}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}}productUrl usItemId id:productId fulfillmentBadge}fragment ProductImageInfoFragment on ProductImageInfo{allImages{id url zoomable}thumbnailUrl}fragment PriceDisplayCodesFragment on PriceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}fragment ProductPriceFragment on ProductPrice{price priceString variantPriceString priceType currencyUnit}
 
 Пример переменных:
     .. code-block::
 
-        {"itemId":"539318462","semStoreId":null,"selected":true,"channel":"WWW","pageType":"ItemPageGlobal","tenant":"WM_GLASS","version":"v1","layout":["itemDesktop"],"tempo":{"targeting":"%7B%22userState%22%3A%22loggedIn%22%7D","params":[{"key":"expoVars","value":"expoVariationValue"},{"key":"expoVars","value":"expoVariationValue2"}]},"page":1,"limit":10,"sort":"relevancy","filters":[],"p13N":{"reqId":"GGxJ9Y6pzR5ZZuBKM4TFgqzhIlB3qKt8H4NT","pageId":"539318462","modules":[{"moduleType":"PersonalizedLabels","moduleId":"234-sdfsfvns-sdfdskvl"}],"userClientInfo":{"ipAddress":"IP=0:0:0:0:0:0:0:1-0:0:0:0:0:0:0:1","isZipLocated":true,"callType":"CLIENT","deviceType":"desktop"},"userReqInfo":{"refererContext":{"source":"itempage"},"pageUrl":"/ip/Knee-Brace-Compression-Support-Sleeve-Adjustable-Strap-Pad-Pain-Relief-Meniscus-Tear-Arthritis-ACL-MCL-Quick-Recovery-Running-Basketball-Crossfit/539318462?athcpid=539318462&athpgid=AthenaItempage&athcgid=null&athznid=grvi&athieid=null&athstid=CS020&athguid=gD0oWlcPzUKNf79WaOdv2RUX4hwrwHemASuQ&athancid=null&athena=true"}},"p13nCls":{"pageId":"539318462","userClientInfo":{"ipAddress":"IP=0:0:0:0:0:0:0:1-0:0:0:0:0:0:0:1","isZipLocated":true,"callType":"CLIENT","deviceType":"desktop"},"userReqInfo":{"refererContext":{"source":"itempage"}}},"fetchBuyBoxAd":true,"fetchMarquee":true,"fetchSkyline":true,"fetchSpCarousel":true,"fetchFitment":true,"fetchIdml":true,"fetchReviews":true,"fetchSEO":true,"fetchP13N":true,"fetchAffirm":true}
+        {"itemId": "493824815","semStoreId": null, "selected": true, "filters": []}
+
 
 Response
 ~~~~~~~~~~~
-Стандартный ответ на верхнем уровне состоит из нескольких частей:
+
+Ответ может содержать порядка 140 полей. Список всех полей можно найти в :download:`link <data/introspection_result.json5>`
 ::
 
     {
         "data": {
-            "contentLayout": {...},
             "product": {...},
-            "idml": {...},
-            "reviews": {...}
         }
     }
 
-- data.contentLayout - Содержит результат поиска и некоторые метаданные.
-    - modules - содержит информацию о различных конфигурациях таких как: marquee, ad, fitment etc.
-    - layouts - набор параметров, определяющих местоположение объектов на странице.
-    - pageMetadata - метаинформация о странице::
+Некоторые поля из ответа:
 
-        "pageMetadata": {
-            "location": {}, - информация и местоположения пользователя
-            "pageContext": {} - информация о контексте страницы
-        }
+- product.allOffers - список всех предложений
+    .. admonition:: Schema reference
+            :class: info
 
-- data.product - содержит информацию о целевом продукте.
-- data.idml - содержит контент секции `About this item <https://monosnap.com/file/ciymqSkuys0bKshEu39z0fP9OukZxL>`_.
-- data.reviews - содержит информацию об отзывах.
+            Description: All product offers
+
+    - allOffers.offerId - уникальный идентификатор оффера
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: offerId of the product
+
+    - allOffers.offerType - тип оффера
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: offer Type
+
+    - allOffers.availabilityStatus - статус доступности
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Availability status of item
+
+    - allOffers.fulfillmentType - тип выполнения заказа
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: fulfillment types - STORE or FC or MARKETPLACE
+
+    - allOffers.fulfillmentBadge - время выполнения заказа
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: fulfillment badge
+
+    - allOffers.fulfillmentTitle - название выполнения заказа
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: fulfillment types based on pickup and shipping
+
+    - allOffers.sellerId - уникальный идентификатор основного продавца товара
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Primary seller of the product
+
+    - allOffers.catalogSellerId - уникальный идентификатор страницы основного продавца товара
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: catalog Seller Id  of primary seller of product
+
+    - allOffers.sellerDisplayName - имя основного продавца, которое будет отображаться
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: seller display name of primary seller of product
+
+    - allOffers.sellerType - тип основного продавца
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: seller type of primary seller of product for eg. INTERNAL
+
+    - allOffers.wfsEnabled - выполняется ли заказ волмартом
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: WFS flag. Fulfilled by Walmart
+
+    - allOffers.hasSellerBadge - профессиональный ли продавец
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: is Pro Seller
+
+    - allOffers.priceInfo - информация о цене
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: All price information related tothe product. e.g. current price, was price, price format
+
+    - allOffers.returnPolicy - политика возврата
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: Return policy
+
+    - allOffers.shippingOption - информация о доставки товара
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: shipping details of the item
+
+    - allOffers.pickupOption - информация о получении товара
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: pickup details of the item
+
+    - allOffers.preOrder - информация о предзаказе
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: preOrder details of the item
+
+- product.sellerId - уникальный идентификатор продавца
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Primary seller of the product
+
+- product.additionalOfferCount - количество офферов
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Additional offer count
+
+- product.availabilityStatus - статус доступности товара
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Availability status of item
+
+- product.averageRating - средний рейтинг от 0 до 5
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: rating of the product of 5
+
+- product.brand - бренд
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Brand of the product.
+
+- product.canonicalUrl - ссылка на товар
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: canonical Url of the product for eg. /ip/Beef-Choice-Angus-New-York-Strip-Steak-0-82-1-57-lb/39944456
+
+- product.catalogSellerId - уникальный идентификатор страницы продавца
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: catalog Seller Id  of primary seller of product
+
+- product.category - категории и подкатегории продукта
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Categories that the product falls under. There are mutiple category levels
+
+- product.classType - тип класса продукта
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Class type of the product.
+
+- product.shortDescription - краткое описание товара. Содержит html теги
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Short description of the product.
+
+- product.detailedDescription - полное описание товара. Содержит html теги
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Detailed description of the product.
+
+- product.fulfillmentLabel - описание доставки
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: fulfillment label
+
+- product.id - уникальный идентификатор страницы продукта
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Unique product id
+
+- product.imageInfo - информация об изображениях
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: All images for the product
+
+- product.location - информация о локации
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: fulfillment location details
+
+- product.name - названия товара
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: Name of the product.
+
+- product.numberOfReviews - количество оценок
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: number of reviews of the product of 5
+
+- product.offerId - уникальный идентификатор оффера
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: primary offer id of product
+
+- product.offerType - тип офферов
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: offer type of primary offer of product for eg. ONLINE_ONLY, ONLINE_AND_STORE
+
+- product.priceInfo - информация о цене
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: All price information related tothe product. e.g. current price, was price, price format
+
+- product.sellerName - имя продавца
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: seller name of primary seller of product
+
+- product.shippingOption - информация о типах доставки
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: shipping details of the item
+
+- product.salesUnit - минимальное количество продаваемых единиц за раз
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: sales unit For e.g EACH
+
+- product.usItemId - уникальный идентификатор товара
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: A unique reference id to identify the product. e.g. 646105256"
+
+- product.variants - информация о продавцах
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: variants of the item
+
+- product.upc - upc товара
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: UPC
+
+- product.sellerType - тип продавца
+    .. admonition:: Schema reference
+            :class: info
+
+            Description: seller type of primary seller of product for eg. INTERNAL
+
 
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для товара с id "14532503": :download:`link <data/item_by_id_response.json5>`
+    Полный пример ответа для товара с id "139340877": :download:`link <data/item_by_id_response.json5>`
 
 UI-Response table comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-+------------+---------------------+--------------------------------------------------+--------------------------------------------------+
-| Title      | Description         | JSON-Path                                        | Screenshot                                       |
-+============+========+============+==================================================+==================================================+
-| Price      | It is fucking price | data.product.price                               | `This is url <https://ident.me>`_                |
-+------------+---------------------+--------------------------------------------------+--------------------------------------------------+
+.. _title: https://monosnap.com/file/BjKYYlkxVlEjWbo4BTvmnBmfiJJv5Z
+.. |title| replace:: Title
+
+.. _avg_rating: https://monosnap.com/file/IPsiMU8iVqDEi6W039Si7qm0lquqkY
+.. |avg_rating| replace:: Average rating
+
+.. _number_reviews: https://monosnap.com/file/lwJtWjP45T6rLOPBlS14hgFaF0ezwj
+.. |number_reviews| replace:: Number of reviews
+
+.. _brand: https://monosnap.com/file/pksi3Wf6k7Bx6XY2naaaN0VOmKIJxc
+.. |brand| replace:: Brand
+
+.. _categories: https://monosnap.com/file/g4m0k9gvsUvnU31OYkbrkmoOvGo1Ky
+.. |categories| replace:: Categories
+
+.. _price: https://monosnap.com/file/wdnCPPjk5CEmHX1IMNAzvABDGZCKIO
+.. |price| replace:: Price
+
+.. _variants: https://monosnap.com/file/mB6aumUbXjPOxx9PdY90mJFm7iRNfU
+.. |variants| replace:: Variants
+
+.. _fulfillment: https://monosnap.com/file/rZZogORcDnvZuaVfIGwkL90RrXAlKD
+.. |fulfillment| replace:: Fulfillment
+
+.. _seller: https://monosnap.com/file/hTY61775be68dnXNWgKuDQcDBlTwAe
+.. |seller| replace:: Seller
+
+.. _images: https://monosnap.com/file/pOWiAmGtU39eKEzTEO4dlWgHLiSdrN
+.. |images| replace:: Images
+
+
++--------------------------------------------------------------------------------+
+|                     Product                                                    |
++-------------------+---------------------------+--------------------------------+
+| Title             | Description               | JSON-Path                      |
++===================+===========================+================================+
+| |title|_          | Product title             | data.product.name              |
++-------------------+---------------------------+--------------------------------+
+| |avg_rating|_     | Average product rating    | data.product.averageRating     |
++-------------------+---------------------------+--------------------------------+
+| |number_reviews|_ | Product number of reviews | data.product.numberOfReviews   |
++-------------------+---------------------------+--------------------------------+
+| |brand|_          | Product brand             | data.product.brand             |
++-------------------+---------------------------+--------------------------------+
+| |categories|_     | Product categories        | data.product.category          |
++-------------------+---------------------------+--------------------------------+
+| |price|_          | Product price info        | data.product.priceInfo         |
++-------------------+---------------------------+--------------------------------+
+| |variants|_       | Product variants          | data.product.variants          |
++-------------------+---------------------------+--------------------------------+
+| |fulfillment|_    | Product fulfillment info  | data.product.fulfillmentLabel  |
++-------------------+---------------------------+--------------------------------+
+| |seller|_         | Main product seller       | data.product.sellerDisplayName |
++-------------------+---------------------------+--------------------------------+
+| |images|_         | Product images            | data.product.imageInfo         |
++-------------------+---------------------------+--------------------------------+
+
+.. _o_price: https://monosnap.com/file/jDuyeIPgiFA41KRKLwnh7F6TE4SpPc
+.. |o_price| replace:: Offer price
+
+.. _o_seller: https://monosnap.com/file/FIzbDJNrUvQM29p6DEyebNMD8ZbOXp
+.. |o_seller| replace:: Offer seller
+
+.. _is_pro: https://monosnap.com/file/l46Lh0sWt9gs8OVHv2mqGijKyyNeyl
+.. |is_pro| replace:: Offer pro seller
+
+.. _shipping: https://monosnap.com/file/mY3O3bM8GpRWfsWIq5sLlvbMw5xuSV
+.. |shipping| replace:: Offer shipping info
+
+.. _returning: https://monosnap.com/file/Ds1dDZpIrPilRHdGWWzEfWfdcpU0E8
+.. |returning| replace:: Offer returning policy
+
+
++--------------+------------------------+---------------------------------------------+
+|               ProductOffer                                                          |
++--------------+------------------------+---------------------------------------------+
+| Title        | Description            | JSON-Path                                   |
++==============+========================+=============================================+
+| |o_price|_   | Offer price info       | data.product.allOffers[i].priceInfo         |
++--------------+------------------------+---------------------------------------------+
+| |o_seller|_  | Offer seller           | data.product.allOffers[i].sellerDisplayName |
++--------------+------------------------+---------------------------------------------+
+| |is_pro|_    | Is whether seller pro  | data.product.allOffers[i].hasSellerBadge    |
++--------------+------------------------+---------------------------------------------+
+| |shipping|_  | Offer shipping info    | data.product.allOffers[i].shippingOption    |
++--------------+------------------------+---------------------------------------------+
+| |returning|_ | Offer returning policy | data.product.allOffers[i].returnPolicy      |
++--------------+------------------------+---------------------------------------------+
