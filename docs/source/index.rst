@@ -18,6 +18,6 @@ Contents
 .. toctree::
 
    overview
-   search_query
-   item_by_id_query
+   search
+   item_by_id
    get_seller_page_details
