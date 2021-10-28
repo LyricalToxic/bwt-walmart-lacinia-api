@@ -1,0 +1,28 @@
+query GetSellerPageDetails($catalogSellerId: String!) {
+  seller(catalogSellerId: $catalogSellerId) {
+    ...SellerFragment
+  }
+}
+fragment SellerFragment on Seller {
+  sellerAboutUs
+  returnPolicyText
+  proSeller
+  sellerTaxPolicy
+  catalogSellerId
+  sellerId
+  sellerName
+  sellerDisplayName
+  sellerPhone
+  sellerEmail
+  sellerType
+  sellerDisplayName
+  sellerLogoURL
+  hasSellerBadge
+  address1
+  address2
+  city
+  state
+  postalCode
+  country
+  countryCode
+}

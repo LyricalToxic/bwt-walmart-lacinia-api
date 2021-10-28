@@ -1,0 +1,308 @@
+query GetSellerPageDetails(
+  $catalogSellerId: String!
+  $cursor: String
+  $filter: ReviewFilter
+  $sort: ReviewSortType
+  $limit: Int
+  $p13n: JSON!
+) {
+  seller(catalogSellerId: $catalogSellerId) {
+    ...SellerFragment
+  }
+  sellerReturnPolicy(catalogSellerId: $catalogSellerId) {
+    catalogSellerId
+    sellerText
+    rapEnabledSeller
+    policies {
+      policyKey
+      returnableToStore
+      returnWindow {
+        value
+        unitType
+      }
+    }
+  }
+  sellerReviews(
+    catalogSellerId: $catalogSellerId
+    cursor: 1
+    sort: RELEVANCY
+    limit: 5
+  ) {
+    catalogSellerId
+    limit
+    totalCount
+    reviews {
+      ...ReviewsFragment
+    }
+  }
+  contentLayout(
+    channel: "WWW"
+    pageType: "SellerPage"
+    tenant: "WM_GLASS"
+    version: "v1"
+  ) {
+    host
+    upstreamStatus
+    modules(p13n: $p13n) {
+      name
+      publishedDate
+      moduleId
+      module_id
+      type
+      version
+      status
+      schedule {
+        start
+        end
+        priority
+        expEnabled
+      }
+      triggers {
+        pageType
+        pageId
+        zone
+        inheritable
+      }
+      matchedTrigger {
+        pageType
+        pageId
+        zone
+        inheritable
+      }
+      configs {
+        ... on EnricherModuleConfigsV1 {
+          zoneV1
+        }
+        ... on TempoWM_GLASSWWWItemCarouselConfigsV1 {
+          t1: title
+          type
+          subTitle
+          viewAllLink {
+            linkText
+            title
+            clickThrough {
+              type
+              value
+            }
+          }
+          tileOptions {
+            productTitle
+          }
+          products {
+            usItemId
+            variantCount
+            variantCriteria {
+              name
+              variantList {
+                name
+                swatchImageUrl
+                selectedProduct {
+                  usItemId
+                }
+              }
+            }
+            offerId
+            priceInfo {
+              priceDisplayCodes {
+                rollback
+                reducedPrice
+                eligibleForAssociateDiscount
+                clearance
+                strikethrough
+                submapType
+                priceDisplayCondition
+                unitOfMeasure
+                pricePerUnitUom
+              }
+              currentPrice {
+                price
+                priceString
+              }
+              wasPrice {
+                price
+                priceString
+              }
+              priceRange {
+                minPrice
+                maxPrice
+                priceString
+              }
+              unitPrice {
+                price
+                priceString
+              }
+            }
+            sellerId
+            sellerName
+            seller {
+              name
+              sellerId
+            }
+            canonicalUrl
+            numberOfReviews
+            averageRating
+            availabilityStatus
+            imageInfo {
+              thumbnailUrl
+              allImages {
+                id
+                url
+              }
+            }
+            name
+            fulfillmentBadge
+            p13nDataV1 {
+              predictedQuantity
+              flags {
+                PREVIOUSLY_PURCHASED {
+                  text
+                }
+                CUSTOMERS_PICK {
+                  text
+                }
+              }
+              labels {
+                PREVIOUSLY_PURCHASED {
+                  text
+                }
+                CUSTOMERS_PICK {
+                  text
+                }
+              }
+            }
+          }
+        }
+        ... on _TempoWM_GLASSWWWSellerContactPlaceholderConfigs {
+          seller(catalogSellerId: $catalogSellerId) {
+            ...SellerFragment
+          }
+        }
+        ... on _TempoWM_GLASSWWWSellerBadgePlaceholderConfigs {
+          title
+          badgeInfo {
+            name
+          }
+        }
+        ... on _TempoWM_GLASSWWWSellerReturnPolicyPlaceholderConfigs {
+          _rawConfigs
+        }
+        ... on _TempoWM_GLASSWWWSellerInfoPlaceholderConfigs {
+          seller(catalogSellerId: $catalogSellerId) {
+            ...SellerFragment
+          }
+          sellerReviews(
+            catalogSellerId: $catalogSellerId
+            cursor: $cursor
+            filter: $filter
+            sort: $sort
+            limit: $limit
+          ) {
+            ...SellerReviewsFragment
+          }
+        }
+        ... on _TempoWM_GLASSWWWSellerReviewsPlaceholderConfigs {
+          sellerReviews(
+            catalogSellerId: $catalogSellerId
+            cursor: $cursor
+            filter: $filter
+            sort: $sort
+            limit: $limit
+          ) {
+            ...SellerReviewsFragment
+          }
+        }
+        ... on _TempoWM_GLASSWWWSellerAboutPlaceholderConfigs {
+          seller {
+            sellerAboutUs
+          }
+        }
+        ... on _TempoWM_GLASSWWWSellerTaxPolicyPlaceholderConfigs {
+          seller {
+            sellerTaxPolicy
+          }
+        }
+      }
+    }
+    layouts {
+      id
+      layout
+    }
+  }
+}
+fragment ReviewsFragment on UGCSellerReview {
+  negativeFeedback
+  positiveFeedback
+  rating
+  reviewSubmissionTime
+  reviewText
+  reviewTitle
+  userNickname
+}
+fragment SellerReviewsFragment on SellerReview {
+  catalogSellerId
+  cursor
+  limit
+  filter
+  sort
+  totalCount
+  pageInfo {
+    nextPageCursor
+    prevPageCursor
+  }
+  topNegativeReview {
+    negativeFeedback
+    positiveFeedback
+    rating
+    reviewSubmissionTime
+    reviewText
+    reviewTitle
+    userNickname
+  }
+  topPositiveReview {
+    negativeFeedback
+    positiveFeedback
+    rating
+    reviewSubmissionTime
+    reviewText
+    reviewTitle
+    userNickname
+  }
+  reviewSummary {
+    averageOverallRating
+    percentPositive
+    percentageFiveCount
+    percentageFourCount
+    percentageOneCount
+    percentageThreeCount
+    percentageTwoCount
+    ratingValueFiveCount
+    ratingValueFourCount
+    ratingValueOneCount
+    ratingValueThreeCount
+    ratingValueTwoCount
+    recommendedPercentage
+    roundedAverageOverallRating
+    totalReviewCount
+  }
+  reviews {
+    ...ReviewsFragment
+  }
+}
+fragment SellerFragment on Seller {
+  catalogSellerId
+  sellerId
+  sellerName
+  sellerDisplayName
+  sellerPhone
+  sellerType
+  sellerDisplayName
+  sellerLogoURL
+  hasSellerBadge
+  address1
+  address2
+  city
+  state
+  postalCode
+  country
+  countryCode
+}

@@ -1,0 +1,19 @@
+{
+  "variables": {
+    "catalogSellerId": "10812",
+    "cursor": "1",
+    "sort": "RELEVANCY",
+    "limit": 10,
+    "p13n": {
+      "pageId": "901864295",
+      "catalogSellerId": "10812",
+      "userReqInfo": {
+        "refererContext": {}
+      },
+      "userClientInfo": {
+        "deviceType": "desktop",
+        "callType": "CLIENT"
+      }
+    }
+  }
+}

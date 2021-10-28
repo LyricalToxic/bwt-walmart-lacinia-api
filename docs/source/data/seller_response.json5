@@ -1,0 +1,26 @@
+{
+    "data": {
+        "seller": {
+            "sellerAboutUs": "Classy Outfit - Class and Speed -  was created for the consumer by experts who have served the consumer industry through their wholesale division over the last three decades. Rest assured that when you place an order with us, you will receive rock bottom wholesale pricing and the service you deserve.",
+            "returnPolicyText": "We accept return within 30 days from purchase date. Please contact us at bmggrad@yahoo.com for return authorization. Items must be returned in its original sealed packaging otherwise we will charge a 15% restocking fee. If the item is defective you must contact us within 7 days of receiving your purchase. We cover return shipping only in the event that the item is defective upon receipt. Thanks for choosing Classy Outfit.",
+            "proSeller": null,
+            "sellerTaxPolicy": "We collect sales tax for shipments in New York",
+            "catalogSellerId": "4650",
+            "sellerId": "D06FC8DC8BF94F1D93AE73B375E82531",
+            "sellerName": "Deal Buster Inc",
+            "sellerDisplayName": "Classy Outfit",
+            "sellerPhone": "3473183388",
+            "sellerEmail": "bmggrad@yahoo.com",
+            "sellerType": "EXTERNAL",
+            "sellerLogoURL": "https://i5.walmartimages.com/asr/6d9bea36-291e-4b8d-9e9c-416ce28ee81f_1.760b3eeac1ff8b34fe999f0a5493f55e.jpeg",
+            "hasSellerBadge": false,
+            "address1": "5117 - 20 Ave",
+            "address2": null,
+            "city": "Brooklyn",
+            "state": "New York",
+            "postalCode": "11204",
+            "country": "United States",
+            "countryCode": null
+        }
+    }
+}
