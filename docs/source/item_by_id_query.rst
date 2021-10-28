@@ -18,7 +18,7 @@ Overview
 
 .. HTTP метод и endpoint.
 
-Поиск информации о продукте на сайте walmart можно выполнить используя `post` запрос на endpoint:
+Поиск информации на сайте walmart можно выполнить используя `post` запрос на endpoint:
 ::
 
     https://www.walmart.com/orchestra/home/graphql или https://www.walmart.com/orchestra/home/graphql/ip/{item_id}

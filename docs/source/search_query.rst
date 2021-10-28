@@ -23,7 +23,7 @@ Overview
 
 .. HTTP метод и endpoint.
 
-Поиск по ключевым словам на сайте walmart выполняется с помощью `post` запроса на endpoint:
+Поиск на сайте walmart выполняется с помощью `post` запроса на endpoint:
 ::
 
     https://www.walmart.com/orchestra/home/graphql/search or https://www.walmart.com/orchestra/home/graphql
