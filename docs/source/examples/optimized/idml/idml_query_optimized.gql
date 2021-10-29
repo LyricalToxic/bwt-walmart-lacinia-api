@@ -1,0 +1,220 @@
+query GetIDML($itemId: String, $html: Boolean) {
+  idml(itemId: $itemId, html: $html) {
+    itemId
+    html
+    warnings {
+      name
+      value
+      attribute
+    }
+    specifications {
+      name
+      value
+      attribute
+    }
+    rxPharmacy {
+      name
+      value
+      attribute
+    }
+    indications {
+      name
+      value
+      attribute
+    }
+    supplementFacts {
+      headers {
+        name
+        value
+        attribute
+      }
+      footers {
+        name
+        value
+        attribute
+      }
+      segments {
+        name
+        amount
+        dvp
+      }
+    }
+    chokingHazards {
+      headline
+      image
+      message
+      mature
+      ageRestriction
+    }
+    directions {
+      name
+      value
+      attribute
+    }
+    displayabilityMatrix {
+      researchTabModuleKey
+      showAboutAlbumHeader
+      showVideoContent
+      showMarketingContent
+    }
+    drugFacts {
+      activeIngredients {
+        name
+        values {
+          name
+        }
+      }
+      warnings {
+        name
+        value
+        attribute
+      }
+      directions {
+        name
+        value
+        attribute
+      }
+      inactiveIngredients {
+        name
+        value
+        attribute
+      }
+      question {
+        name
+        value
+        attribute
+      }
+      otherInformation {
+        name
+        value
+        attribute
+      }
+    }
+    esrbRating
+    ingredients {
+      ingredients {
+        name
+        value
+        attribute
+      }
+      activeIngredientName {
+        name
+        value
+        attribute
+      }
+      activeIngredients {
+        name
+        value
+        attribute
+      }
+      inactiveIngredients {
+        name
+        value
+        attribute
+      }
+    }
+    legalBadges {
+      headline
+      image
+      message
+      mature
+      ageRestriction
+    }
+    longDescription
+    shortDescription
+    mpaaRating
+    nutritionFacts {
+      calorieInfo {
+        name
+        mainNutrient {
+          name
+          amount
+          dvp
+        }
+        childNutrients {
+          name
+          amount
+          dvp
+        }
+      }
+      keyNutrients {
+        name
+        values {
+          name
+          mainNutrient {
+            name
+            amount
+            dvp
+          }
+          childNutrients {
+            name
+            amount
+            dvp
+          }
+        }
+      }
+      vitaminMinerals {
+        name
+        mainNutrient {
+          name
+          amount
+          dvp
+        }
+        childNutrients {
+          name
+          amount
+          dvp
+        }
+      }
+      servingInfo {
+        name
+        values {
+          name
+          value
+          attribute
+        }
+      }
+      staticContent {
+        name
+        value
+        attribute
+      }
+      additionalDisclaimer {
+        name
+        value
+        attribute
+      }
+    }
+    sizeCharts {
+      id
+      tagDisplay
+    }
+    warranty {
+      length
+      information
+    }
+    videos {
+      poster
+      title
+      versions {
+        small
+        large
+      }
+    }
+    videoMatrix {
+      usItemId
+      videoModulesKey
+      videoModulesType
+    }
+    product360ImageContainer {
+      name
+      url
+    }
+    productHighlights {
+      name
+      value
+      attribute
+    }
+    interactiveProductVideo
+  }
+}
