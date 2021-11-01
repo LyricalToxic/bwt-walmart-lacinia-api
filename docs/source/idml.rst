@@ -25,14 +25,6 @@ Overview
 
 .. Описание свойств запроса.
 
-Для запроса являются обязательными заголовки:
-::
-
-    Accept: application/json
-    Content-Type: application/json
-    WM_MP: True
-    X-APOLLO-OPERATION-NAME: AnyFunctionName
-
 Обязательным параметром является catalogSellerId.
 
 .. Описание ответа.
@@ -125,7 +117,7 @@ Response
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для продукта "637717150": :download:`link <data/idml_response.json5>`
+    Полный пример ответа для продукта "637717150": :download:`link <jsons/idml_response.json5>`
 
 UI-Response table comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

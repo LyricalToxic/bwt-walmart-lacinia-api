@@ -31,14 +31,6 @@ Overview
 
 .. Описание свойств запроса.
 
-Для запроса являются обязательными заголовки:
-::
-
-    Accept: application/json
-    Content-Type: application/json
-    WM_MP: True
-    X-APOLLO-OPERATION-NAME: AnyFunctionName
-
 Помимо ключевого слова, в запросе можно указать различные фильтры и сортировку, что в свою очередь будет влиять на количество результатов.
 Также локация влияет на количество результатов.
 
@@ -598,7 +590,7 @@ Response
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для ключевого слова "coffee starbucks": :download:`link <data/search_response.json5>`
+    Полный пример ответа для ключевого слова "coffee starbucks": :download:`link <jsons/search_response.json5>`
 
 UI-Response table comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

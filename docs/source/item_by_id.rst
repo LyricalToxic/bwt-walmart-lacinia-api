@@ -25,14 +25,6 @@ Overview
 
 .. Описание свойств запроса.
 
-Для запроса являются обязательными заголовки:
-::
-
-    Accept: application/json
-    Content-Type: application/json
-    WM_MP: True
-    X-APOLLO-OPERATION-NAME: AnyFunctionName
-
 .. Описание ответа.
 
 Результатом поиска является информация об item.
@@ -41,7 +33,7 @@ Overview
 .. Особенности
 
 
-- в случае если itemId не был найден, то будет возвращена :download:`ошибка 404 в теле ответа <data/item_by_id_404_response.json5>`.
+- в случае если itemId не был найден, то будет возвращена :download:`ошибка 404 в теле ответа <jsons/item_by_id_404_response.json5>`.
 - если item out of stock, тогда информации о продавце может и не быть.
 
 Body
@@ -193,7 +185,7 @@ Query
 Response
 ~~~~~~~~~~~
 
-Ответ может содержать порядка 140 полей. Список всех полей можно найти в :download:`link <data/introspection_result.json5>`
+Ответ может содержать порядка 140 полей. Список всех полей можно найти в :download:`link <jsons/introspection_result.json5>`
 ::
 
     {
@@ -478,7 +470,7 @@ Response
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для товара с id "139340877": :download:`link <data/item_by_id_response.json5>`
+    Полный пример ответа для товара с id "139340877": :download:`link <jsons/item_by_id_response.json5>`
 
 UI-Response table comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
