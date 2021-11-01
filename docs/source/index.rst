@@ -1,24 +1,50 @@
-Welcome to BWT Walmart Lacinia API documentation!
-====================================================
+Добро пожаловать на Walmart Lacinia API документацию (Welcome to BWT Walmart Lacinia API documentation!)
+===========================================================================================================
 
-`Lacinia <https://github.com/walmartlabs/lacinia>`_ - это библиотека реализующая Facebook's GraphQL спецификации на Closure, разработанная  `walmartlabs <https://github.com/walmartlabs]>`_.
-Она является реализацией контракта между GraphQL-клиентом и вашими данными.
+Вступление (Introduce)
+------------------------
+..
+    Предоставить описание документации. Ее цель.
 
-`Lacinia <https://github.com/walmartlabs/lacinia>`_ is a library which implementation of Facebook's GraphQL specification powered by `walmartlabs <https://github.com/walmartlabs]>`_.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
 
-.. note::
+Целью данного документа является предоставить примерное описание backend api сайта `walmart <https://www.walmart.com/>`_ и взаимодействие с ним. \
 
-   This project is under active development.
+Walmart использует библиотеку `lacinia` для своего backend.
 
-Contents
---------
+
+.. admonition:: Lacinia doc reference
+    :class: note
+
+    `Lacinia <https://github.com/walmartlabs/lacinia>`_ - это библиотека реализующая Facebook's `GraphQL <https://graphql.org/learn/>`_
+    спецификации на языке Closure, разработанная  `walmartlabs <https://github.com/walmartlabs]>`_.
+    Она определяет контракт между GraphQL-клиентом и вашими данными.\
+
+
+Контекст (Context)
+-------------------
+В сентябре 2021 года сайта walmart практически полностью перешел на новую версию backend,
+кардинально отличающуюся от старой. Старая api не была полностью удаленна, в основном остались лишь заглушки.
+Новая версия предоставляет:
+
+- больше информации
+- современную архитектуру
+- большую скорость и меньшие задержки
+
+
+.. admonition:: Warning
+    :class: warning
+
+    Официального описания работы api нет, поэтому исследование происходило "в слепую" и методом подбора.
+    Как следствие в документе могут содержаться неправильные выводы или неточности.
+
+
+Содержание (Contents)
+-----------------------
 
 .. toctree::
 
    overview
-   search
+   search_products
    item_by_id
    get_seller_page_details
    idml
