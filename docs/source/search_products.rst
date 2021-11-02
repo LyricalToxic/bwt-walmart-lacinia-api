@@ -1,8 +1,8 @@
-Search
------------
+Поиск (Search)
+----------------
 
-Overview
-~~~~~~~~~~~
+Обзор (Overview)
+~~~~~~~~~~~~~~~~~~
 
 ..
     Overview для каждого запроса должно содержать:
@@ -27,7 +27,7 @@ Overview
 Поиск на сайте walmart выполняется с помощью `post` запроса на endpoint:
 ::
 
-    https://www.walmart.com/orchestra/home/graphql/search or https://www.walmart.com/orchestra/home/graphql
+    https://www.walmart.com/orchestra/home/graphql/search
 
 .. Описание свойств запроса.
 
@@ -42,20 +42,19 @@ Overview
 
 .. Особенности
 
-- размер пагинации всегда 40
+Примечание:
+
+- размер пагинации всегда 40, в независимости от указанного размера
 - при размере пагинации 40 может приходить меньше 40 товаров
 - на пагинациях есть повторяющиеся товары
 - при запросе на страницы следующие за 25, в ответе могут содержаться продукты. Они будут дубликатами
 - сортировка по цене работает некорректно. Результаты сортируются в пределах одной пагинации
 
+Тело (Body)
+~~~~~~~~~~~~~
 
-.. _body:
-
-Body
-~~~~~~~~~~~
-
-Query
-"""""""""""
+Запрос (Query)
+""""""""""""""""
 
 .. function:: search(...)
 
@@ -81,11 +80,6 @@ Query
 
     :parameter String $storeSlotBooked: \
 
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
-
         Относится к seoTopicData.
 
     :parameter String $stores: \
@@ -97,7 +91,7 @@ Query
 
         Уникальный идентификатор магазина относительно которого будет выполняться поиск.
 
-    :parameter Prg $prg!: \
+    :parameter Prg $prg: \
 
         .. admonition:: Schema reference
             :class: info
@@ -262,7 +256,7 @@ Query
 
         - дробной
 
-        При достаточно большом значении цены(значение больше чем наибольшая цена из результатов) и отсутствии значение " " количество результатов будет отличаться.
+        При достаточно большом значении цены(значение больше чем наибольшая цена из результатов) и отсутствии значение " ", количество результатов будет отличаться.
         В основном при отсутствии значения количество результатов будет больше. \
 
         .. admonition:: Attention
@@ -288,7 +282,7 @@ Query
 
         - дробной
 
-        При значении цены "0" и отсутствии значение " " количество результатов будет отличаться.
+        При значении цены "0" и отсутствии значение " ", количество результатов будет отличаться.
         В основном при отсутствии значения количество результатов будет больше. \
 
         .. admonition:: Attention
@@ -317,11 +311,6 @@ Query
             При сортировке best_match в результатах возвращаются спонсорские продукты. \
 
     :parameter Boolean $soft_sort: \
-
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
 
     :parameter Boolean $spelling: \
 
@@ -353,17 +342,7 @@ Query
 
     :parameter String $typehead: \
 
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
-
     :parameter String $strategy: \
-
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
 
     :parameter String $recall_set: \
 
@@ -374,11 +353,6 @@ Query
 
     :parameter Boolean $preciseSearch: \
 
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
-
     :parameter String $pap: \
 
         .. admonition:: Schema reference
@@ -388,31 +362,11 @@ Query
 
     :parameter String $ptss: \
 
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
-
     :parameter String $c_btc_id: \
-
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
 
     :parameter String $c_bstc: \
 
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
-
     :parameter String $sod: \
-
-        .. admonition:: Schema reference
-            :class: info
-
-            Description: null. \
 
     :parameter String $channel: \
 
@@ -479,20 +433,40 @@ Query
 
         Default = {} \
 
+Переменные (Variables)
+""""""""""""""""""""""""
 
-Пример запроса:
+.. collapse:: Пример запроса
+
     .. code-block::
 
         query Search( $query:String $page:Int $prg:Prg! $facet:String $sort:Sort = best_match $catId:String $max_price:String $min_price:String $spelling:Boolean = true $affinityOverride:AffinityOverride $storeSlotBooked:String $ps:Int $ptss:String $recall_set:String $trsp:String  $additionalQueryParams:JSON ={}){search( query:$query page:$page prg:$prg facet:$facet sort:$sort cat_id:$catId max_price:$max_price min_price:$min_price spelling:$spelling affinityOverride:$affinityOverride storeSlotBooked:$storeSlotBooked ps:$ps ptss:$ptss recall_set:$recall_set trsp:$trsp additionalQueryParams:$additionalQueryParams ){query searchResult{...SearchResultFragment}}}fragment SearchResultFragment on SearchInterface{title aggregatedCount...BreadCrumbFragment...DebugFragment...ItemStacksFragment...PageMetaDataFragment...PaginationFragment...SpellingFragment...RequestContextFragment...ErrorResponse modules{facetsV1{...FacetFragment}guidedNavigation{...GuidedNavFragment}guidedNavigationV2{...PillsModuleFragment}pills{...PillsModuleFragment}spellCheck{title subTitle urlLinkText url}}}fragment BreadCrumbFragment on SearchInterface{breadCrumb{id name url}}fragment DebugFragment on SearchInterface{debug{sisUrl}}fragment ItemStacksFragment on SearchInterface{itemStacks{displayMessage meta{adsBeacon{adUuid moduleInfo max_ads}query stackId stackType title layoutEnum totalItemCount totalItemCountDisplay viewAllParams{query cat_id sort facet affinityOverride recall_set min_price max_price}}itemsV2{...ItemFragment...InGridMarqueeAdFragment}}}fragment ItemFragment on Product{__typename id usItemId fitmentLabel name type shortDescription imageInfo{...ProductImageInfoFragment}canonicalUrl externalInfo{url}category{path{name url}}badges{flags{key text}tags{...on BaseBadge{key text type}}}classType averageRating numberOfReviews esrb mediaRating salesUnitType sellerId sellerName hasSellerBadge availabilityStatusV2{display value}productLocation{displayValue aisle{zone aisle}}badge{type dynamicDisplayName}fulfillmentSpeed offerId preOrder{...PreorderFragment}priceInfo{...ProductPriceInfoFragment}variantCriteria{...VariantCriteriaFragment}fulfillmentBadge fulfillmentTitle fulfillmentType brand manufacturerName showAtc sponsoredProduct{spQs clickBeacon spTags}showOptions}fragment ProductImageInfoFragment on ProductImageInfo{thumbnailUrl}fragment ProductPriceInfoFragment on ProductPriceInfo{priceRange{minPrice maxPrice}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}listPrice{...ProductPriceFragment}shipPrice{...ProductPriceFragment}subscriptionPrice{priceString subscriptionString}priceDisplayCodes{priceDisplayCondition finalCostByWeight}}fragment PreorderFragment on PreOrder{isPreOrder preOrderMessage preOrderStreetDateMessage}fragment ProductPriceFragment on ProductPrice{price priceString}fragment VariantCriteriaFragment on VariantCriterion{name type id isVariantTypeSwatch variantList{id images name rank swatchImageUrl availabilityStatus products selectedProduct{canonicalUrl usItemId}}}fragment InGridMarqueeAdFragment on MarqueePlaceholder{__typename type moduleLocation lazy}fragment PageMetaDataFragment on SearchInterface{pageMetadata{title canonical description location{addressId}}}fragment PaginationFragment on SearchInterface{paginationV2{maxPage pageProperties}}fragment SpellingFragment on SearchInterface{spelling{correctedTerm}}fragment RequestContextFragment on SearchInterface{requestContext{isFitmentFilterQueryApplied searchMatchType categories{id name}}}fragment ErrorResponse on SearchInterface{errorResponse{correlationId source errors{errorType statusCode statusMsg source}}}fragment GuidedNavFragment on GuidedNavigationSearchInterface{title url}fragment PillsModuleFragment on PillsSearchInterface{title url image:imageV1{src alt}baseSeoURL}fragment FacetFragment on Facet{name type layout min max selectedMin selectedMax unboundedMax stepSize values{id name description type itemCount isSelected baseSeoURL}}
 
-Пример переменных:
-    .. code-block::
+.. collapse:: Пример переменных
 
-        {"query": "coffee starbucks", "page": 3, "prg": "desktop", "catId": "", "facet": "", "sort": "price_low", "ps": 40, "ptss": "", "trsp": "", "beShelfId": "", "recall_set": "", "module_search": "", "min_price": "", "max_price": "","storeSlotBooked": ""}
+    .. code-block:: json
+        :linenos:
 
-Response
-~~~~~~~~~~~
+        {
+            "query": "coffee starbucks",
+            "page": 3,
+            "prg": "desktop",
+            "catId": "",
+            "facet": "",
+            "sort": "price_low",
+            "ps": 40,
+            "ptss": "",
+            "trsp": "",
+            "beShelfId": "",
+            "recall_set": "",
+            "module_search": "",
+            "min_price": "",
+            "max_price": "",
+            "storeSlotBooked": ""
+        }
 
+Ответ (Response)
+~~~~~~~~~~~~~~~~~~
 
 Стандартный ответ на верхнем уровне состоит из нескольких частей:
 ::
@@ -508,80 +482,92 @@ Response
     }
 
 - data.search.query:String - Содержит финальный вариант ключевого слова.
-- data.search.searchResult:SearchInterface - Содержит результат поиска типа SearchInterface. Структура SearchInterface:
+- data.search.searchResult:SearchInterface - Содержит результат поиска типа SearchInterface.
 
-::
+.. collapse:: Структура SearchInterface
 
-        "searchResult":{
-            "query": "",
-            "searchInterfaceKey": {SearchInterfaceKey},
-            "_prefetch_": {JSON},
-            "itemStacks": [Stack],
-            "title": "",
-            "aggregatedCount": 0,
-            "modules": {SearchInterfaceModule},
-            "errorResponse": {ErrorResponse},
-            "requestContext": {RequestContext},
-            "pageMetadata": {PageMetadata},
-            "spelling": {Spelling},
-            "paginationV2": {PaginationV2},
-            "gridViewToggle": {GridViewToggle},
-            "debug": {Debug},
-            "debug": [breadCrumb],
-        }
+        .. code-block:: json
+                :linenos:
+
+                {
+                    "searchResult": {
+                        "query": "",
+                        "searchInterfaceKey": "{SearchInterfaceKey}",
+                        "_prefetch_": "{JSON}",
+                        "itemStacks": "[Stack]",
+                        "title": "",
+                        "aggregatedCount": 0,
+                        "modules": "{SearchInterfaceModule}",
+                        "errorResponse": "{ErrorResponse}",
+                        "requestContext": "{RequestContext}",
+                        "pageMetadata": "{PageMetadata}",
+                        "spelling": "{Spelling}",
+                        "paginationV2": "{PaginationV2}",
+                        "gridViewToggle": "{GridViewToggle}",
+                        "debug": "{Debug}",
+                        "breadCrumbs": "[breadCrumb]",
+                    }
+                }
 
 \
-    - query:String \
-    - searchInterfaceKey:SearchInterfaceKey \
-    - _prefetch_:JSON \
-    - itemStacks:[Stack] \
+    - query: String \
+    - searchInterfaceKey: SearchInterfaceKey \
+    - _prefetch_: JSON \
+    - itemStacks: [Stack] \
         .. admonition:: Schema reference
             :class: info
 
             Description: Stacks of Items/Products. \
-    - title:String
+    - title: String
         .. admonition:: Schema reference
             :class: info
 
             Description: Computed title containing query & result count information. \
-    - aggregatedCount:Int - количество результатов. \
-    - modules:SearchInterfaceModule \
+    - aggregatedCount: Int - количество результатов. \
+    - modules: SearchInterfaceModule \
     - errorResponse: ErrorResponse
         .. admonition:: Schema reference
             :class: info
 
             Description: Error Information provided by SIS (search interface service). \
-    - requestContext:RequestContext
+
+    - requestContext: RequestContext
         .. admonition:: Schema reference
             :class: info
 
             Description: Request Context provided by SIS (search interface service). \
-    - pageMetadata:PageMetaData
+
+    - pageMetadata: PageMetaData
         .. admonition:: Schema reference
             :class: info
 
             Description: Page Metadata. \
-    - spelling:Spelling
+
+    - spelling: Spelling
         .. admonition:: Schema reference
             :class: info
 
             Description: Corrected Spelling and suggestions. \
-    - paginationV2:PaginationV2
+
+    - paginationV2: PaginationV2
         .. admonition:: Schema reference
             :class: info
 
             Description: Pagination information. \
-    - gridViewToggle:GridViewToggle
+
+    - gridViewToggle: GridViewToggle
         .. admonition:: Schema reference
             :class: info
 
             Description: Grid View/List View links. \
-    - debug:Debug
+
+    - debug: Debug
         .. admonition:: Schema reference
             :class: info
 
             Description: Debug information provided by SIS (search interface service). \
-    - breadCrumb:[BreadCrumb]
+
+    - breadCrumb: [BreadCrumb]
         .. admonition:: Schema reference
             :class: info
 
@@ -590,10 +576,10 @@ Response
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для ключевого слова "coffee starbucks": :download:`link <jsons/search_response.json5>`
+    Полный пример ответа для ключевого слова :download:`"coffee starbucks" <jsons/search_response.json5>`
 
-UI-Response table comparison
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Таблица сопоставления ответа и визуального местоположения данных (UI-Response table comparison)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 .. _product_id: https://monosnap.com/file/xOYVsDHxKuk24OF6rbzt5tEaH5Bopz
