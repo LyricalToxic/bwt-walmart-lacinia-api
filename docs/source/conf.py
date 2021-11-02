@@ -18,7 +18,8 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx_copybutton',
-    'sphinx_inline_tabs'
+    'sphinx_inline_tabs',
+    'sphinx_toolbox.collapse'
 ]
 
 intersphinx_mapping = {
@@ -36,3 +37,4 @@ html_theme = 'furo'
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
+

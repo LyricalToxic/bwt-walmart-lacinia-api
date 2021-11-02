@@ -1,0 +1,86 @@
+{
+  "intent": "SHIPPING",
+  "assortment": {
+    "nodeId": "2447",
+    "displayName": "Cincinnati Supercenter",
+    "accessPoints": null,
+    "intent": "PICKUP",
+    "scheduleEnabled": false
+  },
+  "pickup": [
+    {
+      "buId": "0",
+      "nodeId": "2447",
+      "displayName": "Cincinnati Supercenter",
+      "nodeType": "STORE",
+      "address": {
+        "postalCode": "45238",
+        "addressLine1": "2322 Ferguson Rd",
+        "city": "Cincinnati",
+        "state": "OH",
+        "country": "US",
+        "postalCode9": "45238-3503"
+      },
+      "geoPoint": {
+        "latitude": 39.128243,
+        "longitude": -84.597198
+      },
+      "isGlassEnabled": true,
+      "scheduledEnabled": true,
+      "unScheduledEnabled": true
+    }
+  ],
+  "delivery": {
+    "buId": "0",
+    "nodeId": "2447",
+    "displayName": "Cincinnati Supercenter",
+    "nodeType": "STORE",
+    "address": {
+      "postalCode": "45238",
+      "addressLine1": "2322 Ferguson Rd",
+      "city": "Cincinnati",
+      "state": "OH",
+      "country": "US",
+      "postalCode9": "45238-3503"
+    },
+    "geoPoint": {
+      "latitude": 39.128243,
+      "longitude": -84.597198
+    },
+    "isGlassEnabled": true,
+    "scheduledEnabled": true,
+    "unScheduledEnabled": true,
+    "accessPoints": [
+      {
+        "accessType": "DELIVERY_ADDRESS"
+      }
+    ]
+  },
+  "shippingAddress": {
+    "latitude": 39.1063,
+    "longitude": -84.5356,
+    "postalCode": "45201",
+    "city": "Cincinnati",
+    "state": "OH",
+    "countryCode": "USA",
+    "giftAddress": false
+  },
+  "entityErrors": [],
+  "instore": false,
+  "deliverySlotInfoDTO": null,
+  "guestAccount": {
+    "intent": "SHIPPING",
+    "storeIntent": "PICKUP",
+    "mergeFlag": true,
+    "pickup": {
+      "nodeId": "2447",
+      "timestamp": "timestamp"
+    },
+    "postalCode": {
+      "timestamp": "timestamp",
+      "base": "45201"
+    }
+  },
+  "refreshAt": "{timestamp + 1 hour}",
+  "validateKey": "prod:v2:{ACID}"
+}

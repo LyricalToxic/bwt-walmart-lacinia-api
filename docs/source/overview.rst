@@ -3,11 +3,14 @@
 
 Цель (Objective)
 ------------------
-1. Описать алгоритм составления http запросов.
-2. Обзор GraphQL документа.
-3. Составление graphql документа.
-4. Предоставить пример и описание нескольких документов.
-5. Предоставить файл с результатами интроспекции.
+1. :ref:`Описать алгоритм составления http запросов. <description>`
+2. :ref:`Обзор GraphQL документа. <graphql_document>`
+3. :ref:`Составление GraphQL документа. <graphql_build_doc>`
+4. :doc:`Предоставить пример и описание нескольких документов </search_products>`.
+5. :ref:`Предоставить файл с результатами интроспекции <introspection>`.
+6. :ref:`Предоставить особенности работы api <notes>`.
+
+.. _description:
 
 Описание (Description)
 ------------------------
@@ -24,7 +27,7 @@
 
 Тело запроса состоит из
 
-- query - graphql документ.
+- query - GraphQL документ.
 - variables - переменные для query.
 
 .. Заголовоки
@@ -37,9 +40,10 @@
     WM_MP: True
     X-APOLLO-OPERATION-NAME: AnyOperationName
 
+.. _graphql_document:
+
 GraphQL документ (GraphQL document)
 ---------------------------------------
-
 
 .. tab:: Документ GraphQL (GraphQL document)
 
@@ -55,7 +59,7 @@ GraphQL документ (GraphQL document)
 
         ``Операция (Operation)``. Единичный запрос данных, мутация или подписка, которые интерпретирует исполняемый модуль GraphQL.
 
-Общий вид документа graphql::
+Общий вид документа GraphQL::
 
     %operation type% %Operation name%(%variable definitions%){
         %selection set%
@@ -127,10 +131,12 @@ GraphQL документ (GraphQL document)
 - `Фрагменты (fragments) <https://graphql.org/learn/queries/#fragments>`_
 - `Директивы (directives) <https://graphql.org/learn/queries/#directives>`_
 
+.. _graphql_build_doc:
+
 Алгоритм построения GraphQL документа (GraphQL document building algorithm)
 -----------------------------------------------------------------------------
 
-Для walmart backend graphql schema определены 2 специальных типа:
+Для walmart backend GraphQL schema определены 2 специальных типа:
 
 - Query - объект, для построения запросов на извлечения данных. Документация сфокусирована на этом типе запроса.
 - Mutation - объект, для внесение изменений(мутаций) на стороне сервера. Документация не покрывает этот тип запросов.
@@ -147,8 +153,30 @@ GraphQL документ (GraphQL document)
 
 Итого окончательный алгоритм построение GraphQL документа:
 
-1. Указать тип операции
+1. Указать тип операции. В данном случае всегда будет query::
 
+    query
+
+2. Указать имя операции. Имя должно соответствовать правилам именованию переменных в языка Closure. Также это имя необходимо продублировать в заголовке X-APOLLO-OPERATION-NAME::
+
+    query AnyOperationName(...)
+
+3. Указать все необходимые переменные для AnyOperationName. Определиться какие поля нужно извлечь (см. Query.fields), какие переменные (см. args) для них будут нужны. Значения, подставляемые в переменные, должны быть указаны в формате ключ-значение поля variables в теле https запроса::
+
+    query AnyOperationName($var1:String, $var2:Int, ...)
+
+4. Заполнить секцию выборки выбранными полями::
+
+    query AnyOperationName($var1:String, $var2:Int, ...){
+        field1(arg1:$var1){
+            field11
+        }
+        field2(arg2:$var2){
+            field22
+        }
+    }
+
+.. _introspection:
 
 Интроспекция (Introspection)
 ------------------------------
@@ -157,9 +185,23 @@ GraphQL документ (GraphQL document)
 Результат интроспекции :download:`introspection result <jsons/introspection_result.json5>`.
 Все описанные выше типы/объекты содержаться в этом файле.
 
+.. _notes:
 
-Заметки:
+Заметки (Notes)
+-----------------
 
-- название функций запроса (query AnyFunctionName(...){}) и значение заголовка X-APOLLO-OPERATION-NAME должны совпадать.
-- AnyFunctionName может быть произвольным для любого запроса и **предположительно должен соответствовать правилам именование функций Clojure**.
-- для локации нужен ACID + locDataV3
+- Локация. Локация отслеживается по кукам ACID и locDataV3.
+    - ACID - uuid4, сгенерированный на стороне сервере.
+    - .. collapse:: locDataV3 cookie - json с информацией о локации закодированный в base64 строку. Должен содержать релевантный ACID и временные отметки.
+
+        .. literalinclude:: jsons/location_data_v3_cookie.json5
+            :caption: locDataV3 cookie
+            :linenos:
+            :emphasize-lines: 77,80,84,85
+            :language: json
+- Корректность данных. Известно о:
+    - неправильной сортировки по цене при поиске
+    - дублирование товаров при поиске
+    - неправильное определение офферов
+    - временных ошибках: 500, idmlClient_ERROR, UNAUTHENTICATED, etc.
+    - отсутствие item_id у товаров
