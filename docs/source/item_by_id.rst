@@ -1,7 +1,8 @@
-ItemById
------------
-Overview
-~~~~~~~~~~~
+Товар по уникальному идентификатору (ItemById)
+------------------------------------------------
+
+Обзор (Overview)
+~~~~~~~~~~~~~~~~~~
 
 ..
     Overview для каждого запроса должно содержать:
@@ -14,14 +15,14 @@ Overview
 
 .. Предназначение
 
-Запрос предназначен для получения информации об item. \
+Запрос предназначен для получения информации о товаре. \
 
 .. HTTP метод и endpoint.
 
 Поиск информации на сайте walmart можно выполнить используя `post` запрос на endpoint:
 ::
 
-    https://www.walmart.com/orchestra/home/graphql или https://www.walmart.com/orchestra/home/graphql/ip/{item_id}
+    https://www.walmart.com/orchestra/home/graphql/ip/{item_id}
 
 .. Описание свойств запроса.
 
@@ -32,22 +33,18 @@ Overview
 
 .. Особенности
 
+Примечания:
 
-- в случае если itemId не был найден, то будет возвращена :download:`ошибка 404 в теле ответа <jsons/item_by_id_404_response.json5>`.
-- если item out of stock, тогда информации о продавце может и не быть.
+- в случае если товар не был найден, будет возвращена :download:`ошибка 404 в теле ответа <jsons/item_by_id_404_response.json5>`.
+- если item out of stock, тогда информация о продавце может не быть.
 
-Body
-~~~~~~~~~~~
+Тело (Body)
+~~~~~~~~~~~~~
 
-Query
-"""""""""""
+Запрос (Query)
+""""""""""""""""
 
 .. function:: product(...)
-
-    .. admonition:: Schema reference
-            :class: info
-
-            Description: null
 
     :parameter String $itemId!: \
 
@@ -69,11 +66,6 @@ Query
 
     :parameter PostalAddress $postalAddress: \
 
-        .. admonition:: Schema reference
-                :class: info
-
-                Description: null
-
         Местоположение пользователя. Не влияет на фактическую локацию. Фактическая локация хранится в куках. \
 
         Состоит из полей::
@@ -89,11 +81,6 @@ Query
                 }
 
     :parameter [StoreFrontId] $storeFrontIds: \
-
-        .. admonition:: Schema reference
-                :class: info
-
-                Description: null
 
         Уникальный идентификатор магазина. \
 
@@ -113,27 +100,15 @@ Query
         .. admonition:: Schema reference
                 :class: info
 
-                Description: True if the current variant is selected"
+                Description: True if the current variant is selected
 
-        Неизвестно \
+        Является ли запрашиваемый товар выбранным.
 
     :parameter P13NRequest $p13N: \
 
-        .. admonition:: Schema reference
-                :class: info
-
-                Description: null
-
-        Обязательный параметр, содержащий метаинформацию о запросе. Нужен для modules. \
+        Нужен для modules. \
 
     :parameter String $variantFieldId: \
-
-        .. admonition:: Schema reference
-                :class: info
-
-                Description: null
-
-        Неизвестно \
 
     :parameter Int $semStoreId: \
 
@@ -141,8 +116,6 @@ Query
                 :class: info
 
                 Description: Optional, required only for the SEM (Search Engine Marketing) use case. The storeId for the advertised SEM store. Required for store comparison and for temporarily setting the users store to the SEM store if required.
-
-        Неизвестно. \
 
     :parameter String $catalogSellerId: \
 
@@ -155,37 +128,35 @@ Query
 
     :parameter String $fulfillmentIntent: \
 
-        .. admonition:: Schema reference
-                :class: info
-
-                Description: null
-
-        Неизвестно. \
-
     :parameter [ComponentOfferDetail] $componentOffers: \
 
-        .. admonition:: Schema reference
-                :class: info
 
-                Description: null
+Примеры (Examples)
+""""""""""""""""""""
 
-        Неизвестно. \
+.. collapse:: Запрос
 
-Пример запроса:
     .. code-block::
 
         query ItemById($catalogSellerId:String $semStoreId: Int $postalAddress:PostalAddress $itemId:String! $selected:Boolean $variantFieldId:String $storeFrontIds:[StoreFrontId] $p13N:P13NRequest  $fulfillmentIntent:String  ){product( catalogSellerId:$catalogSellerId itemId:$itemId postalAddress:$postalAddress storeFrontIds:$storeFrontIds selected:$selected semStoreId:$semStoreId p13N:$p13N variantFieldId:$variantFieldId fulfillmentIntent:$fulfillmentIntent ){...FullProductFragment}}fragment FullProductFragment on Product{blitzItem giftingEligibility shipAsIs subscriptionEligible showFulfillmentLink additionalOfferCount shippingRestriction availabilityStatus averageRating suppressReviews brand badges{...BadgesFragment}rhPath partTerminologyId aaiaBrandId manufacturerProductId productTypeId tireSize tireLoadIndex tireSpeedRating viscosity model buyNowEligible earlyAccessEvent showBuyWithWplus preOrder{...PreorderFragment}canonicalUrl catalogSellerId sellerReviewCount sellerAverageRating category{...ProductCategoryFragment}classType classId fulfillmentTitle shortDescription fulfillmentType fulfillmentBadge checkStoreAvailabilityATC fulfillmentLabel{checkStoreAvailability wPlusFulfillmentText message shippingText fulfillmentText locationText fulfillmentMethod addressEligibility fulfillmentType postalCode}hasSellerBadge itemType id imageInfo{...ProductImageInfoFragment}location{postalCode stateOrProvinceCode city storeIds}manufacturerName name numberOfReviews orderMinLimit orderLimit offerId offerType priceInfo{priceDisplayCodes{...PriceDisplayCodesFragment}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}savings{priceString}subscriptionPrice{price priceString intervalFrequency duration percentageRate subscriptionString}priceRange{minPrice maxPrice priceString currencyUnit unitOfMeasure denominations{price priceString selected}}}returnPolicy{returnable freeReturns returnWindow{value unitType}}fsaEligibleInd sellerId sellerName sellerDisplayName secondaryOfferPrice{currentPrice{priceType priceString price}}semStoreData{pickupStoreId deliveryStoreId isSemLocationDifferent}shippingOption{...ShippingOptionFragment}type pickupOption{slaTier accessTypes availabilityStatus storeName storeId}salesUnit usItemId variantCriteria{id categoryTypeAllValues name type variantList{availabilityStatus id images name products swatchImageUrl selected}}variants{...MinimalProductFragment}groupMetaData{groupType groupSubType numberOfComponents groupComponents{quantity offerId componentType productDisplayName}}upc wfsEnabled sellerType ironbankCategory snapEligible showAddOnServices addOnServices{serviceType serviceTitle serviceSubTitle groups{groupType groupTitle assetUrl shortDescription services{displayName offerId selectedDisplayName currentPrice{price priceString}}}}productLocation{displayValue}}fragment BadgesFragment on UnifiedBadge{flags{__typename...on BaseBadge{id text key query type}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought criteria{name value}}}labels{__typename...on BaseBadge{id text key}...on PreviouslyPurchasedBadge{id text key lastBoughtOn numBought}}tags{__typename...on BaseBadge{id text key}}}fragment ShippingOptionFragment on ShippingOption{accessTypes availabilityStatus slaTier deliveryDate maxDeliveryDate shipMethod shipPrice{...ProductPriceFragment}}fragment ProductCategoryFragment on ProductCategory{categoryPathId path{name url}}fragment PreorderFragment on PreOrder{streetDate streetDateDisplayable streetDateType isPreOrder preOrderMessage preOrderStreetDateMessage}fragment MinimalProductFragment on Variant{availabilityStatus imageInfo{...ProductImageInfoFragment}priceInfo{priceDisplayCodes{...PriceDisplayCodesFragment}currentPrice{...ProductPriceFragment}wasPrice{...ProductPriceFragment}unitPrice{...ProductPriceFragment}}productUrl usItemId id:productId fulfillmentBadge}fragment ProductImageInfoFragment on ProductImageInfo{allImages{id url zoomable}thumbnailUrl}fragment PriceDisplayCodesFragment on PriceDisplayCodes{clearance eligibleForAssociateDiscount finalCostByWeight hidePriceForSOI priceDisplayCondition pricePerUnitUom reducedPrice rollback strikethrough submapType unitOfMeasure unitPriceDisplayCondition}fragment ProductPriceFragment on ProductPrice{price priceString variantPriceString priceType currencyUnit}
 
-Пример переменных:
-    .. code-block::
+.. collapse:: Переменные
 
-        {"itemId": "493824815","semStoreId": null, "selected": true, "filters": []}
+    .. code-block:: json
+        :linenos:
+
+        {
+          "itemId": "493824815",
+          "semStoreId": null,
+          "selected": true,
+          "filters": []
+        }
 
 
-Response
-~~~~~~~~~~~
+Ответ (Response)
+~~~~~~~~~~~~~~~~~~
 
-Ответ может содержать порядка 140 полей. Список всех полей можно найти в :download:`link <jsons/introspection_result.json5>`
+Product может содержать порядка 140 полей.
 ::
 
     {
@@ -196,271 +167,277 @@ Response
 
 Некоторые поля из ответа:
 
-- product.allOffers - список всех предложений
+- product.allOffers: ProductOffer - список всех предложений
     .. admonition:: Schema reference
             :class: info
 
             Description: All product offers
 
-    - allOffers.offerId - уникальный идентификатор оффера
+    - allOffers.offerId: String - уникальный идентификатор оффера
         .. admonition:: Schema reference
             :class: info
 
             Description: offerId of the product
 
-    - allOffers.offerType - тип оффера
+    - allOffers.offerType: String  - тип оффера
         .. admonition:: Schema reference
             :class: info
 
             Description: offer Type
 
-    - allOffers.availabilityStatus - статус доступности
+    - allOffers.availabilityStatus: ProductAvailabilityStatus - статус доступности
         .. admonition:: Schema reference
             :class: info
 
             Description: Availability status of item
 
-    - allOffers.fulfillmentType - тип выполнения заказа
+    - allOffers.fulfillmentType: FulfillmentType - тип выполнения заказа
         .. admonition:: Schema reference
             :class: info
 
             Description: fulfillment types - STORE or FC or MARKETPLACE
 
-    - allOffers.fulfillmentBadge - время выполнения заказа
+    - allOffers.fulfillmentBadge: String - время выполнения заказа
         .. admonition:: Schema reference
             :class: info
 
             Description: fulfillment badge
 
-    - allOffers.fulfillmentTitle - название выполнения заказа
+    - allOffers.fulfillmentTitle: String - название выполнения заказа
         .. admonition:: Schema reference
             :class: info
 
             Description: fulfillment types based on pickup and shipping
 
-    - allOffers.sellerId - уникальный идентификатор основного продавца товара
+    - allOffers.sellerId: String - уникальный идентификатор основного продавца товара
         .. admonition:: Schema reference
             :class: info
 
             Description: Primary seller of the product
 
-    - allOffers.catalogSellerId - уникальный идентификатор страницы основного продавца товара
+    - allOffers.catalogSellerId: Int - уникальный идентификатор страницы основного продавца товара
         .. admonition:: Schema reference
             :class: info
 
             Description: catalog Seller Id  of primary seller of product
 
-    - allOffers.sellerDisplayName - имя основного продавца, которое будет отображаться
+    - allOffers.sellerName: String - имя продавца в системе walmart
+        .. admonition:: Schema reference
+            :class: info
+
+            Description: seller name of primary seller of product
+
+    - allOffers.sellerDisplayName: String - имя основного продавца, которое будет отображаться
         .. admonition:: Schema reference
             :class: info
 
             Description: seller display name of primary seller of product
 
-    - allOffers.sellerType - тип основного продавца
+    - allOffers.sellerType: String - тип основного продавца
         .. admonition:: Schema reference
             :class: info
 
             Description: seller type of primary seller of product for eg. INTERNAL
 
-    - allOffers.wfsEnabled - выполняется ли заказ волмартом
+    - allOffers.wfsEnabled: Boolean - выполняется ли заказ волмартом
         .. admonition:: Schema reference
             :class: info
 
             Description: WFS flag. Fulfilled by Walmart
 
-    - allOffers.hasSellerBadge - профессиональный ли продавец
+    - allOffers.hasSellerBadge: Boolean - профессиональный ли продавец
         .. admonition:: Schema reference
             :class: info
 
             Description: is Pro Seller
 
-    - allOffers.priceInfo - информация о цене
+    - allOffers.priceInfo: ProductPriceInfo - информация о цене
         .. admonition:: Schema reference
             :class: info
 
             Description: All price information related tothe product. e.g. current price, was price, price format
 
-    - allOffers.returnPolicy - политика возврата
+    - allOffers.returnPolicy: ProductReturnPolicy - политика возврата
         .. admonition:: Schema reference
             :class: info
 
             Description: Return policy
 
-    - allOffers.shippingOption - информация о доставки товара
+    - allOffers.shippingOption: ShippingOption - информация о доставки товара
         .. admonition:: Schema reference
             :class: info
 
             Description: shipping details of the item
 
-    - allOffers.pickupOption - информация о получении товара
+    - allOffers.pickupOption: PickupOption - информация о получении товара
         .. admonition:: Schema reference
             :class: info
 
             Description: pickup details of the item
 
-    - allOffers.preOrder - информация о предзаказе
+    - allOffers.preOrder: PreOrder - информация о предзаказе
         .. admonition:: Schema reference
             :class: info
 
             Description: preOrder details of the item
 
-- product.sellerId - уникальный идентификатор продавца
+- product.sellerId: String - уникальный идентификатор продавца
     .. admonition:: Schema reference
             :class: info
 
             Description: Primary seller of the product
 
-- product.additionalOfferCount - количество офферов
+- product.additionalOfferCount: Int - количество офферов
     .. admonition:: Schema reference
             :class: info
 
             Description: Additional offer count
 
-- product.availabilityStatus - статус доступности товара
+- product.availabilityStatus: String - статус доступности товара
     .. admonition:: Schema reference
             :class: info
 
             Description: Availability status of item
 
-- product.averageRating - средний рейтинг от 0 до 5
+- product.averageRating: Float - средний рейтинг от 0 до 5
     .. admonition:: Schema reference
             :class: info
 
             Description: rating of the product of 5
 
-- product.brand - бренд
+- product.brand: String - бренд
     .. admonition:: Schema reference
             :class: info
 
             Description: Brand of the product.
 
-- product.canonicalUrl - ссылка на товар
+- product.canonicalUrl: String - ссылка на товар
     .. admonition:: Schema reference
             :class: info
 
             Description: canonical Url of the product for eg. /ip/Beef-Choice-Angus-New-York-Strip-Steak-0-82-1-57-lb/39944456
 
-- product.catalogSellerId - уникальный идентификатор страницы продавца
+- product.catalogSellerId: Int - уникальный идентификатор страницы продавца
     .. admonition:: Schema reference
             :class: info
 
             Description: catalog Seller Id  of primary seller of product
 
-- product.category - категории и подкатегории продукта
+- product.category: ProductCategory - категории и подкатегории продукта
     .. admonition:: Schema reference
             :class: info
 
             Description: Categories that the product falls under. There are mutiple category levels
 
-- product.classType - тип класса продукта
+- product.classType: String - тип класса продукта
     .. admonition:: Schema reference
             :class: info
 
             Description: Class type of the product.
 
-- product.shortDescription - краткое описание товара. Содержит html теги
+- product.shortDescription: String - краткое описание товара. Содержит html теги
     .. admonition:: Schema reference
             :class: info
 
             Description: Short description of the product.
 
-- product.detailedDescription - полное описание товара. Содержит html теги
+- product.detailedDescription: String - полное описание товара. Содержит html теги
     .. admonition:: Schema reference
             :class: info
 
             Description: Detailed description of the product.
 
-- product.fulfillmentLabel - описание доставки
+- product.fulfillmentLabel:FulfillmentLabel - описание доставки
     .. admonition:: Schema reference
             :class: info
 
             Description: fulfillment label
 
-- product.id - уникальный идентификатор страницы продукта
+- product.id: ID - уникальный идентификатор страницы продукта
     .. admonition:: Schema reference
             :class: info
 
             Description: Unique product id
 
-- product.imageInfo - информация об изображениях
+- product.imageInfo: ProductImageInfo - информация об изображениях
     .. admonition:: Schema reference
             :class: info
 
             Description: All images for the product
 
-- product.location - информация о локации
+- product.location: Location - информация о локации
     .. admonition:: Schema reference
             :class: info
 
             Description: fulfillment location details
 
-- product.name - названия товара
+- product.name: String - названия товара
     .. admonition:: Schema reference
             :class: info
 
             Description: Name of the product.
 
-- product.numberOfReviews - количество оценок
+- product.numberOfReviews: Int - количество оценок
     .. admonition:: Schema reference
             :class: info
 
             Description: number of reviews of the product of 5
 
-- product.offerId - уникальный идентификатор оффера
+- product.offerId: String - уникальный идентификатор оффера
     .. admonition:: Schema reference
             :class: info
 
             Description: primary offer id of product
 
-- product.offerType - тип офферов
+- product.offerType: String - тип офферов
     .. admonition:: Schema reference
             :class: info
 
             Description: offer type of primary offer of product for eg. ONLINE_ONLY, ONLINE_AND_STORE
 
-- product.priceInfo - информация о цене
+- product.priceInfo: ProductPriceInfo - информация о цене
     .. admonition:: Schema reference
             :class: info
 
             Description: All price information related tothe product. e.g. current price, was price, price format
 
-- product.sellerName - имя продавца
+- product.sellerName: String - имя продавца
     .. admonition:: Schema reference
             :class: info
 
             Description: seller name of primary seller of product
 
-- product.shippingOption - информация о типах доставки
+- product.shippingOption: ShippingOption - информация о типах доставки
     .. admonition:: Schema reference
             :class: info
 
             Description: shipping details of the item
 
-- product.salesUnit - минимальное количество продаваемых единиц за раз
+- product.salesUnit: String - минимальное количество продаваемых единиц за раз
     .. admonition:: Schema reference
             :class: info
 
             Description: sales unit For e.g EACH
 
-- product.usItemId - уникальный идентификатор товара
+- product.usItemId: String - уникальный идентификатор товара
     .. admonition:: Schema reference
             :class: info
 
             Description: A unique reference id to identify the product. e.g. 646105256"
 
-- product.variants - информация о продавцах
+- product.variants: [Variant] - информация о продавцах
     .. admonition:: Schema reference
             :class: info
 
             Description: variants of the item
 
-- product.upc - upc товара
+- product.upc: String - upc товара
     .. admonition:: Schema reference
             :class: info
 
             Description: UPC
 
-- product.sellerType - тип продавца
+- product.sellerType: String - тип продавца
     .. admonition:: Schema reference
             :class: info
 
@@ -470,10 +447,10 @@ Response
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для товара с id "139340877": :download:`link <jsons/item_by_id_response.json5>`
+    Полный пример ответа для товара с id :download:`"139340877" <jsons/item_by_id_response.json5>`
 
-UI-Response table comparison
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Таблица сопоставления ответа и визуального местоположения данных (UI-Response table comparison)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _title: https://monosnap.com/file/BjKYYlkxVlEjWbo4BTvmnBmfiJJv5Z
 .. |title| replace:: Title
