@@ -1,7 +1,8 @@
-IDML
----------------------
-Overview
-~~~~~~~~~~~
+Описание продукта (IDML)
+--------------------------
+
+Обзор (Overview)
+~~~~~~~~~~~~~~~~~~
 
 ..
     Overview для каждого запроса должно содержать:
@@ -14,7 +15,7 @@ Overview
 
 .. Предназначение
 
-Запрос предназначен для получения описательной информации о продукте. Данные относятся для секции "About this item". \
+Запрос предназначен для получения описательной информации о продукте. Данные относятся к секции "About this item". \
 
 .. HTTP метод и endpoint.
 
@@ -62,18 +63,24 @@ Query
 
                 Description: null
 
+Примеры (Examples)
+""""""""""""""""""""
 
+.. collapse:: Запрос
 
-Пример запроса:
     .. code-block::
 
         query GetIDML($itemId:String, $html:Boolean){idml(itemId:$itemId, html:$html){itemId html warnings{name value  attribute} specifications{name value  attribute}  rxPharmacy{name value  attribute}  indications{name value  attribute}  supplementFacts{headers{name value attribute} footers{name value attribute} segments{name amount dvp}}  chokingHazards{headline image message mature ageRestriction}    directions{name value  attribute}  displayabilityMatrix{researchTabModuleKey showAboutAlbumHeader  showVideoContent showMarketingContent}  drugFacts{activeIngredients{name values{name }} warnings{name value  attribute} directions{name value  attribute} inactiveIngredients{name value  attribute} question{name value  attribute} otherInformation{name value  attribute}}  esrbRating ingredients{ingredients{name value  attribute} activeIngredientName{name value  attribute} activeIngredients{name value  attribute} inactiveIngredients{name value  attribute}}  legalBadges{headline image message mature ageRestriction}  longDescription shortDescription mpaaRating nutritionFacts{calorieInfo{name mainNutrient{name amount dvp} childNutrients{name amount dvp}} keyNutrients{name values{name mainNutrient{name amount dvp} childNutrients{name amount dvp}}} vitaminMinerals{name mainNutrient{name amount dvp} childNutrients{name amount dvp}} servingInfo{name values{name value  attribute}} staticContent{name value  attribute} additionalDisclaimer{name value  attribute} }  sizeCharts{id tagDisplay}  warranty{length information}  videos{poster title versions{small large}}  videoMatrix{usItemId videoModulesKey videoModulesType}  product360ImageContainer{name url}  productHighlights{name value  attribute}  interactiveProductVideo}}
 
 
-Пример переменных:
+.. collapse:: Переменные
+
     .. code-block::
 
-       {"itemId": "637717150", "html":true}
+        {
+            "itemId": "637717150",
+            "html": true
+        }
 
 Response
 ~~~~~~~~~~~
@@ -86,41 +93,41 @@ Response
         }
     }
 
-- data.idml.itemId:String - уникальный идентификатор item-а. \
-- data.idml.html:Boolean - неизвестно. \
-- data.idml.warnings:IdmlAttribute - текст предупреждений. \
-- data.idml.specifications:IdmlAttribute - текст спецификаций. \
-- data.idml.rxPharmacy:IdmlAttribute - информация от аптеки. \
-- data.idml.indications:IdmlAttribute - критерии для применения. \
-- data.idml.supplementFacts:SupplementalFacts - факты о продукте. \
-- data.idml.chokingHazards:LegalContent - правовая информация. \
-- data.idml.directions:IdmlAttribute - описание применения. \
-- data.idml.displayabilityMatrix:DisplayabilityMatrix - флаги отвечающие за показ табличного описания. \
-- data.idml.drugFacts:DrugFacts - информация о лекарствах. \
-- data.idml.esrbRating:String - рейтинг esrb. \
-- data.idml.ingredients:Ingredients - ингредиенты. \
-- data.idml.legalBadges:LegalContent - правовые значки. \
-- data.idml.longDescription:String - полное описание. \
-- data.idml.shortDescription:String - краткое описание. \
-- data.idml.mpaaRating:String - рейтинг mpaa. \
-- data.idml.nutritionFacts:NutritionFacts - пищевые факты. \
-- data.idml.sizeCharts:SizeChart - размер чарта. \
-- data.idml.warranty:Warranty - текст гарантии. \
-- data.idml.videos:Video - видео. \
-- data.idml.videoMatrix:VideoMatrix - матрица видео. \
-- data.idml.product360ImageContainer:Product360Image - 360 изображения. \
-- data.idml.productHighlights:IdmlAttribute - основные моменты продукта. \
-- data.idml.interactiveProductVideo:String - видео с которым возможно взаимодействовать. \
+- data.idml.itemId: String - уникальный идентификатор item-а. \
+- data.idml.html: Boolean - неизвестно. \
+- data.idml.warnings: IdmlAttribute - текст предупреждений. \
+- data.idml.specifications: IdmlAttribute - текст спецификаций. \
+- data.idml.rxPharmacy: IdmlAttribute - информация от аптеки. \
+- data.idml.indications: IdmlAttribute - критерии для применения. \
+- data.idml.supplementFacts: SupplementalFacts - факты о продукте. \
+- data.idml.chokingHazards: LegalContent - правовая информация. \
+- data.idml.directions: IdmlAttribute - описание применения. \
+- data.idml.displayabilityMatrix: DisplayabilityMatrix - флаги отвечающие за показ табличного описания. \
+- data.idml.drugFacts: DrugFacts - информация о лекарствах. \
+- data.idml.esrbRating: String - рейтинг esrb. \
+- data.idml.ingredients: Ingredients - ингредиенты. \
+- data.idml.legalBadges: LegalContent - правовые значки. \
+- data.idml.longDescription: String - полное описание. \
+- data.idml.shortDescription: String - краткое описание. \
+- data.idml.mpaaRating: String - рейтинг mpaa. \
+- data.idml.nutritionFacts: NutritionFacts - пищевые факты. \
+- data.idml.sizeCharts: SizeChart - размер чарта. \
+- data.idml.warranty: Warranty - текст гарантии. \
+- data.idml.videos: Video - видео. \
+- data.idml.videoMatrix: VideoMatrix - матрица видео. \
+- data.idml.product360ImageContainer: Product360Image - 360 изображения. \
+- data.idml.productHighlights: IdmlAttribute - основные моменты продукта. \
+- data.idml.interactiveProductVideo: String - видео с которым возможно взаимодействовать. \
 
 
 
 .. admonition:: Response example
     :class: note
 
-    Полный пример ответа для продукта "637717150": :download:`link <jsons/idml_response.json5>`
+    Полный пример ответа для продукта :download:`"637717150" <jsons/idml_response.json5>`
 
-UI-Response table comparison
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Таблица сопоставления ответа и визуального местоположения данных (UI-Response table comparison)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _warnings: https://monosnap.com/file/Kh8WKu2xV9N1MrWRU6bckEOkoxw3ua
 .. |warnings| replace:: Warnings
