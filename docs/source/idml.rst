@@ -36,11 +36,11 @@
 
 - за раз можно получить информацию о нескольких idml используя `alias <https://graphql.org/learn/queries/#aliases>`_
 
-Body
-~~~~~~~~~~~
+Тело (Body)
+~~~~~~~~~~~~~
 
-Query
-"""""""""""
+Запрос (Query)
+""""""""""""""""
 
 .. function:: idml(...)
 
@@ -82,8 +82,9 @@ Query
             "html": true
         }
 
-Response
-~~~~~~~~~~~
+Ответ (Response)
+~~~~~~~~~~~~~~~~~~
+
 Ответ содержит:
 ::
 
